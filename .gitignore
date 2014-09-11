@@ -1,0 +1,18 @@
+.bundle
+db/*.sqlite3
+log/*.log
+tmp/
+.DS_Store
+
+# JetBrains
+.idea/
+
+# DataBase access
+config/database.yml
+
+# Temporary files
+*~
+
+public/system/*
+Procfile
+config/unicorn.rb

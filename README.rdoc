@@ -1,0 +1,31 @@
+==README
+
+It's students testing system which will be created on Rails.
+
+This README would normally document whatever steps are necessary to get the application up and running.
+
+Ruby version 2.0.0
+
+System dependencies
+
+Rails 4.1.1 MySQL 5.5.37
+
+Configuration
+
+Rename config/database_template.yml to config/database.yml and configurate:
+
+adapter: mysql2
+encoding: utf8
+pool: 10
+database: toaster_dev
+username: <username>
+password: <password>
+socket: /var/run/mysqld/mysqld.sock
+reconnect: true
+Database creation
+
+rake db:create
+
+Database initialization
+
+Run rake db:migrate

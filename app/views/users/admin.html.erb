@@ -1,2 +1,88 @@
-<p>Hi, admin</p>
-<%= link_to "ku", destroy_user_session_path, :method => :delete %>
+<body id="admin_bkg">
+
+  <table id="head_panel">
+    <tr>
+      <td id="tbl_head_left"><%= current_user.login %></td>
+      <td id="tbl_head_right"><%= link_to "Групи & Користувачі", journal_path %></td>
+    </tr>
+  </table>
+
+  <p id="admin_big_header">Ласкаво просимо</p>
+  <!--<div >-->
+  <table id="admin_content">
+    <col width="250px">
+    <tr>
+      <td valign="top"> <!-- create test -->
+        <p class="admin_small_header">Створити тест</p>
+        <!--<form action="./build_test.php" method="POST">-->
+          <table style="margin-bottom: 20px;">
+            <tr><td>Оберіть предмет: <a href="../reg/subject/reg.php" style="font-size: 0.6em;">(створ.)</a></td></tr>
+            <tr>
+              <td>
+                <select  id = "sub" name="subjectfortest" class="admin_selects" onChange="getid('sub');" style="margin-top: 20px; margin-bottom: 10px;">
+                    <option value=0 selected="selected">...</option>
+                    <!--<?php-->
+                    <!--show_sub_list();-->
+                    <!--?>-->
+                </select>
+                <a onclick="return confirm('Ви впевнені?')" style="font-size: 0.6em;" id="delsub" href="" >Видал.</a>
+              </td>
+            </tr>
+            <tr><td>Введіть тему:</td></tr>
+            <tr><td><input type="text" class="admin_fields" style="margin-top: 10px;" name="theme"/></td></tr>
+          </table>
+          <input type="submit" class="admin_buttons" style="margin-left: 0px; margin-top: 5px;" name="create" value="Створити.." />
+        <!--</form>-->
+      </td>
+      <td valign="top"> <!-- find test -->
+        <p class="admin_small_header">Знайти існуючий тест</p>
+        <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+          <p>Відомі дані для пошуку:</p>
+          <table id="search_form">
+            <tr>
+              <td>Оберіть предмет:</td>
+              <td>
+                <select name="subject"  class="admin_selects" >
+                  <option value=0 selected="selected">...</option>
+                  <!--<?php-->
+                  <!--show_sub_list();-->
+                  <!--?>-->
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td>Введіть тему:</td>
+              <td><input type="text" class="admin_fields" name="ftheme"/></td>
+            </tr>
+            <tr>
+              <td>Введіть групу:</td>
+              <td>
+                <input type="text"  class="admin_fields" name="group"/>
+              </td>
+            </tr>
+          </table>
+          <input type="submit" class="admin_buttons" value="Знайти.." name="fin" />
+        </form>
+        <!-- find test results -->
+        <%= render 'tests' %>
+      </td>
+      <td valign="top"> <!-- last results -->
+        <p class="admin_small_header">Остання активність</p>
+        <%= render 'activity' %>
+      </td>
+    </tr>
+  </table>
+
+<div id="exit">
+  <%= link_to destroy_user_session_path, :method => :delete do %>
+      <%= image_tag "exit.gif", :style => 'width: 50px;' %>
+  <% end %>
+</div>
+
+<div id="error">
+  <%= flash[:alert] %>
+</div>
+
+<p id="admin_footer"></p>
+
+</body>

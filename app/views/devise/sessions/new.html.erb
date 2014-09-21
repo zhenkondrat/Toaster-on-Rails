@@ -1,18 +1,33 @@
-<h2>Sign in</h2>
+<body id = "admin_bkg">
+<div id = "window_sign_in">
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div><%= f.label :login %><br />
-  <%= f.text_field :login, autofocus: true %></div>
+  <p id="sign_in_header">Вхід</p>
 
-  <div><%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "off" %></div>
-
-  <% if devise_mapping.rememberable? -%>
-    <div><%= f.check_box :remember_me %> <%= f.label :remember_me %></div>
-  <% end -%>
-
-  <div><%= f.submit "Sign in" %></div>
-<% end %>
-
-<p><%= flash[:alert] %></p>
-<%= render "devise/shared/links" %>
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+    <table id="sign_in_form">
+      <tr><td><br/></td></tr>
+      <tr><td>логін:</td></tr>
+      <tr>
+        <td><%= f.text_field :login, autofocus: true, class: "fields" %></td>
+      </tr>
+      <tr><td>пароль:</td></tr>
+      <tr>
+        <td><%= f.password_field :password, autocomplete: "off", class: "fields" %></td>
+      </tr>
+      <tr>
+        <td>
+        <% if devise_mapping.rememberable? %>
+           <%= f.check_box :remember_me %> <%= f.label "Запамятати" %>
+        <% end %>
+        </td>
+      </tr>
+      <tr>
+        <td><%= f.submit "Вхід", id: "sign_in_button" %></td>
+      </tr>
+    </table>
+  <% end %>
+</div>
+<div id="error">
+  <%= flash[:alert] %>
+</div>
+</body>

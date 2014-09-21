@@ -1,2 +1,47 @@
-<p>Hi, student</p>
-<%= link_to "ku", destroy_user_session_path, :method => :delete %>
+<body id="user_bkg">
+
+<p id="user"><%= current_user.login %></p>
+
+<div id="student_content">
+  <p id="user_big_header">Ласкаво просимо</p>
+  <div id="user_info">
+    <div id="left">
+      <p class="user_small_header">Особисті дані</p>
+      <p>Прізвище:</p>
+      <p><%= current_user.first_name %></p>
+      <p>Ім'я:</p>
+      <p><%= current_user.last_name %></p>
+      <p>По-батькові:</p>
+      <p><%= current_user.father_name %></p>
+      <p>Групи до яких належить користувач:</p>
+      <p>
+        <!--<?php echo $group_list; ?>-->
+      </p>
+      <p>Наявні для проходження тести</p>
+      <!--<?php showtests(); ?>-->
+
+    </div>
+    <div id="right">
+      <p class="user_small_header">Останні результати</p>
+      <div id="results">
+        <table style = "font-size: 14px; text-align: center; left: -10px;">
+          <col width="100">
+          <col width="150">
+          <col width="50">
+          <col width="100">
+          <tr><td>Предмет</td> <td>Назва тесту</td> <td>Бал</td> <td>Дата</td></tr>
+          <!--<?php showmarks(); ?>-->
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div id="exit">
+  <%= link_to destroy_user_session_path, :method => :delete do %>
+      <%= image_tag("exit.gif", width: "50px") %>
+  <% end %>
+</div>
+<p id="user_footer"></p>
+</body>

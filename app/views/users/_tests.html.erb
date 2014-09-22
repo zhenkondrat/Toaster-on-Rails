@@ -1,9 +1,21 @@
-<div id= "find"  >
+<% if @tests %>
+<div id= "find">
   <table>
-    <col width="150">
+    <col width="140">
     <col width="70">
     <col width="80">
     <col width="70">
-    <!--<?php  searchtest(); ?>-->
+    <tr><th>Назва тесту</th> <th>Предмет</th> <th>Групи</th> <th>Операції</th></tr>
+        <% @tests.each do |test| %>
+            <tr>
+                <td><%= test.name %></td>
+                <td><%= test.get_subject_name %></td>
+                <td><a href=' . "./journal.php?vg=" . $test[0] .'>групи</a></td>
+                <td style = "width: 40px;"><%= link_to "тар.", tests_path %>
+                &nbsp;
+                <%= link_to "вид.", tests_path, :method => :delete %></td>
+            </tr>
+        <% end %>
   </table>
 </div>
+<% end %>

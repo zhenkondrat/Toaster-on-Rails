@@ -1,0 +1,21 @@
+<h2 style="text-align: center">Створення групи</h2>
+<div class="page_content">
+  <%= form_tag reg_group_path do %>
+  <table>
+    <colgroup>
+      <col width="100px"/>
+      <col width="100px"/>
+    </colgroup>
+    <tr>
+      <td>Назва групи</td>
+      <td><%= text_field_tag :group_name, "" %></td>
+    </tr>
+    <tr>
+      <td>
+        <%= button_tag "Реєструвати", :name => 'add_group', :class => 'admin_buttons_small', :value => true %>
+      </td>
+      <td></td>
+    </tr>
+  </table>
+  <% end %>
+</div>

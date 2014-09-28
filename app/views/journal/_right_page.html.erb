@@ -1,0 +1,5 @@
+<% if @action == :reg_group %>
+    <%= render 'reg_group' %>
+<% else %>
+    <%= render 'groups' if @groups %>
+<% end %>

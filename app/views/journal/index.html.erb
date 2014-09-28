@@ -1,32 +1,57 @@
-<div id="book">
-
-  <form action= "<?php echo $_SERVER['PHP_SELF']; echo $lid; ?>" method="POST"> <!-- book(journal) -->
-
-    <!-- left page -->
-    <div id="leftpage">
-      <!--<?php-->
-			    <!--showleftpage($aboutl, $l);-->
-			<!--?>-->
-    </div>
-
-    <!-- right page -->
-    <div id="rightpage">
-      <!--<?php-->
-				<!--showrightpage($aboutr, $r);-->
-			<!--?>-->
-    </div>
-
-
-  </form>
+<body id = "journal_content">
+<div id="journal">
+    <table id="pages">
+      <colgroup>
+        <col width="290px"/>
+        <col width="60px"/>
+        <col width="290px"/>
+      </colgroup>
+      <tr>
+        <td> <!-- left_page content -->
+          <%= render 'left_page' %>
+        </td>
+        <td></td> <!-- spacer -->
+        <td> <!-- right_page content -->
+          <%= render 'right_page' %>
+        </td>
+      </tr>
+      <tr>
+        <td> <!-- left_page search line -->
+          <% if @users %>
+            <%= text_field_tag 'user_name', '', class: 'search_line' %>
+            <%= button_tag 'Знайти', :name => 'search_user', :class => 'admin_buttons_small btn_search' %>
+          <% end %>
+        </td>
+        <td></td> <!-- spacer -->
+        <td> <!-- right_page search line -->
+          <% if @groups %>
+            <%= text_field_tag 'group_name', '', class: 'search_line' %>
+            <%= button_tag 'Знайти', :name => 'search_user', :class => 'admin_buttons_small btn_search' %>
+          <% end %>
+        </td>
+      </tr>
+      <tr>
+         <!-- left_page buttons -->
+        <td>
+          <%= render 'buttons', :page => 0 %>
+        </td>
+        <td></td> <!-- spacer -->
+        <!-- right_page buttons -->
+        <td>
+          <%= render 'buttons', :page => 1 %>
+        </td>
+      </tr>
+    </table>
 </div> <!-- end of book -->
 
-<p id="bookmark1"><a href="./reg/group_new.php">Додати групу</a></p>		            <!-- bookmark1 -->
-<p id="bookmark2"><a href="./reg/user_new.php">Додати корист.</a></p>	                <!-- bookmark2 -->
-<p id="bookmark3"><a href="<?php echo $_SERVER['PHP_SELF']; ?>">Форзац</a></p>		    <!-- bookmark3 -->
+<p id="bookmark1"><%= link_to "Головна", root_path %></p>		            <!-- bookmark1 -->
+<p id="bookmark2"><a href="./reg/user_new.php">Тести</a></p>	                <!-- bookmark2 -->
+<p id="bookmark3"><a href="<?php echo $_SERVER['PHP_SELF']; ?>">Результати</a></p>		    <!-- bookmark3 -->
 
 <p class="mend"><a href="./index.php">На головну</a></p>
 <!--<?php-->
     <!--if ($error_string != "")-->
         <!--myerror($error_string);-->
     <!--?>-->
-<p id="bottom"></p>
+<p id="admin_footer"></p>
+</body>

@@ -8,7 +8,10 @@ Rails.application.routes.draw do
   devise_for :users
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
+  post '/reg_group' => 'journal#reg_group'
+  post '/reg_user' => 'journal#reg_user'
   post 'search_test' => 'users#index'
+  post '/journal' => 'journal#index'
   get 'journal' => 'journal#index'
   # You can have the root of your site routed with "root"
   root 'users#index'

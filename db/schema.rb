@@ -11,7 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140921113525) do
+ActiveRecord::Schema.define(version: 20140928150547) do
+
+  create_table "groups", force: true do |t|
+    t.string "name"
+  end
 
   create_table "subjects", force: true do |t|
     t.string "subject_name"
@@ -23,6 +27,11 @@ ActiveRecord::Schema.define(version: 20140921113525) do
     t.integer "weight1"
     t.integer "weight2"
     t.integer "weight3"
+  end
+
+  create_table "user_groups", force: true do |t|
+    t.integer "user_id"
+    t.integer "group_id"
   end
 
   create_table "users", force: true do |t|

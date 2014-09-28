@@ -1,0 +1,5 @@
+<% if @action == :reg_user %>
+    <%= render 'reg_user' %>
+<% else %>
+    <%= render 'users' if @users %>
+<% end %>

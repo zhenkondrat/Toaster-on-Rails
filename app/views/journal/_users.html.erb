@@ -1,0 +1,22 @@
+<h2 style="text-align: center">Користувачі</h2>
+<div class="page_content">
+  <table>
+    <colgroup>
+      <col width="10px"/>
+      <col width="200px"/>
+      <col width="60px"/>
+    </colgroup>
+    <tr>
+      <th>№</th><th>User login</th><th>Chase</th>
+    </tr>
+    <% if @users %>
+        <% for i in 0..@users.count-1 %>
+            <tr>
+              <td><%= i+1 %></td>
+              <td><%= @users[i].login %></td>
+              <td><%= check_box_tag "user_check[]", @users[i].id.to_s %></td>
+            </tr>
+        <% end %>
+    <% end %>
+  </table>
+</div>

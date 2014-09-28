@@ -1,47 +1,34 @@
 // Place all the styles related to the journal controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-//body
-//{
-//  width: 800px !important;
-//  background-color: #ded0c3;
-//  margin-left: auto;
-//  margin-right: auto;
-//  font-size: 12px;
-//}
-//table
-//{
-//  font-size: 12px;
-//}
-//
-//#book
-//{
-//  background: url('./journal/book.gif') no-repeat;
-//  height: 550px;
-//  margin-top: 50px;
-//}
-//
-//#leftpage
-//{
-//  position: relative;
-//  float: left;
-//  left: 60px;
-//  top: 20px;
-//  width: 285px;
-//  height: 400px;
-//}
-//
-//#rightpage
-//{
-//  position: relative;
-//  float: right;
-//  top: 20px;
-//  width: 285px;
-//  height: 400px;
-//  left: -110px;
-//}
-//
-//.head
+#journal_content
+{
+  width: 800px !important;
+  background-color: #ded0c3;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 12px;
+}
+
+#journal
+{
+  background: url('journal.gif') no-repeat;
+  height: 550px;
+  margin-top: 50px;
+}
+
+#journal table { font-size: 12px; }
+
+#pages{
+  padding-top: 25px;
+  padding-left: 50px;
+}
+
+.page_content{
+  height: 350px;
+  overflow-y: auto;
+}
+//.
 //{
 //  font-weight: bold;
 //  width: 285px;
@@ -63,10 +50,7 @@
 //  margin-bottom: 2px;
 //  width: 280px;
 //}
-//.instring
-//{
-//  width: 278px;
-//}
+.search_line{ width: 200px; }
 //
 //#bottom
 //{
@@ -106,16 +90,34 @@
 //  color: black;
 //}
 //
-//.button
-//{
-//  margin-top: 0px;
-//  background-color: #bf8e62;
-//  border-style: none;
-//  height: 20px;
-//  width: 86px;
-//  text-align: center;
-//  margin-right: 5px;
-//}
+.admin_buttons_small{
+  margin-top: 0px;
+  background-color: #bf8e62;
+  border-style: none;
+  height: 20px;
+  width: 86px;
+  text-align: center;
+  margin-right: 5px;
+}
+
+.admin_links_small{
+  margin-top: 0px;
+  background-color: #bf8e62;
+  border-style: none;
+  height: 20px;
+  width: 86px;
+  text-align: center;
+  margin-right: 5px;
+}
+
+.btn_search{
+  display: inline;
+  width: 67px;
+}
+
+.form_fields{
+  width: 150px;
+}
 //
 //.emptybtn
 //{
@@ -135,29 +137,29 @@
 //  background-color: white;
 //}
 //
-//#bookmark1
-//{
-//  width: 65px;
-//  position: relative;
-//  left: 737px;
-//  top: -460px;
-//}
-//
-//#bookmark2
-//{
-//  width: 65px;
-//  position: relative;
-//  left: 737px;
-//  top: -445px;
-//}
-//
-//#bookmark3
-//{
-//  width: 65px;
-//  position: relative;
-//  left: 737px;
-//  top: -422px;
-//}
+#bookmark1
+{
+  width: 65px;
+  position: relative;
+  left: 725px;
+  top: -445px;
+}
+
+#bookmark2
+{
+  width: 65px;
+  position: relative;
+  left: 725px;
+  top: -405px;
+}
+
+#bookmark3
+{
+  width: 65px;
+  position: relative;
+  left: 725px;
+  top: -365px;
+}
 //
 //#really
 //{

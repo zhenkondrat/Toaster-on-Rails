@@ -5,14 +5,16 @@ Rails.application.routes.draw do
 
   # resources :users
 
-  devise_for :users
+  devise_for :users, controllers: { :registrations => 'registrations' }
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
-  post '/reg_group' => 'journal#reg_group'
-  post '/reg_user' => 'journal#reg_user'
+
   post 'search_test' => 'users#index'
   post '/journal' => 'journal#index'
-  get 'journal' => 'journal#index'
+  post '/save_user_info' => 'journal#save_user_info'
+  get '/journal' => 'journal#index'
+  get '/user_info/:id' => 'journal#user_info', :as => 'user_info'
+  get '/delete_users_group' => 'journal#delete_users_group'
   # You can have the root of your site routed with "root"
   root 'users#index'
 

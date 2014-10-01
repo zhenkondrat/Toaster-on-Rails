@@ -16,6 +16,14 @@
   font-size: 1.4em;
 }
 
+#sign_up_header
+{
+  position: relative;
+  left: 90px;
+  top: 40px;
+  font-size: 1.4em;
+}
+
 #sign_in_form
 {
   position: relative;
@@ -33,6 +41,19 @@
   margin-left: 50px;
   margin-bottom: -5px;
   width: 70px;
+  height: 30px;
+  font-size: 1.1em;
+  background-color: #bf8e62;
+  border-style: none;
+}
+
+#sign_up_button
+{
+  margin-top: 5px;
+  margin-right: auto;
+  margin-left: 25px;
+  margin-bottom: -5px;
+  width: 120px;
   height: 30px;
   font-size: 1.1em;
   background-color: #bf8e62;

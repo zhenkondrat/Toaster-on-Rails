@@ -16,7 +16,7 @@
               <td><%= i+1 %></td>
               <td><%= @groups[i].name %></td>
               <td><%= @groups[i].users_count %></td>
-              <td><%= check_box_tag "group_check[]", @groups[i].id.to_s %></td>
+              <td><%= check_box_tag "groups_check[]", @groups[i].id.to_s %></td>
             </tr>
         <% end %>
     <% end %>

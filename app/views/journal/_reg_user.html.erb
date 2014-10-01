@@ -1,37 +1,26 @@
 <h2 style="text-align: center">Новий користувач:</h2>
 <div class="page_content">
-  <%= form_tag reg_user_path do %>
-      <table>
-        <colgroup>
-          <col width="100px"/>
-          <col width="100px"/>
-        </colgroup>
-        <tr>
-          <td>Логін</td>
-          <td><%= text_field_tag :user_login, "", class: "form_fields" %></td>
-        </tr>
-        <tr>
-          <td>Пароль</td>
-          <td><%= password_field :user_password, "", class: "form_fields" %></td>
-        </tr>
-        <tr>
-          <td>Прізвище</td>
-          <td><%= text_field_tag :user_last_name, "", class: "form_fields" %></td>
-        </tr>
-        <tr>
-          <td>Ім'я</td>
-          <td><%= text_field_tag :user_first_name, "", class: "form_fields" %></td>
-        </tr>
-        <tr>
-          <td>По-батькові</td>
-          <td><%= text_field_tag :user_father_name, "", class: "form_fields" %></td>
-        </tr>
-        <tr>
-          <td>
-            <%= button_tag "Реєструвати", :name => 'add_user', :class => 'admin_buttons_small', :value => true %>
-          </td>
-          <td></td>
-        </tr>
-      </table>
-  <% end %>
+  <!--<%#= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>-->
+      <!--<table>-->
+        <!--<colgroup>-->
+          <!--<col width="100px"/>-->
+          <!--<col width="100px"/>-->
+        <!--</colgroup>-->
+        <!--<tr>-->
+          <!--<td>Логін</td>-->
+          <!--<td><%#= f.text_field :class => "form_fields" %></td>-->
+        <!--</tr>-->
+        <!--<tr>-->
+          <!--<td>Пароль</td>-->
+          <!--<td><%#= f.password_field :class => "form_fields" %></td>-->
+        <!--</tr>-->
+        <!--<tr>-->
+          <!--<td>-->
+            <!--<%#= f.submit "Реєструвати", :name => 'add_user', :class => 'admin_buttons_small', :value => true %>-->
+          <!--</td>-->
+          <!--<td></td>-->
+        <!--</tr>-->
+      <!--</table>-->
+  <!--<%# end %>-->
+  <%= render new_user_registration_path %>
 </div>

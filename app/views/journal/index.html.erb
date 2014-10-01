@@ -1,5 +1,6 @@
 <body id = "journal_content">
 <div id="journal">
+  <%= form_tag journal_path do %>
     <table id="pages">
       <colgroup>
         <col width="290px"/>
@@ -18,15 +19,15 @@
       <tr>
         <td> <!-- left_page search line -->
           <% if @users %>
-            <%= text_field_tag 'user_name', '', class: 'search_line' %>
+            <%= text_field_tag 'user_name', params[:user_name], class: 'search_line' %>
             <%= button_tag 'Знайти', :name => 'search_user', :class => 'admin_buttons_small btn_search' %>
           <% end %>
         </td>
         <td></td> <!-- spacer -->
         <td> <!-- right_page search line -->
           <% if @groups %>
-            <%= text_field_tag 'group_name', '', class: 'search_line' %>
-            <%= button_tag 'Знайти', :name => 'search_user', :class => 'admin_buttons_small btn_search' %>
+            <%= text_field_tag 'group_name', params[:group_name], class: 'search_line' %>
+            <%= button_tag 'Знайти', :name => 'search_group', :class => 'admin_buttons_small btn_search' %>
           <% end %>
         </td>
       </tr>
@@ -42,16 +43,21 @@
         </td>
       </tr>
     </table>
+  <% end %>
 </div> <!-- end of book -->
 
-<p id="bookmark1"><%= link_to "Головна", root_path %></p>		            <!-- bookmark1 -->
-<p id="bookmark2"><a href="./reg/user_new.php">Тести</a></p>	                <!-- bookmark2 -->
-<p id="bookmark3"><a href="<?php echo $_SERVER['PHP_SELF']; ?>">Результати</a></p>		    <!-- bookmark3 -->
+<p id="bookmark1"><%= link_to "Головна", root_path %></p>		                <!-- bookmark1 -->
+<p id="bookmark2"><%= link_to "Нов. Кор.", new_user_registration_path %></p>	<!-- bookmark2 -->
+<p id="bookmark3"><%= link_to "Форзац", journal_path %></p>		                <!-- bookmark3 -->
 
-<p class="mend"><a href="./index.php">На головну</a></p>
 <!--<?php-->
     <!--if ($error_string != "")-->
         <!--myerror($error_string);-->
     <!--?>-->
+<% if flash[:notice] || flash[:error] %>
+  <div id="error">
+    <%= flash[:error] || flash[:notice] %>
+  </div>
+<% end %>
 <p id="admin_footer"></p>
 </body>

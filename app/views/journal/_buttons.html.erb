@@ -1,14 +1,9 @@
 <% if page == 0 && @users %>
-    <%= form_tag journal_path do %>
-        <%= button_tag 'Додати', :name => 'reg_user', :class => 'admin_buttons_small' %>
-        <%= button_tag 'Видалити', :name => 'rm_user', :class => 'admin_buttons_small' %>
-    <% end %>
+        <%= button_tag 'Видалити', :name => 'rm_users', :class => 'admin_buttons_small' , :value => true %>
+        <%= button_tag 'Реєструвати', :name => 'reg_users_in_group', :class => 'admin_buttons_small', :value => true %>
 <% end %>
 
 <% if page == 1 && @groups %>
-    <%= form_tag journal_path do %>
         <%= button_tag 'Додати', :name => 'reg_group', :class => 'admin_buttons_small', :value => true %>
-        <%= button_tag 'Видалити', :name => 'rm_group', :class => 'admin_buttons_small', :value => true %>
-        <%= button_tag 'Реєструвати', :name => 'reg_users', :class => 'admin_buttons_small', :value => true %>
-    <% end %>
+        <%= button_tag 'Видалити', :name => 'rm_groups', :class => 'admin_buttons_small', :value => true %>
 <% end %>

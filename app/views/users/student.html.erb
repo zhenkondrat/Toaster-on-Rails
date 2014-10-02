@@ -7,18 +7,18 @@
   <div id="user_info">
     <div id="left">
       <p class="user_small_header">Особисті дані</p>
-      <p>Прізвище:</p>
-      <p><%= current_user.first_name %></p>
-      <p>Ім'я:</p>
-      <p><%= current_user.last_name %></p>
-      <p>По-батькові:</p>
-      <p><%= current_user.father_name %></p>
+      <p>Прізвище: <%= current_user.last_name %></p>
+      <p>Ім'я: <%= current_user.first_name %></p>
+      <p>По-батькові: <%= current_user.father_name %></p>
       <p>Групи до яких належить користувач:</p>
       <p>
-        <!--<?php echo $group_list; ?>-->
+        <% groups = current_user.registrations %>
+        <% groups.each do |group| %>
+            <span><%= group.name %> </span>
+        <% end %>
       </p>
       <p>Наявні для проходження тести</p>
-      <!--<?php showtests(); ?>-->
+
 
     </div>
     <div id="right">
@@ -30,7 +30,7 @@
           <col width="50">
           <col width="100">
           <tr><td>Предмет</td> <td>Назва тесту</td> <td>Бал</td> <td>Дата</td></tr>
-          <!--<?php showmarks(); ?>-->
+
         </table>
       </div>
     </div>

@@ -3,6 +3,8 @@ Rails.application.routes.draw do
 
   resources :subjects
 
+  resources :questions
+
   # resources :users
 
   devise_for :users, controllers: { :registrations => 'registrations' }
@@ -12,9 +14,12 @@ Rails.application.routes.draw do
   post 'search_test' => 'users#index'
   post '/journal' => 'journal#index'
   post '/save_user_info' => 'journal#save_user_info'
+  post '/create_test' => 'tests#create'
+  get '/tests/content/:id' => 'tests#content'
   get '/journal' => 'journal#index'
   get '/user_info/:id' => 'journal#user_info', :as => 'user_info'
   get '/delete_users_group' => 'journal#delete_users_group'
+
   # You can have the root of your site routed with "root"
   root 'users#index'
 

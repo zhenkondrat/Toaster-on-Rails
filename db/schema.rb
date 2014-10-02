@@ -11,10 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140928150547) do
+ActiveRecord::Schema.define(version: 20141002205136) do
 
   create_table "groups", force: true do |t|
     t.string "name"
+  end
+
+  create_table "questions", force: true do |t|
+    t.integer "test_id"
+    t.text    "condition"
+    t.integer "type"
   end
 
   create_table "subjects", force: true do |t|

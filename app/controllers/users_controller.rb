@@ -6,7 +6,13 @@ class UsersController < ApplicationController
     else
       if current_user.admin
         if params.include? :theme || :subject || :group
-          @tests = Test.all.where("'name' LIKE '"+params[:theme]+"%'")
+          query = if params[:subject][:subject_id].empty?
+                    "'name' LIKE '"+params[:theme]+"%'"
+                  else
+                    "'name' LIKE '"+params[:theme]+"%' AND subject_id = "+params[:subject][:subject_id]
+                  end
+          @tests = Test.all.where(query)
+          @select_find = params[:subject][:subject_id].to_i
         end
         render :admin
       else

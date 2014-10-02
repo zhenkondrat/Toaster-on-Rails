@@ -1,0 +1,18 @@
+<body id = "journal_content">
+
+    <div id = "test_info">
+        <h2>Інформація тесту</h2>
+        <ul>
+          <li><h3>Назва: "<%= @test.name %>"</h3></li>
+          <li><h3>Предмет: "<%= @subject_name %>"</h3></li>
+        </ul>
+        <h3>Список питань:</h3>
+        <%= link_to "Додати питання", new_question_path %>
+    </div>
+<% if flash[:notice] || flash[:error] %>
+    <div id="error">
+      <%= flash[:error] || flash[:notice] %>
+    </div>
+<% end %>
+<p id="admin_footer"></p>
+</body>

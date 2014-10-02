@@ -2,7 +2,7 @@
 
   <table id="head_panel">
     <tr>
-      <td id="tbl_head_left"><%= current_user.login %></td>
+      <td id="tbl_head_left"><%= link_to current_user.login, root_path %></td>
       <td id="tbl_head_right"><%= link_to "Групи & Користувачі", journal_path %></td>
     </tr>
   </table>
@@ -16,7 +16,7 @@
     <tr>
       <td valign="top"> <!-- create test -->
         <p class="admin_small_header">Створити тест</p>
-        <%= form_tag :controller => 'users', :action => 'index' do %>
+        <%= form_tag :controller => 'tests', :action => 'create' do %>
           <table style="margin-bottom: 20px;">
             <tr><td>Оберіть предмет: <%= link_to "(створ.)", {:controller => 'subjects', :method => :create}, :class => 'small_link' %></td></tr>
             <tr>
@@ -27,7 +27,7 @@
                            class: "admin_selects",
                            id: "select_to_create",
                            style: "margin-top: 10px; margin-bottom: 10px;",
-                           onChange: "subject_selected();"
+                           onChange: "subject_selected();",
                     )
                 %>
                 <%= link_to "Видал.", {:controller => 'subjects', :method => :delete, :remote => true}, :id => 'rm_subject', :class => 'small_link' %>
@@ -50,7 +50,8 @@
                   <td>
                     <%= select("subject",
                                "subject_id",
-                               Subject.all.collect {|p| [ p.subject_name, p.id ] }, {include_blank: '...'},
+                               Subject.all.collect {|p| [ p.subject_name, p.id ] },
+                               @select_find ||= {include_blank: '...'},
                                class: "admin_selects"
                         )
                     %>

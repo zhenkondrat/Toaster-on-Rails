@@ -98,14 +98,7 @@ class JournalController < ApplicationController
     @user = User.find(params[:id])
     @action = :user_info
     @groups = Group.all
-    groups_id = ""
-    groups = UserGroup.where('user_id' => @user.id).select(:group_id)
-    groups.each{ |g|
-      groups_id += g.group_id.to_s+", "
-    }
-    unless groups_id.empty?
-      @user_groups = Group.where('id IN ('+groups_id.chop.chop+')')
-    end
+    @user_groups = @user.registrations
   end
 
 end

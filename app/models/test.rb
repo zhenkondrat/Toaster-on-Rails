@@ -15,4 +15,8 @@ class Test < ActiveRecord::Base
       Test.all.where(query)
     end
   end
+
+  def question_count
+    Question.where(:test_id => self.id).count
+  end
 end

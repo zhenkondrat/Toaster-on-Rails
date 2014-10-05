@@ -7,7 +7,14 @@
           <li><h3>Предмет: "<%= @subject_name %>"</h3></li>
         </ul>
         <h3>Список питань:</h3>
-        <%= link_to "Додати питання", new_question_path %>
+        <% unless @questions.empty? %>
+        <ol>
+          <% @questions.each do |question| %>
+          <li><%= link_to truncate(question.condition, length: 64), edit_question_path(question) %></li>
+          <% end %>
+        </ol>
+        <% end %>
+        <%= link_to "Додати питання", new_question_path(:question_test_id => @test.id) %>
     </div>
     <%= link_to root_path do %>
         <h2>На головну</h2>

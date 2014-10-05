@@ -11,6 +11,7 @@ class TestsController < ApplicationController
   def show
     @test = Test.find(params[:id])
     @subject_name = Subject.find(@test.subject_id).subject_name
+    @questions = Question.where(:test_id => @test.id)
   end
 
   private

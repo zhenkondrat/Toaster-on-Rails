@@ -22,23 +22,23 @@ function addNext(mydiv, shbl)
 
             inpch = document.createElement("input");
             inpch.setAttribute('type', 'checkbox');
-            inpch.setAttribute('name', 'stch[]');
+            inpch.setAttribute('name', 'answer_check[]');
             inpch.setAttribute('value', ks);
-            inpch.setAttribute('id', 'stch' + ks);
+            inpch.setAttribute('id', 'answer_check_' + ks);
             ediv.appendChild(inpch);
-            break
+            break;
         case 'compr':
             kr++;
             inp.setAttribute('name', shbl + kr);
             inp.setAttribute('id', shbl + kr);
             inp.setAttribute('style', 'width: 170px;');
-            break
+            break;
         case 'compl':
             kl++;
             inp.setAttribute('name', shbl + kl);
             inp.setAttribute('id', shbl + kl);
             inp.setAttribute('style', 'width: 170px;');
-            break
+            break;
     }
     inp.setAttribute('size', '25');
     ediv.appendChild(inp);
@@ -49,31 +49,31 @@ function delPrev(shbl)
 {
     switch (shbl)
     {
-        case 'std':
+        case 'answer_':
             if (ks>0)
             {
                 var el = document.getElementById(shbl + ks);
                 el.parentNode.removeChild(el);
-                var el = document.getElementById('stch' + ks);
+                var el = document.getElementById('answer_check_' + ks);
                 el.parentNode.removeChild(el);
                 ks--;
             }
-            break
-        case 'vidl':
+            break;
+        case 'answer_left_':
             if (kl>0)
             {
                 var el = document.getElementById(shbl + kl);
                 el.parentNode.removeChild(el);
                 kl--;
             }
-            break
-        case 'vidr':
+            break;
+        case 'answer_right_':
             if (kr>0)
             {
                 var el = document.getElementById(shbl + kr);
                 el.parentNode.removeChild(el);
                 kr--;
             }
-            break
+            break;
     }
 }

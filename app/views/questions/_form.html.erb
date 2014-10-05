@@ -6,18 +6,24 @@
   </tr>
 </table>
 <div id = "question_content">
-  <p id="first">Питання №  </p>
+  <p id="question_header">Питання № <%= @test.question_count + 1 %></p>
   <%= form_for @question do |t| %>
+    <%= t.hidden_field "question_test_id", :value => @test.id %>
     <table id = "question_form">
+    <colgroup>
+        <col width="200px">
+        <col width="400px">
+        <col width="200px">
+    </colgroup>
     <tr>
       <td colspan="3">
         <%= t.text_area :condition, :id => "question_text" %>
       </td>
     </tr>
-    <tr>
-      <td><%= t.radio_button :type, 1 %></td>
-      <td><%= t.radio_button :type, 2 %></td>
-      <td><%= t.radio_button :type, 3 %></td>
+    <tr class="center">
+      <td><%= t.radio_button :question_type, 1 %></td>
+      <td><%= t.radio_button :question_type, 3 %></td>
+      <td><%= t.radio_button :question_type, 2 %></td>
     </tr>
     <tr>
       <td>
@@ -33,45 +39,43 @@
         <table>
           <tr>
             <td id = "compl">
-              <input type="button" value="-" onClick="delPrev('vidl');" style="width: 25px;" />
-              <input type="button" value="+" onClick="addNext('compl','vidl');" style="width: 25px;" />
-              <input type="text" name="vidl0" id="vidl0" value="" size="25" style="width: 170px;" />
+              <input type="button" value="-" onClick="delPrev('answer_left_');" style="width: 25px;" />
+              <input type="button" value="+" onClick="addNext('compl','answer_left_');" style="width: 25px;" />
+              <input type="text" name="answer_left_0" id="answer_left_0" value="" size="25" style="width: 170px;" />
             </td>
 
-            <td id = "compr">
-              <input type="button" value="-" onClick="delPrev('vidr');" style="width: 25px;" />
-              <input type="button" value="+" onClick="addNext('compr','vidr');" style="width: 25px;" />
-              <input type="text" name="vidr0" id="vidr0" value="" size="25" style="width: 170px;" />
+            <td id = "compr" class="right">
+              <input type="button" value="-" onClick="delPrev('answer_right_');" style="width: 25px;" />
+              <input type="button" value="+" onClick="addNext('compr','answer_right_');" style="width: 25px;" />
+              <input type="text" name="answer_right_0" id="answer_right_0" value="" size="25" style="width: 170px;" />
             </td>
           </tr>
         </table>
       </td>
 
-      <td>
+      <td id = "pright">
         <p class="type_header">Звичайне</p>
-        <input type="button" value="-" onClick="delPrev('std');" style="width: 25px;" />
-        <input type="button" value="+" onClick="addNext('pright','std');" style="width: 25px;" />
+        <input type="button" value="-" onClick="delPrev('answer_');" style="width: 25px;" />
+        <input type="button" value="+" onClick="addNext('pright','answer_');" style="width: 25px;" />
         <div>
-          <input type="checkbox" id="stch0" name="stch[]" value="0" />
-          <input type="text" name="std0" id="std0" value="" size="25" style="width: 160px;" />
+          <input type="checkbox" id="answer_check_0" name="answer_check[]" value="0" />
+          <input type="text" name="answer_0" id="answer_0" value="" size="25" style="width: 160px;" />
         </div>
       </td>
     </tr>
 
-    <tr>
+    <tr class="right">
       <td colspan="3">
-       <input type="submit" name="next" class="button" value="Наступне"/>
+        <%= t.submit "Зберегти", :class => "question_button" %>
       </td>
     </tr>
   </table>
   <% end %>
-  <p id = "end"><a href="index.php">Закінчити</a></p>
+  <p id = "link_out"><%= link_to "Закінчити", test_path(@test.id) %></p>
 </div>
   <div id="error">
-    <%= flash[:alert] || flash[:notice] %>
+    <%= flash[:error] || flash[:notice] %>
   </div>
 
   <p id="admin_footer"></p>
-
-
 </body>

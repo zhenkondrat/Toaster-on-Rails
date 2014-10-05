@@ -4,9 +4,8 @@ class TestsController < ApplicationController
   end
 
   def create
-    debugger
     test = Test.create!(test_params)
-    redirect_to test_content_path(test.id)
+    redirect_to test_path(test.id)
   end
 
   def show

@@ -1,0 +1,13 @@
+  <%= form_for @subject do |f| %>
+      <table id="sign_form" style="padding-top: 50px;">
+        <tr><td><br/></td></tr>
+        <tr><td>назва предмету:</td></tr>
+        <tr>
+          <td><%= f.text_field :subject_name, autofocus: true, class: "fields" %></td>
+        </tr>
+        <tr><td><br/></td></tr>
+        <tr class = "center">
+          <td><%= f.submit "Створити", id: "sign_button" %></td>
+        </tr>
+      </table>
+  <% end %>

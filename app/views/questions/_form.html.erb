@@ -1,0 +1,77 @@
+<body id="question_body">
+
+<table id="head_panel">
+  <tr>
+    <td id="tbl_head_left"><%= link_to current_user.login, root_path %></td>
+  </tr>
+</table>
+<div id = "question_content">
+  <p id="first">Питання №  </p>
+  <%= form_for @question do |t| %>
+    <table id = "question_form">
+    <tr>
+      <td colspan="3">
+        <%= t.text_area :condition, :id => "question_text" %>
+      </td>
+    </tr>
+    <tr>
+      <td><%= t.radio_button :type, 1 %></td>
+      <td><%= t.radio_button :type, 2 %></td>
+      <td><%= t.radio_button :type, 3 %></td>
+    </tr>
+    <tr>
+      <td>
+        <p class="type_header">Лоігчне</p>
+        <table style="margin-bottom: 20px; position: relative; left: 40px;">
+          <tr><td><%= radio_button_tag :answer1, false %>ні</td></tr>
+          <tr><td><%= radio_button_tag :answer1, true %>так</td></tr>
+        </table>
+      </td>
+
+      <td>
+        <p class="type_header">Відповідність</p>
+        <table>
+          <tr>
+            <td id = "compl">
+              <input type="button" value="-" onClick="delPrev('vidl');" style="width: 25px;" />
+              <input type="button" value="+" onClick="addNext('compl','vidl');" style="width: 25px;" />
+              <input type="text" name="vidl0" id="vidl0" value="" size="25" style="width: 170px;" />
+            </td>
+
+            <td id = "compr">
+              <input type="button" value="-" onClick="delPrev('vidr');" style="width: 25px;" />
+              <input type="button" value="+" onClick="addNext('compr','vidr');" style="width: 25px;" />
+              <input type="text" name="vidr0" id="vidr0" value="" size="25" style="width: 170px;" />
+            </td>
+          </tr>
+        </table>
+      </td>
+
+      <td>
+        <p class="type_header">Звичайне</p>
+        <input type="button" value="-" onClick="delPrev('std');" style="width: 25px;" />
+        <input type="button" value="+" onClick="addNext('pright','std');" style="width: 25px;" />
+        <div>
+          <input type="checkbox" id="stch0" name="stch[]" value="0" />
+          <input type="text" name="std0" id="std0" value="" size="25" style="width: 160px;" />
+        </div>
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="3">
+       <input type="submit" name="next" class="button" value="Наступне"/>
+      </td>
+    </tr>
+  </table>
+  <% end %>
+  <p id = "end"><a href="index.php">Закінчити</a></p>
+</div>
+  <div id="error">
+    <%= flash[:alert] || flash[:notice] %>
+  </div>
+
+  <p id="admin_footer"></p>
+
+
+</body>

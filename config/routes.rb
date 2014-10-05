@@ -19,6 +19,9 @@ Rails.application.routes.draw do
   get '/journal' => 'journal#index'
   get '/user_info/:id' => 'journal#user_info', :as => 'user_info'
   get '/delete_users_group' => 'journal#delete_users_group'
+  get '/subject/new' => 'subjects#new'
+  post '/subjects' => 'subjects#create'
+  get '/delete_subject' => 'subjects#delete'
 
   # You can have the root of your site routed with "root"
   root 'users#index'

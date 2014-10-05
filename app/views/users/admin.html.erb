@@ -18,7 +18,7 @@
         <p class="admin_small_header">Створити тест</p>
         <%= form_tag :controller => 'tests', :action => 'create' do %>
           <table style="margin-bottom: 20px;">
-            <tr><td>Оберіть предмет: <%= link_to "(створ.)", {:controller => 'subjects', :method => :create}, :class => 'small_link' %></td></tr>
+            <tr><td>Оберіть предмет: <%= link_to "(створ.)", new_subject_path, :class => 'small_link' %></td></tr>
             <tr>
               <td>
                 <%= select("subject",
@@ -30,7 +30,7 @@
                            onChange: "subject_selected();",
                     )
                 %>
-                <%= link_to "Видал.", {:controller => 'subjects', :method => :delete, :remote => true}, :id => 'rm_subject', :class => 'small_link' %>
+                <%= link_to "Видал.", 'delete_subject', :id => 'rm_subject', :class => 'small_link' %>
               </td>
             </tr>
             <tr><td>Введіть тему:</td></tr>
@@ -69,7 +69,7 @@
             <%= submit_tag "Знайти", :name => nil, :class => 'admin_buttons' %>
         <% end %>
         <!-- find test results -->
-        <%= render 'tests' %>
+        <%= render 'tests/tests' %>
       </td>
       <td valign="top"> <!-- last results -->
         <p class="admin_small_header">Остання активність</p>
@@ -85,7 +85,7 @@
 </div>
 
 <div id="error">
-  <%= flash[:alert] %>
+  <%= flash[:alert] || flash[:notice] %>
 </div>
 
 <p id="admin_footer"></p>

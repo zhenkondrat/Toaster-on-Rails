@@ -8,52 +8,34 @@
   font-family: sans-serif;
 }
 
-#sign_in_header
+#sign_header
 {
   position: relative;
-  left: 125px;
-  top: 40px;
-  font-size: 1.4em;
-}
-
-#sign_up_header
-{
-  position: relative;
-  left: 90px;
-  top: 40px;
-  font-size: 1.4em;
-}
-
-#sign_in_form
-{
-  position: relative;
-  left: 50px;
   top: 20px;
-  width: 200px;
-  margin-left: 10px;
-  margin-top: -10px;
+  text-align: center;
+  font-size: 1.4em;
 }
 
-#sign_in_button
+#sign_form
 {
-  margin-top: 20px;
+  position: relative;
+  width: 200px;
+  margin-left: auto;
   margin-right: auto;
-  margin-left: 50px;
-  margin-bottom: -5px;
-  width: 70px;
+}
+
+#sign_button
+{
+  width: auto;
   height: 30px;
   font-size: 1.1em;
   background-color: #bf8e62;
   border-style: none;
 }
 
-#sign_up_button
+#sign_in_button
 {
-  margin-top: 5px;
-  margin-right: auto;
-  margin-left: 25px;
-  margin-bottom: -5px;
-  width: 120px;
+  width: 75px;
   height: 30px;
   font-size: 1.1em;
   background-color: #bf8e62;

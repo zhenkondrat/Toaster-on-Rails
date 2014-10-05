@@ -9,6 +9,9 @@
         <h3>Список питань:</h3>
         <%= link_to "Додати питання", new_question_path %>
     </div>
+    <%= link_to root_path do %>
+        <h2>На головну</h2>
+    <% end %>
 <% if flash[:notice] || flash[:error] %>
     <div id="error">
       <%= flash[:error] || flash[:notice] %>

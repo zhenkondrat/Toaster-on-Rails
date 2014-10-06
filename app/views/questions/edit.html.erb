@@ -1,0 +1,26 @@
+<body id = "journal_content">
+
+<div id = "test_info">
+<%= form_for @question do |t| %>
+    <%= t.text_area :condition, :id => "question_text" %>
+    <%=
+        case @question.question_type
+        when 1
+          render 'type_1'
+        when 2
+          render 'type_2'
+        when 3
+          render 'type_3'
+        end
+    %>
+    <p class="right"><%= t.submit "Зберегти" %></p>
+<% end %>
+</div>
+<p id = "link_out"><%= link_to "Завершити", test_path(@question.test_id) %></p>
+<div id="exit">
+  <%= link_to destroy_user_session_path, :method => :delete do %>
+      <%= image_tag("exit.gif", width: "50px") %>
+  <% end %>
+</div>
+<p id="admin_footer"></p>
+</body>

@@ -77,3 +77,8 @@ function delPrev(shbl)
             break;
     }
 }
+
+function setParam(count)
+{
+    ks = count-1;
+}

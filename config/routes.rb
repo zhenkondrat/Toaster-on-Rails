@@ -22,6 +22,8 @@ Rails.application.routes.draw do
   get '/subject/new' => 'subjects#new'
   post '/subjects' => 'subjects#create'
   get '/delete_subject' => 'subjects#delete'
+  get '/del_group_test' => 'tests#del_group_from_list'
+  post '/reg_group_test' => 'tests#reg_group'
 
   # You can have the root of your site routed with "root"
   root 'users#index'

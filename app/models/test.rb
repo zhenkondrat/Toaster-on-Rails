@@ -1,4 +1,7 @@
 class Test < ActiveRecord::Base
+  has_many :test_groups
+  has_many :groups, :through => :test_groups
+
   def get_subject_name
     Subject.find(self.subject_id).subject_name
   end
@@ -13,6 +16,12 @@ class Test < ActiveRecord::Base
                 "'name' LIKE '"+theme+"%' AND subject_id = "+subject
               end
       Test.all.where(query)
+    end
+  end
+
+  def reg_group group_id
+    if TestGroup.where(:test_id => self.id, :group_id => group_id).count == 0
+      TestGroup.create!(:test_id => self.id, :group_id => group_id)
     end
   end
 

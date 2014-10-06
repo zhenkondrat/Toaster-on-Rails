@@ -58,7 +58,39 @@ class QuestionsController < ApplicationController
   end
 
   def edit
+    @question = Question.find(params[:id])
+    case @question.question_type
+    when 1
+      @answer = Answer1.where(:question_id => @question.id).first
+    when 2
+      @answers = Answer2.where(:question_id => @question.id)
+    when 3
 
+    end
+  end
+
+  def update
+    question = Question.find(params[:id])
+    question.condition = question_params[:condition]
+    question.remove_answers
+    case question.question_type
+    when 1
+      answer = Answer1.new
+      answer.question_id = question.id
+      answer.is_right = params[:answer1]
+      answer.save!
+    when 2
+      i = 0
+      while params.include? ('answer_'+i.to_s)
+        answer = Answer2.new
+        answer.question_id = question.id
+        answer.answer = params['answer_'+i.to_s]
+        answer.is_right = params[:answer_check].include? i.to_s
+        answer.save!
+        i+=1
+      end
+    end
+    redirect_to root_path
   end
 
   private

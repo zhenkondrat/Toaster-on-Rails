@@ -1,0 +1,24 @@
+<p class="type_header">Звичайне</p>
+<input type="button" value="-" onClick="delPrev('answer_');" style="width: 25px;" />
+<input type="button" value="+" onClick="addNext('pright','answer_');" style="width: 25px;" />
+<% if !@answers %>
+  <div>
+    <input type="checkbox" id="answer_check_0" name="answer_check[]" value="0" />
+    <input type="text" name="answer_0" id="answer_0" value="" size="25" style="width: 160px;" />
+  </div>
+<% else %>
+  <% i = 0 %>
+  <script>
+    setParam(<%= @answers.count %>);
+  </script>
+  <div id="pright">
+
+  <% @answers.each do |answer| %>
+    <div>
+      <input type="checkbox" id="answer_check_<%= i.to_s %>" name="answer_check[]" />
+      <%= text_field_tag 'answer_'+i.to_s, answer.answer, :style => "width: 160px" %>
+    </div>
+    <% i+=1 %>
+  <% end %>
+  </div>
+<% end %>

@@ -16,13 +16,13 @@
     <tr>
       <td valign="top"> <!-- create test -->
         <p class="admin_small_header">Створити тест</p>
-        <%= form_tag :controller => 'tests', :action => 'create' do %>
+        <%= form_for @test do |t| %>
           <table style="margin-bottom: 20px;">
             <tr><td>Оберіть предмет: <%= link_to "(створ.)", new_subject_path, :class => 'small_link' %></td></tr>
             <tr>
               <td>
-                <%= select("subject",
-                           "subject_id",
+                <%= t.select(
+                           :subject_id,
                            Subject.all.collect {|p| [ p.subject_name, p.id ] }, {include_blank: '...'},
                            class: "admin_selects",
                            id: "select_to_create",
@@ -34,9 +34,9 @@
               </td>
             </tr>
             <tr><td>Введіть тему:</td></tr>
-            <tr><td><%= text_field_tag :theme, "", :id => 'theme', :class => 'admin_fields' %></td></tr>
+            <tr><td><%= t.text_field :name, :id => 'theme', :class => 'admin_fields' %></td></tr>
           </table>
-          <%= submit_tag "Створити", :name => nil, :class => 'admin_buttons' %>
+          <%= t.submit "Створити", :class => 'admin_buttons' %>
         <% end %>
       </td>
       <td valign="top"> <!-- find test -->

@@ -1,0 +1,97 @@
+<body id = "journal_content">
+  <%= hidden_field_tag "test_id", @test.id %>
+  <table id = "edit_test_table">
+    <colgroup>
+      <col width="400">
+      <col width="400">
+    </colgroup>
+    <tr style="vertical-align: top;">
+      <td style="border-right: ridge">
+        <%= form_for @test do |t| %>
+        <div id = "test_info">
+          <h2>Інформація тесту</h2>
+          <table>
+            <tr><td><h3>Назва:</h3><td><%= t.text_field :name, :value => @test.name %></td></tr>
+            <tr><td><h3>Предмет:</h3></td>
+              <td>
+              <%= t.select(:subject_id,
+                         Subject.all.collect {|p| [ p.subject_name, p.id ] }, {default: @test.id},
+                         class: "admin_selects",
+                         id: "select_to_create",
+                         style: "margin-top: 10px; margin-bottom: 10px; width: 155px;",
+                         onChange: "subject_selected();",
+                  )
+              %>
+            </td>
+            </tr>
+            <tr>
+              <td>Кількість запитань:</td>
+              <td><%= t.text_field :questions_count, :value => @test.questions_count %></td>
+            </tr>
+            <tr>
+              <td>Час відповіді(сек.):</td>
+              <td><%= t.text_field :question_time, :value => @test.question_time %></td>
+            </tr>
+          </table>
+          <div>
+            <h3>Вага питань:</h3>
+            <table>
+              <tr>
+                <td>Логічне:</td><td><%= t.text_field :weight1, :value => @test.weight1 %></td>
+              </tr>
+              <tr>
+                <td>Звичайне:</td><td><%= t.text_field :weight2, :value => @test.weight2 %></td>
+              </tr>
+              <tr>
+                <td>Складне:</td><td><%= t.text_field :weight3, :value => @test.weight3 %></td>
+              </tr>
+            </table>
+          </div>
+          <%= t.submit "Зберегти" %>
+          <h3>Список питань:</h3>
+          <% unless @questions.empty? %>
+            <ol>
+            <% @questions.each do |question| %>
+              <% if question.question_type != 3 %>
+                <li><%= link_to truncate(question.condition, length: 64), edit_question_path(question) %></li>
+              <% else %>
+                <li><%= truncate(question.condition, length: 64) %></li>
+              <% end %>
+            <% end %>
+            </ol>
+          <% end %>
+          <%= link_to "Додати питання", new_question_path(:question_test_id => @test.id) %>
+        </div>
+        <% end %>
+      </td>
+      <td style="padding-left: 5%">
+        <%= form_tag reg_group_test_path do %>
+          <h3 class="center">Групи</h3>
+          <div id="test_groups">
+            <%= render 'groups/groups'%>
+          </div>
+          <div class="right">
+            <%= submit_tag "Реєструвати" %>
+          </div>
+        <% end %>
+      </td>
+    </tr>
+  </table>
+  <div>
+    Доступний для груп(натисніть аби вилучити зі списку):
+    <% @test_groups.each do |group| %>
+     <span><%= link_to group.name, del_group_test_path(:tid => @test.id, :gid => group.id) %></span>&nbsp
+    <% end %>
+  </div>
+
+  <%= link_to root_path do %>
+    <h2>На головну</h2>
+  <% end %>
+
+<% if flash[:notice] || flash[:error] %>
+    <div id="error">
+      <%= flash[:error] || flash[:notice] %>
+    </div>
+<% end %>
+<p id="admin_footer"></p>
+</body>

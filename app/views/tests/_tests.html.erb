@@ -9,7 +9,7 @@
             <tr>
                 <td><%= test.name %></td>
                 <td><%= test.get_subject_name %></td>
-                <td><%= link_to "info", test_path(test.id) %></td>
+                <td><%= link_to "info", edit_test_path(test.id) %></td>
                 <td style = "width: 40px;"><%= link_to "тар.", tests_path %>
                 &nbsp;
                 <%= link_to "вид.", tests_path(test.id), :method => :delete %></td>

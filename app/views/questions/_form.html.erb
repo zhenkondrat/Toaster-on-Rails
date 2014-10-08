@@ -46,7 +46,7 @@
     </tr>
   </table>
   <% end %>
-  <p id = "link_out"><%= link_to "Завершити", test_path(@test.id) %></p>
+  <p id = "link_out"><%= link_to "Завершити", edit_test_path(@test.id) %></p>
 </div>
   <div id="error">
     <%= flash[:error] || flash[:notice] %>

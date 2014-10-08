@@ -12,6 +12,7 @@ class UsersController < ApplicationController
           @tests = Test.find_tests subject, theme, group
           @select_find = subject.to_i unless subject.empty?
         end
+        @test = Test.new
         render :admin
       else
         render :student

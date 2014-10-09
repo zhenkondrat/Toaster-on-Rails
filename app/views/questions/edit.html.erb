@@ -16,7 +16,7 @@
     <p class="right"><%= t.submit "Зберегти" %></p>
 <% end %>
 </div>
-<p id = "link_out"><%= link_to "Завершити", test_path(@question.test_id) %></p>
+<p id = "link_out"><%= link_to "Завершити", edit_test_path(@question.test_id) %></p>
 <div id="exit">
   <%= link_to destroy_user_session_path, :method => :delete do %>
       <%= image_tag("exit.gif", width: "50px") %>

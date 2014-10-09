@@ -93,6 +93,14 @@ class QuestionsController < ApplicationController
     redirect_to root_path
   end
 
+  def destroy
+    question = Question.find(params[:id])
+    test_id = question.test_id
+    question.destroy
+    flash[:notice] = 'Питання успішно видалено'
+    redirect_to edit_test_path(test_id)
+  end
+
   private
 
   def question_params

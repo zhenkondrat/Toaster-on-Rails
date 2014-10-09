@@ -52,11 +52,17 @@
           <% unless @questions.empty? %>
             <ol>
             <% @questions.each do |question| %>
-              <% if question.question_type != 3 %>
-                <li><%= link_to truncate(question.condition, length: 64), edit_question_path(question) %></li>
-              <% else %>
-                <li><%= truncate(question.condition, length: 64) %></li>
-              <% end %>
+              <li>
+                <% if question.question_type != 3 %>
+                  <%= link_to truncate(question.condition, length: 64), edit_question_path(question) %>
+                <% else %>
+                  <%= truncate(question.condition, length: 64) %>
+                <% end %>
+                &nbsp;
+                <%= link_to question, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                    <%= image_tag 'delete.gif', style: "width: 10px;" %>
+                <% end %>
+              </li>
             <% end %>
             </ol>
           <% end %>

@@ -13,8 +13,10 @@
       <p>Групи до яких належить користувач:</p>
       <p>
         <% groups = current_user.registrations %>
-        <% groups.each do |group| %>
-            <span><%= group.name %> </span>
+        <% if groups %>
+          <% groups.each do |group| %>
+              <span><%= group.name %> </span>
+          <% end %>
         <% end %>
       </p>
       <p>Наявні для проходження тести</p>

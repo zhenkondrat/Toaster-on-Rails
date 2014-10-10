@@ -1,5 +1,4 @@
 <body id = "journal_content">
-  <%= hidden_field_tag "test_id", @test.id %>
   <table id = "edit_test_table">
     <colgroup>
       <col width="400">
@@ -72,6 +71,7 @@
       </td>
       <td style="padding-left: 5%">
         <%= form_tag reg_group_test_path do %>
+          <%= hidden_field_tag "test_id", @test.id %>
           <h3 class="center">Групи</h3>
           <div id="test_groups">
             <%= render 'groups/groups'%>

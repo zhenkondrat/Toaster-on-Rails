@@ -1,26 +1,21 @@
-<body>
+<body id="user_bkg">
 
-<p id="user"><?php echo $uname; ?></p>
-<form action="<?php echo $_SERVER['PHP_SELF']."?n=$number&tid=$tid"; ?>" method="POST">
-<div id="content">
-  <p id="first">Питання №<?php echo $number;?></p>
-  <div id="center">
-    <div id="question">
-      <p style="margin: 5px;"><?php echo $question_text; ?></p>
+<p id="user"><%= current_user.login %></p>
+<%= form_tag test_path(params[:id]), method: 'GET' do %>
+  <div id="student_content">
+    <p id="first">Питання №<%= @local+1 %></p>
+    <div id="center">
+      <div id="question">
+        <p style="margin: 5px;"><%= @question.condition %></p>
+      </div>
+
     </div>
-    <?php
-				showquestion();
-			?>
+    <div style="width: 300px;">
+      <%= submit_tag 'Наступне' %>
+    </div>
   </div>
-  <div style="width: 300px;">
-    <input type="submit" name="next" value="Наступне" style="position: relative; left: 720px;" />
-  </div>
-</div>
-</form>
-<div id="mend"><a href="index.php">На головну</a></div>
-<div id="exit">
-  <a href="../logout.php"><img src="../../styles/share/exit.gif" style="width: 50px;" /></a>
-</div>
+<% end %>
+<div id="mend"><%= link_to "На головну", root_path %></div>
 
-<p id="bottom"></p>
+<p id="user_footer"></p>
 </body>

@@ -28,4 +28,17 @@ class Test < ActiveRecord::Base
   def question_count
     Question.where(:test_id => self.id).count
   end
+
+  def questions
+    questions = Question.select(:id).where(:test_id => self.id)
+    qids = [] # question id's
+    questions.each{ |e| qids.push e.id }
+    qids.shuffle!
+    if self.question_count
+      qids[0..self.question_count-1]
+    else
+      qids
+    end
+  end
+
 end

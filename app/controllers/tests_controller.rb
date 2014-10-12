@@ -24,6 +24,22 @@ class TestsController < ApplicationController
     redirect_to edit_test_path test.id
   end
 
+  def show
+    unless session[:local]      # if I just want start pass test
+      test = Test.find(params[:id])
+      session[:questions] = test.questions
+      session[:local] = 0
+    end
+
+    @local = session[:local]
+    if session[:local] != session[:questions].count
+      @question = Question.find(session[:questions][@local])
+      session[:local] = @local+1
+    else
+      redirect_to root_path
+    end
+  end
+
   def del_group_from_list
     group_id = params[:gid]
     test_id = params[:tid]

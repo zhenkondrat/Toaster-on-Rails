@@ -15,6 +15,7 @@ class UsersController < ApplicationController
         @test = Test.new
         render :admin
       else
+        session[:local] = nil
         render :student
       end
     end

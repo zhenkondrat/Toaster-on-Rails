@@ -1,6 +1,22 @@
 class TestsController < ApplicationController
-  def set_weights
 
+  def save_answer
+    answers = session[:answers] || []
+    case params[:question_type]
+    when '1'
+      answers.push [params[:question_id],
+                    params[:question_type],
+                    params[:answer1]
+                   ]
+    when '2'
+      answers.push [params[:question_id],
+                    params[:question_type],
+                    params[:standard]
+                   ]
+    else
+      nil
+    end
+    session[:answers] = answers
   end
 
   def create
@@ -25,10 +41,14 @@ class TestsController < ApplicationController
   end
 
   def show
-    unless session[:local]      # if I just want start pass test
+    if !session[:local]      # if I just want start pass test
       test = Test.find(params[:id])
+      session[:test_id] = test.id
       session[:questions] = test.questions
       session[:local] = 0
+      session[:answers] = nil
+    else
+      save_answer
     end
 
     @local = session[:local]
@@ -69,4 +89,5 @@ class TestsController < ApplicationController
                   :question_time
     )
   end
+
 end

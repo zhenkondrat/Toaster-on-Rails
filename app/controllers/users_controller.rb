@@ -15,7 +15,11 @@ class UsersController < ApplicationController
         @test = Test.new
         render :admin
       else
-        session[:local] = nil
+        if session[:local]
+          result = Result.new
+          result.create_by_answers session[:answers], session[:questions], current_user.id
+          session[:local] = nil
+        end
         render :student
       end
     end

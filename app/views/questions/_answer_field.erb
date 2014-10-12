@@ -1,0 +1,21 @@
+<%= hidden_field_tag 'test_id', @question.test_id %>
+<%= hidden_field_tag 'question_id', @question.id %>
+<%= hidden_field_tag 'question_type', @question.question_type %>
+<% case @question.question_type %>
+<% when 1 %>
+    <table style="margin-bottom: 20px;">
+      <tr><td><%= radio_button_tag :answer1, false %>ні</td></tr>
+      <tr><td><%= radio_button_tag :answer1, true %>так</td></tr>
+    </table>
+<% when 2 %>
+  <table style="margin-bottom: 20px;">
+  <% @question.answer.each do |answer| %>
+    <tr>
+      <td><input type="checkbox" name="standard[]" value = "<%= answer.id %>" /></td>
+      <td><%= answer.answer %></td>
+    </tr>
+  <% end %>
+  </table>
+<% else %>
+
+<% end %>

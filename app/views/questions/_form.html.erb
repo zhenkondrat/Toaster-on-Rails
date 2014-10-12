@@ -6,7 +6,7 @@
   </tr>
 </table>
 <div id = "question_content">
-  <p id="question_header">Питання № <%= @test.question_count + 1 %></p>
+  <p id="question_header">Питання № <%= @test.all_question_count + 1 %></p>
   <%= form_for @question do |t| %>
     <%= t.hidden_field "question_test_id", :value => @test.id %>
     <table id = "question_form">

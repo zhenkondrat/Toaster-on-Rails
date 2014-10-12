@@ -1,14 +1,14 @@
 <body id="user_bkg">
 
 <p id="user"><%= current_user.login %></p>
-<%= form_tag test_path(params[:id]), method: 'GET' do %>
+<%= form_tag test_path(params[:id]) do %>
   <div id="student_content">
     <p id="first">Питання №<%= @local+1 %></p>
     <div id="center">
       <div id="question">
         <p style="margin: 5px;"><%= @question.condition %></p>
       </div>
-
+      <%= render 'questions/answer_field' %>
     </div>
     <div style="width: 300px;">
       <%= submit_tag 'Наступне' %>

@@ -12,15 +12,12 @@
       <p>По-батькові: <%= current_user.father_name %></p>
       <p>Групи до яких належить користувач:</p>
       <p>
-        <% groups = current_user.registrations %>
-        <% if groups %>
-          <% groups.each do |group| %>
-              <span><%= group.name %> </span>
-          <% end %>
-        <% end %>
+        <%= render 'groups/user_groups' %>
       </p>
       <p>Наявні для проходження тести</p>
-
+      <p>
+        <%= render 'tests/user_tests' %>
+      </p>
 
     </div>
     <div id="right">

@@ -1,0 +1,26 @@
+<body>
+
+<p id="user"><?php echo $uname; ?></p>
+<form action="<?php echo $_SERVER['PHP_SELF']."?n=$number&tid=$tid"; ?>" method="POST">
+<div id="content">
+  <p id="first">Питання №<?php echo $number;?></p>
+  <div id="center">
+    <div id="question">
+      <p style="margin: 5px;"><?php echo $question_text; ?></p>
+    </div>
+    <?php
+				showquestion();
+			?>
+  </div>
+  <div style="width: 300px;">
+    <input type="submit" name="next" value="Наступне" style="position: relative; left: 720px;" />
+  </div>
+</div>
+</form>
+<div id="mend"><a href="index.php">На головну</a></div>
+<div id="exit">
+  <a href="../logout.php"><img src="../../styles/share/exit.gif" style="width: 50px;" /></a>
+</div>
+
+<p id="bottom"></p>
+</body>

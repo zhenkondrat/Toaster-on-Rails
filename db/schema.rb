@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141012173357) do
+ActiveRecord::Schema.define(version: 20141014204134) do
 
   create_table "answer1s", force: true do |t|
     t.integer "question_id"
@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(version: 20141012173357) do
     t.integer "question_id"
     t.text    "field"
     t.boolean "side"
+    t.integer "compare"
   end
 
   create_table "groups", force: true do |t|

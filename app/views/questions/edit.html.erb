@@ -1,6 +1,6 @@
 <body id = "journal_content">
 
-<div id = "test_info">
+<div id = "question_content" style="margin-top: 10%">
 <%= form_for @question do |t| %>
     <%= t.text_area :condition, :id => "question_text" %>
     <%=
@@ -9,7 +9,7 @@
           render 'type_1'
         when 2
           render 'type_2'
-        when 3
+        else
           render 'type_3'
         end
     %>

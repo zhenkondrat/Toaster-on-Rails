@@ -1,5 +1,49 @@
 class QuestionsController < ApplicationController
 
+  def create_answer1 question
+    answer = Answer1.new
+    answer.question_id = question.id
+    answer.is_right = params[:answer1]
+    answer.save!
+  end
+
+  def create_answer2 question
+    i = 0
+    while params.include? ('answer_'+i.to_s)
+      answer = Answer2.new
+      answer.question_id = question.id
+      answer.answer = params['answer_'+i.to_s]
+      answer.is_right = params[:answer_check].include? i.to_s
+      answer.save!
+      i+=1
+    end
+  end
+
+  def create_answer3 question
+    compare = []
+    i = 0
+    while params.include? ('answer_left_'+i.to_s)
+      answer = Answer3.new
+      answer.question_id = question.id
+      answer.field = params['answer_left_'+i.to_s]
+      answer.side = 0
+      answer.save!
+      compare.push answer.id
+      i+=1
+    end
+    compare.reverse!
+    i = 0
+    while params.include? ('answer_right_'+i.to_s)
+      answer = Answer3.new
+      answer.question_id = question.id
+      answer.field = params['answer_right_'+i.to_s]
+      answer.side = 1
+      answer.compare = compare.pop
+      answer.save!
+      i+=1
+    end
+  end
+
   def new
     @question = Question.new
     @test = Test.find(params[:question_test_id])
@@ -19,39 +63,11 @@ class QuestionsController < ApplicationController
       question.save!
       case type
       when "1"
-        answer = Answer1.new
-        answer.question_id = question.id
-        answer.is_right = params[:answer1]
-        answer.save!
+        create_answer1 question
       when "2"
-        i = 0
-        while params.include? ('answer_'+i.to_s)
-          answer = Answer2.new
-          answer.question_id = question.id
-          answer.answer = params['answer_'+i.to_s]
-          answer.is_right = params[:answer_check].include? i.to_s
-          answer.save!
-          i+=1
-        end
-      when "3"
-        i = 0
-        while params.include? ('answer_left_'+i.to_s)
-          answer = Answer3.new
-          answer.question_id = question.id
-          answer.field = params['answer_left_'+i.to_s]
-          answer.side = 0
-          answer.save!
-          i+=1
-        end
-        i = 0
-        while params.include? ('answer_right_'+i.to_s)
-          answer = Answer3.new
-          answer.question_id = question.id
-          answer.field = params['answer_right_'+i.to_s]
-          answer.side = 1
-          answer.save!
-          i+=1
-        end
+        create_answer2 question
+      else
+        create_answer3 question
       end
     end
     redirect_to new_question_path(:question_test_id => test_id)
@@ -64,8 +80,10 @@ class QuestionsController < ApplicationController
       @answer = Answer1.where(:question_id => @question.id).first
     when 2
       @answers = Answer2.where(:question_id => @question.id)
-    when 3
-
+    else
+      answers = Answer3.where(:question_id => @question.id)
+      @answers1 = answers.where(:side => 0)
+      @answers2 = answers.where(:side => 1)
     end
   end
 
@@ -75,22 +93,14 @@ class QuestionsController < ApplicationController
     question.remove_answers
     case question.question_type
     when 1
-      answer = Answer1.new
-      answer.question_id = question.id
-      answer.is_right = params[:answer1]
-      answer.save!
+      create_answer1 question
     when 2
-      i = 0
-      while params.include? ('answer_'+i.to_s)
-        answer = Answer2.new
-        answer.question_id = question.id
-        answer.answer = params['answer_'+i.to_s]
-        answer.is_right = params[:answer_check].include? i.to_s
-        answer.save!
-        i+=1
-      end
+      create_answer2 question
+    else
+      create_answer3 question
     end
-    redirect_to root_path
+    flash[:error] = "Питання успішно оновлено"
+    redirect_to edit_test_path(question.test_id)
   end
 
   def destroy

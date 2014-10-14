@@ -78,7 +78,8 @@ function delPrev(shbl)
     }
 }
 
-function setParam(count)
-{
-    ks = count-1;
-}
+function setParam(count){ ks = count-1; }
+
+function setParam1(count){ kl = count-1; }
+
+function setParam2(count){ kr = count-1; }

@@ -1,16 +1,32 @@
+<script>
+    setParam1(<%= @answers1.count %>);
+    setParam2(<%= @answers2.count %>);
+</script>
 <p class="type_header">Відповідність</p>
 <table>
-  <tr style="vertical-align: top;">
+  <tr style="vertical-align: top">
     <td id = "compl">
       <input type="button" value="-" onClick="delPrev('answer_left_');" style="width: 25px;" />
       <input type="button" value="+" onClick="addNext('compl','answer_left_');" style="width: 25px;" />
-      <input type="text" name="answer_left_0" id="answer_left_0" value="" size="25" style="width: 170px;" />
+      <% i=0 %>
+      <% @answers1.each do |answer| %>
+          <div>
+            <%= text_field_tag 'answer_left_'+i.to_s, answer.field, :style => "width: 170px" %>
+          </div>
+          <% i+=1 %>
+      <% end %>
     </td>
 
     <td id = "compr" class="right">
       <input type="button" value="-" onClick="delPrev('answer_right_');" style="width: 25px;" />
       <input type="button" value="+" onClick="addNext('compr','answer_right_');" style="width: 25px;" />
-      <input type="text" name="answer_right_0" id="answer_right_0" value="" size="25" style="width: 170px;" />
+      <% i=0 %>
+      <% @answers2.each do |answer| %>
+          <div>
+            <%= text_field_tag 'answer_right_'+i.to_s, answer.field, :style => "width: 170px" %>
+          </div>
+          <% i+=1 %>
+      <% end %>
     </td>
   </tr>
 </table>

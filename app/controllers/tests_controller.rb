@@ -14,7 +14,9 @@ class TestsController < ApplicationController
                     params[:standard]
                    ]
     else
-      nil
+      params.each_key { |key|
+        answers.push [key[3..-1], params[key]] if key.index('ucl') || key.index('ucr')
+      }
     end
     session[:answers] = answers
   end

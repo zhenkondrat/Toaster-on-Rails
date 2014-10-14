@@ -17,5 +17,30 @@
   <% end %>
   </table>
 <% else %>
+  <% answers = @question.answer %>
+  <table>
+    <tr style="vertical-align: top">
+      <td id = "compl">
+       <% answers[0].each do |answer| %>
+         <p  class = "noselect">
+           <span id = "cl<%= answer.id %>" onClick="change_color('cl<%= answer.id %>');">
+             <%= answer.field %>
+           </span>
+           <input type="hidden" name = "ucl<%= answer.id %>" id = "ucl<%= answer.id %>" value="8" />
+         </p>
+       <% end %>
+      </td>
 
+      <td id = "compr">
+         <% answers[1].each do |answer| %>
+           <p  class = "noselect">
+             <span id = "cl<%= answer.id %>" onClick="change_color('cl<%= answer.id %>');">
+               <%= answer.field %>
+             </span>
+             <input type="hidden" name = "ucr<%= answer.id %>" id = "ucl<%= answer.id %>" value="8" />
+           </p>
+         <% end %>
+      </td>
+    </tr>
+  </table>
 <% end %>

@@ -15,9 +15,10 @@ class Question < ActiveRecord::Base
   def answer
     case self.question_type
       when 2
-        Answer2.where(:question_id => self.id)
+        Answer2.where(:question_id => self.id).shuffle
       when 3
         answers = Answer3.where(:question_id => self.id)
+        answers.shuffle
         [answers.where(side: false), answers.where(side: true)]
       else
         nil

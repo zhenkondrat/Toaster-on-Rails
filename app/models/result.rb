@@ -47,7 +47,6 @@ class Result < ActiveRecord::Base
     answers.each do |answer|
       question_id = answer[0]
       case answer[1] # question type
-
       when '1'
         origin = Answer1.where(:question_id => question_id).first
         sum += @tariff1 if origin.is_right.to_s == answer[2]

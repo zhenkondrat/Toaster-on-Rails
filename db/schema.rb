@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141014204134) do
+ActiveRecord::Schema.define(version: 20141015115520) do
 
   create_table "answer1s", force: true do |t|
     t.integer "question_id"
@@ -33,6 +33,15 @@ ActiveRecord::Schema.define(version: 20141014204134) do
 
   create_table "groups", force: true do |t|
     t.string "name"
+  end
+
+  create_table "mark_systems", force: true do |t|
+    t.string "name"
+  end
+
+  create_table "marks", force: true do |t|
+    t.string  "presentation"
+    t.integer "percent"
   end
 
   create_table "questions", force: true do |t|
@@ -64,6 +73,7 @@ ActiveRecord::Schema.define(version: 20141014204134) do
     t.integer "weight3"
     t.integer "questions_count"
     t.integer "question_time"
+    t.integer "mark_system"
   end
 
   create_table "user_groups", force: true do |t|

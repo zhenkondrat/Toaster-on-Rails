@@ -1,6 +1,7 @@
 class Test < ActiveRecord::Base
   has_many :test_groups
   has_many :groups, :through => :test_groups
+  has_one :mark_system
 
   def get_subject_name
     Subject.find(self.subject_id).subject_name

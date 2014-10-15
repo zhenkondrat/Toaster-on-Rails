@@ -16,6 +16,28 @@ class Result < ActiveRecord::Base
     sum
   end
 
+  def answer2_right? origin, answers
+    solution = true
+    answers ||= []
+    origin.each do |el|
+      unless (el.is_right && (answers.include? el.id.to_s)) ||
+          (!el.is_right && !(answers.include? el.id.to_s))
+        solution = false
+      end
+    end
+    solution
+  end
+
+  def answer3_right? origin, left, right
+    solution = true
+    origin.each do |e|
+      if e.compare
+        solution = false if left.key(right[e.id.to_s]) != e.compare.to_s
+      end
+    end
+    solution
+  end
+
   def create_by_answers answers, questions, user_id
     @test = Test.find(Question.find(answers[0][0]).test_id)
     set_tariffs
@@ -29,20 +51,12 @@ class Result < ActiveRecord::Base
       when '1'
         origin = Answer1.where(:question_id => question_id).first
         sum += @tariff1 if origin.is_right.to_s == answer[2]
-
       when '2'
         origin = Answer2.where(:question_id => question_id)
-        right = true
-        answ = answer[2] || []
-        origin.each do |el|
-          unless (el.is_right && (answ.include? el.id.to_s)) ||
-             (!el.is_right && !(answ.include? el.id.to_s))
-            right = false
-          end
-        end
-        sum += @tariff2 if right
+        sum += @tariff2 if answer2_right? origin, answer[2]
       else
-        nil
+        origin = Answer3.where(:question_id => question_id, :side => 1)
+        sum += @tariff3 if answer3_right? origin, answer[2][0], answer[2][1]
       end
     end
 

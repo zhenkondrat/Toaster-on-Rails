@@ -14,9 +14,15 @@ class TestsController < ApplicationController
                     params[:standard]
                    ]
     else
+      answer1 = {}; answer2 = {}
       params.each_key { |key|
-        answers.push [key[3..-1], params[key]] if key.index('ucl') || key.index('ucr')
+        answer1[key[3..-1]] = params[key] if key.index('ucl') # key[3..-1] : ucl100 => 100
+        answer2[key[3..-1]] = params[key] if key.index('ucr') # key[3..-1] : ucr99 => 99
       }
+      answers.push [params[:question_id],
+                    params[:question_type],
+                    [answer1, answer2]
+                   ]
     end
     session[:answers] = answers
   end

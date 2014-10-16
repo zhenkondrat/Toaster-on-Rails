@@ -1,0 +1,35 @@
+<div id="admin_content">
+  <script>
+      setMarksCount(<%= @marks.count %>);
+  </script>
+  <%= form_for @mark_system do |t| %>
+      <table id="marks">
+        <colgroup>
+          <col width="200px">
+          <col width="200px">
+        </colgroup>
+        <tr>
+          <td>Назва:</td>
+          <td><%= t.text_field :name, value: @mark_system.name %></td>
+        </tr>
+        <tr>
+          <td><input type="button" value="-" onClick="delMark('marks');" style="width: 25px;" /></td>
+          <td><input type="button" value="+" onClick="addMark('marks');" style="width: 25px;" /></td>
+        </tr>
+        <tr>
+          <td>Представлення</td>
+          <td>Відсотковий поріг</td>
+        </tr>
+        <% @marks.each do |mark| %>
+            <tr>
+              <td><%= text_field_tag 'mark_system[marks[presentation_'+mark.id.to_s+']]', mark.presentation %></td>
+              <td><%= text_field_tag 'mark_system[marks[percent_'+mark.id.to_s+']]', mark.percent %></td>
+            </tr>
+        <% end %>
+      </table>
+      <div>
+        <%= t.submit 'Зберегти' %>
+      </div>
+  <% end %>
+  <h4><%= link_to 'На головну', root_path %></h4>
+</div>

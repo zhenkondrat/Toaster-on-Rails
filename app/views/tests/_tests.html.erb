@@ -4,15 +4,20 @@
     <col width="140">
     <col width="70">
     <col width="80">
-    <col width="70">
+    <col width="60">
+    <col width="25">
         <% @tests.each do |test| %>
             <tr>
                 <td><%= test.name %></td>
                 <td><%= test.get_subject_name %></td>
                 <td><%= link_to "info", edit_test_path(test.id) %></td>
-                <td style = "width: 40px;"><%= link_to "тар.", tests_path %>
-                &nbsp;
-                <%= link_to "вид.", tests_path(test.id), :method => :delete %></td>
+                <td style = "width: 40px;">
+                  <%= link_to "тар.", tests_path %>
+                  &nbsp;
+                  <%= link_to test, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                      <%= image_tag 'delete.gif', style: "width: 10px;" %>
+                  <% end %>
+                </td>
             </tr>
         <% end %>
   </table>

@@ -21,5 +21,21 @@ class User < ActiveRecord::Base
                 INNER JOIN users ON users.id = '+self.id.to_s)
               .select('tests.id, tests.name')
   end
+
+  def results count = nil
+    results = if count
+                Result.where(user_id: self.id).order(created_at: :desc).limit(count)
+              else
+                Result.where(user_id: self.id).order(created_at: :desc)
+              end
+    out = []
+
+    results.each do |result|
+      test = Test.find(result.test_id)
+      out.push [test.get_subject_name, test.name, result.mark_presentation, result.created_at]
+    end
+
+    out
+  end
 end
 

@@ -1,0 +1,11 @@
+<body id="admin_bkg" >
+<h2 class="center">Нова система оцінювання:</h2>
+
+<%= render 'form' %>
+
+<% if flash[:notice] || flash[:error] %>
+    <div id="error">
+      <%= flash[:error] || flash[:notice] %>
+    </div>
+<% end %>
+</body>

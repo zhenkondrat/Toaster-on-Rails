@@ -29,7 +29,11 @@
           <col width="50">
           <col width="100">
           <tr><td>Предмет</td> <td>Назва тесту</td> <td>Бал</td> <td>Дата</td></tr>
-
+          <% @results.each do |result| %>
+              <tr>
+                <td><%=result[0]%></td><td><%=result[1]%></td><td><%=result[2]%></td><td><%=result[3]%></td>
+              </tr>
+          <% end %>
         </table>
       </div>
     </div>

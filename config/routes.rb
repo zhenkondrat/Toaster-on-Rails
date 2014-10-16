@@ -27,6 +27,7 @@ Rails.application.routes.draw do
   get '/del_group_test' => 'tests#del_group_from_list'
   post '/reg_group_test' => 'tests#reg_group'
   post '/tests/:id' => 'tests#show'
+  post '/mark_systems/:id' => 'mark_systems#update'
   # You can have the root of your site routed with "root"
   root 'users#index'
 

@@ -1,7 +1,6 @@
 class Test < ActiveRecord::Base
   has_many :test_groups
   has_many :groups, :through => :test_groups
-  has_one :mark_system
 
   def get_subject_name
     Subject.find(self.subject_id).subject_name
@@ -30,6 +29,10 @@ class Test < ActiveRecord::Base
     Question.where(:test_id => self.id).count
   end
 
+  def mark_systems
+    MarkSystem.all
+  end
+
   def questions
     questions = Question.select(:id).where(:test_id => self.id)
     qids = [] # question id's
@@ -40,6 +43,11 @@ class Test < ActiveRecord::Base
     else
       qids
     end
+  end
+
+  def destroy
+    Question.where(:test_id => self.id).delete_all
+    super
   end
 
 end

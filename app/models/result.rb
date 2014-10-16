@@ -62,6 +62,7 @@ class Result < ActiveRecord::Base
     self.test_id = @test.id
     self.user_id = user_id
     self.mark = sum.to_f / (max_mark questions)
+    self.created_at = DateTime.now
     self.save!
   end
 
@@ -69,6 +70,24 @@ class Result < ActiveRecord::Base
     @tariff1 = @test.weight1 || 1
     @tariff2 = @test.weight2 || 1
     @tariff3 = @test.weight3 || 1
+  end
+
+  def get_test
+    Test.find(self.test_id)
+  end
+
+  def get_user_name
+    User.find(self.user_id).login
+  end
+
+  def mark_presentation
+    test = Test.find(self.test_id)
+
+    if test.mark_system
+      Mark.where("mark_system_id = #{test.mark_system} AND percent <= #{self.mark*100}").order(id: :desc).first.presentation
+    else
+      result.mark.to_s
+    end
   end
 
 end

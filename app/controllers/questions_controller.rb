@@ -99,7 +99,7 @@ class QuestionsController < ApplicationController
     else
       create_answer3 question
     end
-    flash[:error] = "Питання успішно оновлено"
+    flash[:error] = 'Питання успішно оновлено'
     redirect_to edit_test_path(question.test_id)
   end
 
@@ -107,6 +107,7 @@ class QuestionsController < ApplicationController
     question = Question.find(params[:id])
     test_id = question.test_id
     question.destroy
+
     flash[:notice] = 'Питання успішно видалено'
     redirect_to edit_test_path(test_id)
   end

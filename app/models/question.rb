@@ -25,4 +25,9 @@ class Question < ActiveRecord::Base
     end
   end
 
+  def destroy
+    self.remove_answers
+    super
+  end
+
 end

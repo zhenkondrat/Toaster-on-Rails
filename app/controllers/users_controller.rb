@@ -20,6 +20,7 @@ class UsersController < ApplicationController
           result.create_by_answers session[:answers], session[:questions], current_user.id
           session[:local] = nil
         end
+        @results = current_user.results 5
         render :student
       end
     end

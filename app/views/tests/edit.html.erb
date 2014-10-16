@@ -46,6 +46,23 @@
               </tr>
             </table>
           </div>
+          <div style="margin: 10px">
+            <p>Система оцінювання:</p>
+            <table>
+              <% @test.mark_systems.each do |system| %>
+                <tr>
+                  <td><%= t.radio_button :mark_system, system.id, checked: (system.id == @test.mark_system) %></td>
+                  <td>
+                    <%= link_to system.name, edit_mark_system_path(system.id) %>
+                    <%= link_to system, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                        <%= image_tag 'delete.gif', style: "width: 10px;" %>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </table>
+            <%= link_to 'Створити нову', new_mark_system_path %>
+          </div>
           <%= t.submit "Зберегти" %>
           <h3>Список питань:</h3>
           <% unless @questions.empty? %>

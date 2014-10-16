@@ -27,6 +27,22 @@ class TestsController < ApplicationController
     session[:answers] = answers
   end
 
+  def del_group_from_list
+    group_id = params[:gid]
+    test_id = params[:tid]
+    TestGroup.where(:group_id => group_id, :test_id => test_id).delete_all
+    redirect_to edit_test_path(test_id)
+  end
+
+  def reg_group
+    test = Test.find(params[:test_id])
+    groups = params[:groups_check]
+    groups.each{ |id|
+      test.reg_group id
+    }
+    redirect_to edit_test_path(test.id)
+  end
+
   def create
     test = Test.create!(test_params)
     redirect_to edit_test_path(test.id)
@@ -68,20 +84,10 @@ class TestsController < ApplicationController
     end
   end
 
-  def del_group_from_list
-    group_id = params[:gid]
-    test_id = params[:tid]
-    TestGroup.where(:group_id => group_id, :test_id => test_id).delete_all
-    redirect_to edit_test_path(test_id)
-  end
-
-  def reg_group
-    test = Test.find(params[:test_id])
-    groups = params[:groups_check]
-    groups.each{ |id|
-      test.reg_group id
-    }
-    redirect_to edit_test_path(test.id)
+  def destroy
+    Test.find(params[:id]).destroy
+    flash[:notice] = 'Тест успішно видалено'
+    redirect_to root_path
   end
 
   private
@@ -94,7 +100,8 @@ class TestsController < ApplicationController
                   :weight3,
                   :subject_id,
                   :questions_count,
-                  :question_time
+                  :question_time,
+                  :mark_system
     )
   end
 

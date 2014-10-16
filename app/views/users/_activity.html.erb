@@ -1,12 +1,16 @@
 <div id="last_results">
   <table style = "font-size: 14px; text-align: center; left: -10px;">
-    <col width="100">
-    <col width="150">
-    <col width="50">
-    <col width="150">
-    <col width="60">
-    <!--<?php-->
-    <!--show_l_results();-->
-    <!--?>-->
+    <colgroup>
+      <col width="100">
+      <col width="150">
+      <col width="50">
+      <col width="100">
+    </colgroup>
+    <tr><td>Предмет</td> <td>Назва тесту</td> <td>Бал</td> <td>Дата</td></tr>
+    <% @results.each do |result| %>
+        <tr>
+          <td><%=result[0]%></td><td><%=result[1]%></td><td><%=result[2]%></td><td><%=result[3]%></td>
+        </tr>
+    <% end %>
   </table>
 </div>

@@ -6,13 +6,14 @@ class UsersController < ApplicationController
     else
       if current_user.admin
         if params.include? :theme || :subject || :group
-          subject = params[:subject][:subject_id]
+          subject = params[:subject]
           theme = params[:theme]
           group = params[:group]
           @tests = Test.find_tests subject, theme, group
           @select_find = subject.to_i unless subject.empty?
         end
         @test = Test.new
+        @results = User.results 5
         render :admin
       else
         if session[:local]

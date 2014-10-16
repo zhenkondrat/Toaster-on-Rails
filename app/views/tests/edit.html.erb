@@ -102,6 +102,12 @@
      <span><%= link_to group.name, del_group_test_path(:tid => @test.id, :gid => group.id) %></span>&nbsp
     <% end %>
   </div>
+  <div>
+    Результати проходження по групам:
+    <% @test_groups.each do |group| %>
+        <span><%= link_to group.name, results_path(test: @test.id, group: group.id) %></span>&nbsp
+    <% end %>
+  </div>
 
   <%= link_to root_path do %>
     <h2>На головну</h2>

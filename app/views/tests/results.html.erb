@@ -1,0 +1,23 @@
+<body id="admin_bkg" >
+<div id="admin_content">
+  <h3>Група: "<%= @group_name %>"</h3>
+  <h3>Тест: "<%= @test_name %>"</h3>
+  <div class="center">
+  <table border = "2" rules="all" cellpadding="2">
+    <colgroup>
+      <col width="150px">
+      <col width="160px">
+      <col width="100px">
+      <col width="200px">
+    </colgroup>
+    <tr><th>Логін</th><th>ПІБ</th><th>Оцінка</th><th>Дата та час</th></tr>
+    <% @results.each do |result| %>
+        <tr>
+          <td><%=result[0]%></td><td><%=result[1]%></td><td><%=result[2]%></td><td><%=result[3]%></td>
+        </tr>
+    <% end %>
+  </table>
+  </div>
+  <h4><%= link_to 'На головну', root_path %></h4>
+</div>
+</body>

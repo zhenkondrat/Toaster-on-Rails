@@ -43,6 +43,19 @@ class TestsController < ApplicationController
     redirect_to edit_test_path(test.id)
   end
 
+  def results
+    @results = []
+    test_id = params[:test]
+    group_id = params[:group]
+    @group_name = Group.find(params[:group]).name
+    @test_name = Test.find(params[:test]).name
+    users = User.joins('INNER JOIN user_groups ON user_groups.user_id = users.id').where('user_groups.group_id = '+group_id.to_s)
+    users.each do |user|
+      result = user.result(test_id)
+      @results.push [user.login, user.get_fio, result[0], result[1]]
+    end
+  end
+
   def create
     test = Test.create!(test_params)
     redirect_to edit_test_path(test.id)
@@ -71,6 +84,7 @@ class TestsController < ApplicationController
       session[:questions] = test.questions
       session[:local] = 0
       session[:answers] = nil
+      session[:time] = test.question_time
     else
       save_answer
     end

@@ -32,10 +32,48 @@ class User < ActiveRecord::Base
 
     results.each do |result|
       test = Test.find(result.test_id)
-      out.push [test.get_subject_name, test.name, result.mark_presentation, result.created_at]
+      out.push [test.get_subject_name, test.name, result.mark_presentation, result.created_at.to_formatted_s(:db)]
     end
 
     out
+  end
+
+  def result test_id
+    results = Result.where(user_id: self.id, test_id: test_id).order(created_at: :desc)
+    out = ''
+    results.each do |t|
+      out += t.mark_presentation + ', '
+    end
+    out.chop!; out.chop!
+    if results != []
+      [out, results[0].created_at.to_formatted_s(:db)]
+    else
+      [out, '-']
+    end
+  end
+
+  def self.results count = nil
+    results = if count
+                Result.all.order(created_at: :desc).limit(count)
+              else
+                Result.all.order(created_at: :desc)
+              end
+    out = []
+
+    results.each do |result|
+      test = Test.find(result.test_id)
+      out.push [test.get_subject_name, test.name, result.mark_presentation, result.created_at.to_formatted_s(:db)]
+    end
+
+    out
+  end
+
+  def get_fio
+    fio = ''
+    fio += self.last_name if self.last_name
+    fio += ' '+self.first_name[0] if self.first_name
+    fio += '. '+self.father_name[0]+'.' if self.father_name
+    fio
   end
 end
 

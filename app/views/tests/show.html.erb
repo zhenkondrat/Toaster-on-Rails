@@ -1,9 +1,9 @@
 <body id="user_bkg">
-
 <p id="user"><%= current_user.login %></p>
+
 <%= form_tag test_path(params[:id]) do %>
   <div id="student_content">
-    <h2>Питання №<%= @local+1 %></h2>
+    <h2>Питання №<%= @local+1 %><span id="time"></span></h2>
     <div id="center">
       <div id="question">
         <p style="margin: 5px;"><%= @question.condition %></p>
@@ -15,6 +15,7 @@
     </div>
   </div>
 <% end %>
+
 <div id="mend"><%= link_to "На головну", root_path %></div>
 
 <p id="user_footer"></p>

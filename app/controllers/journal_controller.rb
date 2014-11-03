@@ -25,6 +25,34 @@ class JournalController < ApplicationController
     end
   end
 
+  def save_user_info
+    user = User.find(params[:save_user])
+    user.login = params[:user_login]
+    user.first_name = params[:user_first_name]
+    user.last_name = params[:user_last_name]
+    user.father_name = params[:user_father_name]
+    user.save!
+    redirect_to user_info_path(user.id)
+  end
+
+  def delete_users_group
+    begin
+      UserGroup.find_by(:user_id => params[:user_id], :group_id => params[:group_id]).destroy!
+    rescue
+      flash[:error] = "Полегше :)"
+    end
+    redirect_to user_info_path(params[:user_id])
+  end
+
+  def user_info
+    @user = User.find(params[:id])
+    @action = :user_info
+    @groups = Group.all
+    @user_groups = @user.registrations
+  end
+
+  private
+
   def reg_group
     Group.create!(:name => params[:group_name])
     flash[:notice] = 'Група успішно створена'
@@ -61,16 +89,6 @@ class JournalController < ApplicationController
     redirect_to journal_path
   end
 
-  def save_user_info
-    user = User.find(params[:save_user])
-    user.login = params[:user_login]
-    user.first_name = params[:user_first_name]
-    user.last_name = params[:user_last_name]
-    user.father_name = params[:user_father_name]
-    user.save!
-    redirect_to user_info_path(user.id)
-  end
-
   def reg_users_in_group
     users = params[:users_check]
     groups = params[:groups_check]
@@ -83,22 +101,6 @@ class JournalController < ApplicationController
     }
     flash[:notice] = 'Користувачі успішно зареєстровані'
     redirect_to journal_path
-  end
-
-  def delete_users_group
-    begin
-      UserGroup.find_by(:user_id => params[:user_id], :group_id => params[:group_id]).destroy!
-    rescue
-      flash[:error] = "Полегше :)"
-    end
-    redirect_to user_info_path(params[:user_id])
-  end
-
-  def user_info
-    @user = User.find(params[:id])
-    @action = :user_info
-    @groups = Group.all
-    @user_groups = @user.registrations
   end
 
 end

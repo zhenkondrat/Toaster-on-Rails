@@ -24,7 +24,6 @@ Rails.application.routes.draw do
   get '/delete_users_group' => 'journal#delete_users_group'
 
   # test
-  post '/create_test' => 'tests#create'
   post '/reg_group_test' => 'tests#reg_group'
   post '/tests/:id' => 'tests#show'
   get '/tests/content/:id' => 'tests#content'

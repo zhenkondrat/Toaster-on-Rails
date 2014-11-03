@@ -6,6 +6,7 @@ class UsersController < ApplicationController
   end
 
   def student
+
     save_results if session[:pass_test]
     @results = current_user.results 5
   end

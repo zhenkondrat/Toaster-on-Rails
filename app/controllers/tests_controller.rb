@@ -1,45 +1,25 @@
 class TestsController < ApplicationController
 
-  def save_answer
-    answers = session[:answers] || []
-    case params[:question_type]
-    when '1'
-      answers.push [params[:question_id],
-                    params[:question_type],
-                    params[:answer1]
-                   ]
-    when '2'
-      answers.push [params[:question_id],
-                    params[:question_type],
-                    params[:standard]
-                   ]
-    else
-      answer1 = {}; answer2 = {}
-      params.each_key { |key|
-        answer1[key[3..-1]] = params[key] if key.index('ucl') # key[3..-1] : ucl100 => 100
-        answer2[key[3..-1]] = params[key] if key.index('ucr') # key[3..-1] : ucr99 => 99
-      }
-      answers.push [params[:question_id],
-                    params[:question_type],
-                    [answer1, answer2]
-                   ]
-    end
-    session[:answers] = answers
-  end
-
   def del_group_from_list
     group_id = params[:gid]
     test_id = params[:tid]
-    TestGroup.where(:group_id => group_id, :test_id => test_id).delete_all
+
+    TestGroup.where(
+      :group_id => group_id,
+      :test_id => test_id
+    ).delete_all
+
     redirect_to edit_test_path(test_id)
   end
 
   def reg_group
     test = Test.find(params[:test_id])
     groups = params[:groups_check]
+
     groups.each{ |id|
       test.reg_group id
     }
+
     redirect_to edit_test_path(test.id)
   end
 
@@ -78,13 +58,14 @@ class TestsController < ApplicationController
   end
 
   def show
-    if !session[:local]      # if I just want start pass test
+    if !session[:pass_test]      # if I just want start pass test
       test = Test.find(params[:id])
       session[:test_id] = test.id
       session[:questions] = test.questions
       session[:local] = 0
       session[:answers] = nil
       session[:time] = test.question_time
+      session[:pass_test] = true
     else
       save_answer
     end
@@ -106,6 +87,36 @@ class TestsController < ApplicationController
 
   private
 
+  def save_answer
+    answers = session[:answers] || []
+    case params[:question_type]
+      when '1'
+        answers.push [
+          params[:question_id],
+          params[:question_type],
+          params[:answer1]
+        ]
+      when '2'
+        answers.push [
+          params[:question_id],
+          params[:question_type],
+          params[:standard]
+        ]
+      else
+        answer1 = {}; answer2 = {}
+        params.each_key { |key|
+          answer1[key[3..-1]] = params[key] if key.index('ucl') # key[3..-1] : ucl100 => 100
+          answer2[key[3..-1]] = params[key] if key.index('ucr') # key[3..-1] : ucr99 => 99
+        }
+        answers.push [
+          params[:question_id],
+          params[:question_type],
+          [answer1, answer2]
+        ]
+    end
+    session[:answers] = answers
+  end
+
   def test_params
     params.require(:test)
           .permit(:name,
@@ -116,7 +127,7 @@ class TestsController < ApplicationController
                   :questions_count,
                   :question_time,
                   :mark_system
-    )
+          )
   end
 
 end

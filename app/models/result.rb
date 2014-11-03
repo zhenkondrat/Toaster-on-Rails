@@ -1,6 +1,6 @@
 class Result < ActiveRecord::Base
 
-  def max_mark questions
+  def max_mark (questions)
     sum = 0
     questions = Question.where('id IN ('+questions.join(', ')+')')
     questions.each do |question|
@@ -16,7 +16,7 @@ class Result < ActiveRecord::Base
     sum
   end
 
-  def answer2_right? origin, answers
+  def answer2_right? (origin, answers)
     solution = true
     answers ||= []
     origin.each do |el|
@@ -28,7 +28,7 @@ class Result < ActiveRecord::Base
     solution
   end
 
-  def answer3_right? origin, left, right
+  def answer3_right? (origin, left, right)
     solution = true
     origin.each do |e|
       if e.compare
@@ -38,41 +38,33 @@ class Result < ActiveRecord::Base
     solution
   end
 
-  def create_by_answers answers, questions, user_id
-    begin
-      @test = Test.find(Question.find(answers[0][0]).test_id)
-      set_tariffs
-      sum = 0
-      self.test_id = @test.id
+  def create_by_answers (answers, questions, test_id, user_id)
+    @test = Test.find test_id
+    set_tariffs
+    sum = 0
+    self.test_id = @test.id
 
-      answers.each do |answer|
-        question_id = answer[0]
-        case answer[1] # question type
-        when '1'
-          origin = Answer1.where(:question_id => question_id).first
-          sum += @tariff1 if origin.is_right.to_s == answer[2]
-        when '2'
-          origin = Answer2.where(:question_id => question_id)
-          sum += @tariff2 if answer2_right? origin, answer[2]
-        else
-          origin = Answer3.where(:question_id => question_id, :side => 1)
-          sum += @tariff3 if answer3_right? origin, answer[2][0], answer[2][1]
-        end
+    answers.each do |answer|
+      question_id = answer[0]
+      case answer[1] # question type
+      when '1'
+        origin = Answer1.where(:question_id => question_id).first
+        sum += @tariff1 if origin.is_right.to_s == answer[2]
+      when '2'
+        origin = Answer2.where(:question_id => question_id)
+        sum += @tariff2 if answer2_right? origin, answer[2]
+      else
+        origin = Answer3.where(:question_id => question_id, :side => 1)
+        sum += @tariff3 if answer3_right? origin, answer[2][0], answer[2][1]
       end
-
-      self.test_id = @test.id
-      self.user_id = user_id
-      self.mark = sum.to_f / (max_mark questions)
-      self.created_at = DateTime.now
-      self.save!
-
-    rescue
-      self.mark = 0
-      self.test_id = Test.all.first.id # Temporary!!!
-      self.user_id = user_id
-      self.created_at = DateTime.now
-      self.save!
     end
+
+    self.create!(
+        test_id: @test.id,
+        user_id: user_id,
+        mark: sum.to_f / (max_mark questions),
+        created_at: DateTime.now,
+    )
   end
 
   def set_tariffs

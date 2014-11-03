@@ -7,30 +7,39 @@ Rails.application.routes.draw do
 
   resources :questions
 
-  # resources :users
-
   devise_for :users, controllers: { :registrations => 'registrations' }
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
-  post 'search_test' => 'users#index'
+  # user
+  post 'search_test' => 'users#admin'
+  get 'admin' => 'users#admin'
+  get 'student' => 'users#student'
+
+  # journal
   post '/journal' => 'journal#index'
   post '/save_user_info' => 'journal#save_user_info'
-  post '/create_test' => 'tests#create'
-  get '/tests/content/:id' => 'tests#content'
   get '/journal' => 'journal#index'
   get '/user_info/:id' => 'journal#user_info', :as => 'user_info'
   get '/delete_users_group' => 'journal#delete_users_group'
+
+  # test
+  post '/create_test' => 'tests#create'
+  post '/reg_group_test' => 'tests#reg_group'
+  post '/tests/:id' => 'tests#show'
+  get '/tests/content/:id' => 'tests#content'
+  get '/del_group_test' => 'tests#del_group_from_list'
+  get '/results' => 'tests#results'
+
+  # subject
   get '/subject/new' => 'subjects#new'
   post '/subjects' => 'subjects#create'
   get '/delete_subject' => 'subjects#delete'
-  get '/del_group_test' => 'tests#del_group_from_list'
-  post '/reg_group_test' => 'tests#reg_group'
-  post '/tests/:id' => 'tests#show'
   post '/mark_systems/:id' => 'mark_systems#update'
-  get '/results' => 'tests#results'
+
   # You can have the root of your site routed with "root"
   root 'users#index'
+
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

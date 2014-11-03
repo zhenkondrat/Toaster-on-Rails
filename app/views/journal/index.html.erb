@@ -1,4 +1,5 @@
-<body id = "journal_content">
+<body id = 'admin_bkg'>
+<div id = "journal_content">
 <div id="journal">
   <%= form_tag journal_path do %>
     <table id="pages">
@@ -59,5 +60,6 @@
     <%= flash[:error] || flash[:notice] %>
   </div>
 <% end %>
+</div>
 <p id="admin_footer"></p>
 </body>

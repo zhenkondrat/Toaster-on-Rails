@@ -12,15 +12,7 @@
     font-size: 2em;
     text-align: center;
 }
-//#user_bkg
-//{
-//  background-color: #ded0c3;
-//  width: 500px;
-//  margin-left: auto;
-//  margin-right: auto;
-//}
-//
-//
+
 #admin_content
 {
   font-family: 'Times New Roman', sans-serif;
@@ -30,7 +22,6 @@
   margin-top: 3%;
   width: 900px;
   text-align: top;
-  height: 600px;
 }
 //
 .admin_small_header
@@ -43,81 +34,22 @@
 .small_link{
   font-size: 0.6em;
 }
-//
-//#center
-//{
-//  border-right-style: ridge;
-//  border-left-style: ridge;
-//  padding-left: 30px;
-//  padding-right: 30px;
-//  border-width: 4px;
-//  position: relative;
-//  width: 420px;
-//  /*float: center;*/
-//  height: 400px;
-//}
-//
-//#pleft
-//{
-//  width: 250px;
-//  position: relative;
-//  float: left;
-//  left: -300px;
-//  top: -430px;
-//}
-//
-//#pright
-//{
-//  width: 250px;
-//  position: relative;
-//  float: right;
-//  left: 300px;
-//  top: -430px;
-//}
-//
+
 #admin_footer
 {
   background : url('admin_footer.jpg') repeat-x;
   height : 100px;
-  position: fixed;
-  bottom: -6px;
+  margin-top: 15%;
   width: 100%;
   right: 0;
 }
-//
-//#first
-//{
-//  font-family: 'Comic Sans MS';
-//  font-size: 2em;
-//  text-align: center;
-//}
-//
+
 #search_form
 {
   border-spacing: 5px;
   margin-bottom: 20px;
 }
-//
-//#exit
-//{
-//  position: fixed;
-//  bottom: 170px;
-//  left: 10px;
-//}
-//
-//#reg
-//{
-//  position: fixed;
-//  top: 0px;
-//  right: 10px;
-//}
-//#user
-//{
-//  position: absolute;
-//  top: 0px;
-//  left: 20px;
-//}
-//
+
 .admin_fields
 {
   width: 170px;

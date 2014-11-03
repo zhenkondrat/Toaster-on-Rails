@@ -1,5 +1,5 @@
 <body id="admin_bkg">
-
+<div>
   <table id="head_panel">
     <tr>
       <td id="tbl_head_left"><%= link_to current_user.login, root_path %></td>
@@ -42,7 +42,8 @@
       <td valign="top"> <!-- find test -->
         <p class="admin_small_header">Знайти існуючий тест</p>
         <p>Відомі дані для пошуку:</p>
-        <%= form_tag :controller => 'users' do |t| %>
+
+        <%= form_tag search_test_path do %>
             <table id="search_form">
                 <col width="350">
                 <tr>
@@ -66,6 +67,7 @@
             </table>
             <%= submit_tag "Знайти", :name => nil, :class => 'admin_buttons' %>
         <% end %>
+
         <!-- find test results -->
         <%= render 'tests/tests' %>
       </td>
@@ -84,6 +86,8 @@
 
 <div id="error">
   <%= flash[:alert] || flash[:notice] %>
+</div>
+
 </div>
 
 <p id="admin_footer"></p>

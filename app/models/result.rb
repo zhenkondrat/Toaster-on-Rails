@@ -44,27 +44,27 @@ class Result < ActiveRecord::Base
     sum = 0
     self.test_id = @test.id
 
-    answers.each do |answer|
-      question_id = answer[0]
-      case answer[1] # question type
-      when '1'
-        origin = Answer1.where(:question_id => question_id).first
-        sum += @tariff1 if origin.is_right.to_s == answer[2]
-      when '2'
-        origin = Answer2.where(:question_id => question_id)
-        sum += @tariff2 if answer2_right? origin, answer[2]
-      else
-        origin = Answer3.where(:question_id => question_id, :side => 1)
-        sum += @tariff3 if answer3_right? origin, answer[2][0], answer[2][1]
+    if answers
+      answers.each do |answer|
+        question_id = answer[0]
+        case answer[1] # question type
+        when '1'
+          origin = Answer1.where(:question_id => question_id).first
+          sum += @tariff1 if origin.is_right.to_s == answer[2]
+        when '2'
+          origin = Answer2.where(:question_id => question_id)
+          sum += @tariff2 if answer2_right? origin, answer[2]
+        else
+          origin = Answer3.where(:question_id => question_id, :side => 1)
+          sum += @tariff3 if answer3_right? origin, answer[2][0], answer[2][1]
+        end
       end
     end
 
-    self.create!(
-        test_id: @test.id,
-        user_id: user_id,
-        mark: sum.to_f / (max_mark questions),
-        created_at: DateTime.now,
-    )
+    self.user_id = user_id
+    self.mark = sum.to_f / (max_mark questions)
+    self.created_at = DateTime.now
+    self.save!
   end
 
   def set_tariffs

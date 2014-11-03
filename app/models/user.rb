@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
     false
   end
 
-  def registrations
+  def registrations # List the groups where user is already joined
     groups_id = ""
     groups = UserGroup.where('user_id' => self.id).select(:group_id)
     groups.each{ |g|

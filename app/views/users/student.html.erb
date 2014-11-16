@@ -1,5 +1,5 @@
-<body id="user_bkg">
-
+<div class="user_bkg">
+  <div>_</div> <!-- without it something goes wrong -->
 <p id="user"><%= current_user.login %></p>
 
 <div id="student_content">
@@ -46,5 +46,9 @@
       <%= image_tag("exit.gif", width: "50px") %>
   <% end %>
 </div>
-<p id="user_footer"></p>
-</body>
+<p id="user_footer" class="user_footer"></p>
+</div>
+<script type="text/javascript">
+    min_screen_size = 600;
+    adaptation();
+</script>

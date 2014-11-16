@@ -1,4 +1,5 @@
-<body id="user_bkg">
+<div class="user_bkg">
+  <div>_</div> <!-- without it something goes wrong -->
 <p id="user"><%= current_user.login %></p>
 
 <%= form_tag test_path(params[:id]) do %>
@@ -18,5 +19,5 @@
 
 <div id="mend"><%= link_to "На головну", root_path %></div>
 
-<p id="user_footer"></p>
-</body>
+<p id="user_footer" class="user_footer"></p>
+</div>

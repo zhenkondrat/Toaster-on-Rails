@@ -1,5 +1,7 @@
-<body id = "journal_content">
-<div id="journal">
+<div class="admin_bkg">
+<div>_</div> <!-- without it something goes wrong -->
+<div class = "journal_content">
+<div class="journal">
   <%= form_tag journal_path do %>
     <table id="pages">
       <colgroup>
@@ -59,5 +61,11 @@
     <%= flash[:error] || flash[:notice] %>
   </div>
 <% end %>
-<p id="admin_footer"></p>
-</body>
+</div>
+  <p id="admin_footer" class="admin_footer"></p>
+</div>
+
+<script type="text/javascript">
+    min_screen_size = 750;
+    adaptation();
+</script>

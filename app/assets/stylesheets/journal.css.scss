@@ -1,17 +1,15 @@
 // Place all the styles related to the journal controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-#journal_content
+.journal_content
 {
-  width: 800px !important;
-  background-color: #ded0c3;
+  width: 800px;
   margin-left: auto;
   margin-right: auto;
   font-size: 12px;
-  height: 800px;
 }
 
-#journal
+.journal
 {
   background: url('journal.gif') no-repeat;
   height: 550px;
@@ -29,68 +27,9 @@
   height: 350px;
   overflow-y: auto;
 }
-//.
-//{
-//  font-weight: bold;
-//  width: 285px;
-//  text-align: center;
-//  font-size: 16px;
-//}
-//
-//.page
-//{
-//  position: relative;
-//  height: 350px;
-//  overflow-y: auto;
-//}
-//
-//
-//.downtitle
-//{
-//  position: relative;
-//  margin-bottom: 2px;
-//  width: 280px;
-//}
+
 .search_line{ width: 200px; }
-//
-//#bottom
-//{
-//  background : url('./share/admin_footer.jpg') repeat-x;
-//  height : 100px;
-//  position: fixed;
-//  bottom: -6px;
-//  width: 100%;
-//  right: 0;
-//}
-//
-//.findfild
-//{
-//  width: 275px;
-//  background-color: #d9c39b;
-//  border-style: none;
-//  margin-bottom: 2px;
-//}
-//
-//.mend
-//{
-//  position: fixed !important;
-//  right: 30px !important;
-//  bottom: 155px !important;
-//}
-//
-//a:link
-//{
-//  color: black;
-//}
-//a:hover
-//{
-//  color: #bf8e62;
-//}
-//a:visited
-//{
-//  color: black;
-//}
-//
+
 .admin_buttons_small{
   margin-top: 0px;
   background-color: #bf8e62;
@@ -119,25 +58,7 @@
 .form_fields{
   width: 150px;
 }
-//
-//.emptybtn
-//{
-//  /*background-color: none;*/
-//  border-style: none;
-//}
-//
-//#error
-//{
-//  position: fixed;
-//  text-align: left;
-//  width: 100%;
-//  left: 0px;
-//  color: red;
-//  margin: auto;
-//  bottom: 150px;
-//  background-color: white;
-//}
-//
+
 #bookmark1
 {
   width: 65px;
@@ -161,23 +82,3 @@
   left: 725px;
   top: -365px;
 }
-//
-//#really
-//{
-//  position: fixed;
-//  z-index: 99;
-//  width: 250px;
-//  height: 100px;
-//  background-color: #c3a569;
-//  top: 30%;
-//  left: 42%;
-//  border-style: ridge;
-//  border-color: #403328;
-//}
-//
-//#info
-//{
-//  position: relative;
-//  left: 10px;
-//  top: 25px;
-//}

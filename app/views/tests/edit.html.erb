@@ -1,4 +1,5 @@
-<body id = "journal_content">
+<div class="admin_bkg">
+<div class = "journal_content">
   <table id = "edit_test_table">
     <colgroup>
       <col width="400">
@@ -118,5 +119,11 @@
       <%= flash[:error] || flash[:notice] %>
     </div>
 <% end %>
-<p id="admin_footer"></p>
-</body>
+</div>
+  <p id="admin_footer"></p>
+</div>
+
+<script type="text/javascript">
+    min_screen_size = 750;
+    adaptation();
+</script>

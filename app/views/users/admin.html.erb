@@ -1,5 +1,4 @@
-<body id="admin_bkg">
-
+<div class="admin_bkg">
   <table id="head_panel">
     <tr>
       <td id="tbl_head_left"><%= link_to current_user.login, root_path %></td>
@@ -86,6 +85,11 @@
   <%= flash[:alert] || flash[:notice] %>
 </div>
 
-<p id="admin_footer"></p>
+<p id="admin_footer" class="admin_footer"></p>
 
-</body>
+</div>
+
+<script type="text/javascript">
+    min_screen_size = 600;
+    adaptation();
+</script>

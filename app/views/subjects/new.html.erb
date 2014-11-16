@@ -1,5 +1,6 @@
-<body id = "admin_bkg">
-<div id = "window_sign_in">
+<div class = "admin_bkg">
+<div>_</div> <!-- without it something goes wrong -->
+<div class = "window_sign_in">
 
   <p id="sign_header">Новий предмет</p>
   <%= render 'form' %>
@@ -8,4 +9,4 @@
 <div id="error">
   <%= flash[:alert] %>
 </div>
-</body>
+</div>

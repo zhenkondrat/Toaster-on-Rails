@@ -1,5 +1,7 @@
-<body id = "admin_bkg">
-<div id = "window_sign_in">
+<div class = "admin_bkg">
+<div>_</div> <!-- without it something goes wrong -->
+
+<div class = "window_sign_in">
   <p id="sign_header">Реєстрація</p>
 
   <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
@@ -28,8 +30,10 @@
         </tr>
       </table>
   <% end %>
- </div>
+</div>
+
 <div id="error">
   <%= flash[:alert] %>
 </div>
-</body>
+
+</div>

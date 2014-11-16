@@ -1,4 +1,5 @@
-<body id="admin_bkg" >
+<div class="admin_bkg" >
+  <div>_</div> <!-- without it something goes wrong -->
 <h2 class="center">Редагування системи оцінювання:</h2>
 
 <%= render 'form' %>
@@ -8,4 +9,4 @@
       <%= flash[:error] || flash[:notice] %>
     </div>
 <% end %>
-</body>
+</div>

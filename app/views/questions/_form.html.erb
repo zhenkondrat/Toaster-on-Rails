@@ -1,4 +1,4 @@
-<body id="question_body">
+<div class="admin_bkg">
 
 <table id="head_panel">
   <tr>
@@ -52,5 +52,10 @@
     <%= flash[:error] || flash[:notice] %>
   </div>
 
-  <p id="admin_footer"></p>
-</body>
+  <p id="admin_footer" class="admin_footer"></p>
+</div>
+
+<script type="text/javascript">
+    min_screen_size = 480;
+    adaptation();
+</script>

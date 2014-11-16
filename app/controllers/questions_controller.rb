@@ -1,49 +1,5 @@
 class QuestionsController < ApplicationController
 
-  def create_answer1 question
-    answer = Answer1.new
-    answer.question_id = question.id
-    answer.is_right = params[:answer1]
-    answer.save!
-  end
-
-  def create_answer2 question
-    i = 0
-    while params.include? ('answer_'+i.to_s)
-      answer = Answer2.new
-      answer.question_id = question.id
-      answer.answer = params['answer_'+i.to_s]
-      answer.is_right = params[:answer_check].include? i.to_s
-      answer.save!
-      i+=1
-    end
-  end
-
-  def create_answer3 question
-    compare = []
-    i = 0
-    while params.include? ('answer_left_'+i.to_s)
-      answer = Answer3.new
-      answer.question_id = question.id
-      answer.field = params['answer_left_'+i.to_s]
-      answer.side = 0
-      answer.save!
-      compare.push answer.id
-      i+=1
-    end
-    compare.reverse!
-    i = 0
-    while params.include? ('answer_right_'+i.to_s)
-      answer = Answer3.new
-      answer.question_id = question.id
-      answer.field = params['answer_right_'+i.to_s]
-      answer.side = 1
-      answer.compare = compare.pop
-      answer.save!
-      i+=1
-    end
-  end
-
   def new
     @question = Question.new
     @test = Test.find(params[:question_test_id])
@@ -113,6 +69,50 @@ class QuestionsController < ApplicationController
   end
 
   private
+
+  def create_answer1 question
+    answer = Answer1.new
+    answer.question_id = question.id
+    answer.is_right = params[:answer1]
+    answer.save!
+  end
+
+  def create_answer2 question
+    i = 0
+    while params.include? ('answer_'+i.to_s)
+      answer = Answer2.new
+      answer.question_id = question.id
+      answer.answer = params['answer_'+i.to_s]
+      answer.is_right = params[:answer_check].include? i.to_s
+      answer.save!
+      i+=1
+    end
+  end
+
+  def create_answer3 question
+    compare = []
+    i = 0
+    while params.include? ('answer_left_'+i.to_s)
+      answer = Answer3.new
+      answer.question_id = question.id
+      answer.field = params['answer_left_'+i.to_s]
+      answer.side = 0
+      answer.save!
+      compare.push answer.id
+      i+=1
+    end
+    compare.reverse!
+    i = 0
+    while params.include? ('answer_right_'+i.to_s)
+      answer = Answer3.new
+      answer.question_id = question.id
+      answer.field = params['answer_right_'+i.to_s]
+      answer.side = 1
+      answer.compare = compare.pop
+      answer.save!
+      i+=1
+    end
+  end
 
   def question_params
     params.require(:question).permit(:question_test_id, :condition, :question_type)

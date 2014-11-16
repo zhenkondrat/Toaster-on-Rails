@@ -24,6 +24,9 @@
       <tr class="center">
         <td><%= f.submit "Вхід", id: "sign_in_button" %></td>
       </tr>
+      <tr>
+        <td><%= link_to 'Реєстрація', new_user_registration_path, class: 'small-text' %></td>
+      </tr>
     </table>
   <% end %>
 </div>

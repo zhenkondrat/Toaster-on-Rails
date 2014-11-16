@@ -15,7 +15,7 @@
  */
 
 body{
-    margin: 0;
+  margin: 0;
 }
 
 a:link
@@ -32,9 +32,21 @@ a:visited
 }
 
 .center{
-    text-align: center;
+  text-align: center;
 }
 
 .right{
-    text-align: right;
+  text-align: right;
+}
+
+.inline{
+  display: inline;
+}
+
+.red{
+  color: red;
+}
+
+.small-text{
+  font-size: 0.8em;
 }

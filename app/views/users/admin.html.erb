@@ -2,7 +2,19 @@
   <table id="head_panel">
     <tr>
       <td id="tbl_head_left"><%= link_to current_user.login, root_path %></td>
-      <td id="tbl_head_right"><%= link_to "Групи & Користувачі", journal_path %></td>
+      <td id="tbl_head_right">
+        <span>
+          Коди-запрошення:
+          <%= form_tag invite_code_path, class: 'inline' do %>
+              <%= submit_tag 'Згенерувати', class: 'inline' %>
+              <span>
+                Admin:<span class="red"><%= @token[:admin] %></span>
+                User:<span class="red"><%= @token[:user] %></span>
+              </span>
+          <% end %>
+        </span>
+        <%= link_to "Групи & Користувачі", journal_path %>
+      </td>
     </tr>
   </table>
 

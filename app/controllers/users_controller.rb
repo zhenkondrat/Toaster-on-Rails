@@ -1,12 +1,11 @@
 class UsersController < ApplicationController
-  before_action :authorization
+  before_action :authorization, except: :generate_invite_code
 
   def index
     redirect_to new_user_session_path
   end
 
   def student
-
     save_results if session[:pass_test]
     @results = current_user.results 5
   end
@@ -15,8 +14,18 @@ class UsersController < ApplicationController
     find_test if params.include? :theme || :subject || :group
     @test = Test.new
     @results = User.results 5
+    @token = InviteCode.local
   end
 
+  def generate_invite_code
+    if current_user && current_user.admin
+      InviteCode.generate!
+      redirect_to admin_path
+    else
+      flash[:error] = 'У вас немає прав для даної операції'
+      redirect_to root_path
+    end
+  end
 private
 
   def search_test_params

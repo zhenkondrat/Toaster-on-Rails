@@ -1,8 +1,14 @@
 class User < ActiveRecord::Base
-  devise :database_authenticatable, :registerable, :rememberable
+  devise :database_authenticatable, :registerable, :rememberable, :validatable
   has_many :groups, through: :user_groups
+  attr_accessor :token
+  validates :login, :uniqueness => true
 
   def email_required?
+    false
+  end
+
+  def email_changed?
     false
   end
 
@@ -75,5 +81,6 @@ class User < ActiveRecord::Base
     fio += '. '+self.father_name[0]+'.' if self.father_name
     fio
   end
+
 end
 

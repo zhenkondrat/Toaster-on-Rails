@@ -13,6 +13,7 @@ Rails.application.routes.draw do
 
   # user
   post 'search_test' => 'users#admin'
+  post 'invite_code' => 'users#generate_invite_code'
   get 'admin' => 'users#admin'
   get 'student' => 'users#student'
 

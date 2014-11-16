@@ -1,10 +1,33 @@
 class RegistrationsController < Devise::RegistrationsController
-  prepend_before_filter :require_no_authentication, only: [:cancel]
-  prepend_before_filter :authenticate_scope!, only: [:new, :create, :edit, :update, :destroy]
+
+  # POST /resource
+  def create
+    tokens = InviteCode.local
+    case params[:user][:token]
+    when tokens[:user]
+      params[:user][:admin] = false
+      super
+    when tokens[:admin]
+      params[:user][:admin] = true
+      super
+    else
+      flash[:alert] = 'Ключ-запрошення хибний!'
+      redirect_to new_user_registration_path
+    end
+  end
 
   protected
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.for(:sign_up).push(:login, :password, :admin)
+    devise_parameter_sanitizer.for(:sign_up)
+      .push(:login,
+            :password,
+            :password_confirmation,
+            :first_name,
+            :last_name,
+            :father_name,
+            :admin,
+            :token
+      )
   end
 end

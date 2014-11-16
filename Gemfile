@@ -37,6 +37,7 @@ gem 'spring',        group: :development
 gem 'capistrano'
 gem 'capistrano-rails'
 gem 'capistrano-bundler'
+gem 'capistrano-rvm'
 
 # Use byebug
 gem 'byebug', group: [:development, :test]

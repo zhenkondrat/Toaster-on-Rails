@@ -1,6 +1,6 @@
 class Test < ActiveRecord::Base
-  has_many :test_groups
-  has_many :groups, :through => :test_groups
+  has_many :test_groups, :foreign_key => :test_id, :dependent => :delete_all
+  has_many :question, :foreign_key => :test_id, :dependent => :delete_all
 
   def get_subject_name
     Subject.find(self.subject_id).subject_name
@@ -43,11 +43,6 @@ class Test < ActiveRecord::Base
     else
       qids
     end
-  end
-
-  def destroy
-    Question.where(:test_id => self.id).delete_all
-    super
   end
 
 end

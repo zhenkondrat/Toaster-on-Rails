@@ -1,16 +1,7 @@
 class Question < ActiveRecord::Base
-  def remove_answers
-    case self.question_type
-    when 1
-      Answer1.where(:question_id => self.id).delete_all
-    when 2
-      Answer2.where(:question_id => self.id).delete_all
-    when 3
-      Answer3.where(:question_id => self.id).delete_all
-    else
-      nil
-    end
-  end
+  has_many :answer1, :foreign_key => :question_id, :dependent => :delete_all
+  has_many :answer2, :foreign_key => :question_id, :dependent => :delete_all
+  has_many :answer3, :foreign_key => :question_id, :dependent => :delete_all
 
   def answer
     case self.question_type
@@ -22,11 +13,6 @@ class Question < ActiveRecord::Base
     else
       nil
     end
-  end
-
-  def destroy
-    self.remove_answers
-    super
   end
 
 end

@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable, :rememberable, :validatable
-  has_many :groups, through: :user_groups
+  has_many :user_groups, :foreign_key => :user_id, :dependent => :delete_all
+  has_many :results, :foreign_key => :user_id, :dependent => :delete_all
   attr_accessor :token
   validates :login, :uniqueness => true
 
@@ -13,10 +14,10 @@ class User < ActiveRecord::Base
   end
 
   def registrations # List the groups where user is already joined
-    groups_id = ""
+    groups_id = ''
     groups = UserGroup.where('user_id' => self.id).select(:group_id)
     groups.each{ |g|
-      groups_id += g.group_id.to_s+", "
+      groups_id += g.group_id.to_s+', '
     }
     groups_id.empty? ? nil : Group.where('id IN ('+groups_id.chop.chop+')')
   end

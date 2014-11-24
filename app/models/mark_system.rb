@@ -1,9 +1,3 @@
 class MarkSystem < ActiveRecord::Base
-  has_many :marks
-
-  def destroy
-    Mark.where(mark_system_id: self.id).delete_all
-    super
-  end
-
+  has_many :marks, :foreign_key => :mark_system_id, :dependent => :delete_all
 end

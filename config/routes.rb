@@ -13,7 +13,7 @@ Rails.application.routes.draw do
 
   # user
   post 'search_test' => 'users#admin'
-  post 'invite_code' => 'users#generate_invite_code'
+  get 'invite_code' => 'users#generate_invite_code'
   get 'admin' => 'users#admin'
   get 'student' => 'users#student'
 
@@ -39,7 +39,6 @@ Rails.application.routes.draw do
 
   # You can have the root of your site routed with "root"
   root 'users#index'
-
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

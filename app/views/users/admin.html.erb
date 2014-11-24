@@ -5,13 +5,11 @@
       <td id="tbl_head_right">
         <span>
           Коди-запрошення:
-          <%= form_tag invite_code_path, class: 'inline' do %>
-              <%= submit_tag 'Згенерувати', class: 'inline' %>
-              <span>
-                Admin:<span class="red"><%= @token[:admin] %></span>
-                User:<span class="red"><%= @token[:user] %></span>
-              </span>
-          <% end %>
+          <%= submit_tag 'Згенерувати', id: 'get_token', class: 'inline' %>
+          <span>
+            Admin:<span id="admin_token" class="red"><%= @token[:admin] %></span>
+            User:<span id="user_token" class="red"><%= @token[:user] %></span>
+          </span>
         </span>
         <%= link_to "Групи & Користувачі", journal_path %>
       </td>
@@ -53,7 +51,7 @@
       <td valign="top"> <!-- find test -->
         <p class="admin_small_header">Знайти існуючий тест</p>
         <p>Відомі дані для пошуку:</p>
-        <%= form_tag :controller => 'users' do |t| %>
+        <%= form_tag search_test_path do |t| %>
             <table id="search_form">
                 <col width="350">
                 <tr>

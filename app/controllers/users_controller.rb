@@ -20,7 +20,12 @@ class UsersController < ApplicationController
   def generate_invite_code
     if current_user && current_user.admin
       InviteCode.generate!
-      redirect_to admin_path
+      codes = InviteCode.local
+      msg = { :status => "ok",
+              :admin => codes[:admin],
+              :user  => codes[:user]
+      }
+      render json: msg
     else
       flash[:error] = 'У вас немає прав для даної операції'
       redirect_to root_path

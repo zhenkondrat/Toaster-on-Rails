@@ -3,6 +3,9 @@
 <head>
   <title>Toaster</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <script>
+    var root_path = '<%= root_url %>';
+  </script>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>

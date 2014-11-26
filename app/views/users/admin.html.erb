@@ -51,7 +51,7 @@
       <td valign="top"> <!-- find test -->
         <p class="admin_small_header">Знайти існуючий тест</p>
         <p>Відомі дані для пошуку:</p>
-        <%= form_tag search_test_path do |t| %>
+        <%= form_tag search_test_path, remote: true do |t| %>
             <table id="search_form">
                 <col width="350">
                 <tr>

@@ -8,14 +8,16 @@ set :stage, :production
 # role :web, %w{deploy@example.com}
 # role :db,  %w{deploy@example.com}
 
-
+set :full_app_name, "#{fetch(:application)}_#{fetch(:stage)}"
+set :unicorn_worker_count, 5
+set :enable_ssl, false
 # Extended Server Syntax
 # ======================
 # This can be used to drop a more detailed server definition into the
 # server list. The second argument is a, or duck-types, Hash and is
 # used to set extended properties on the server.
 
-server '192.168.1.100', user: 'deploy', roles: %w{web app}
+server '192.168.56.102', user: 'deploy', roles: %w{web app}
 
 
 # Custom SSH Options

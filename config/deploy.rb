@@ -2,6 +2,7 @@
 lock '3.2.1'
 
 set :application, 'toaster'
+set :deploy_user, 'deploy'
 set :repo_url, 'git@github.com:elhowm/Toaster-on-Rails.git'
 
 # Default branch is :master
@@ -55,4 +56,18 @@ namespace :deploy do
     end
   end
 
+  set(:executable_config_files, %w(
+    unicorn_init.sh
+  ))
+
+  set(:symlinks, [
+                   {
+                     source: "nginx.conf",
+                     link: "/etc/nginx/sites-enabled/default"
+                   },
+                   {
+                     source: "unicorn_init.sh",
+                     link: "/etc/init.d/unicorn"
+                   }
+  ])
 end

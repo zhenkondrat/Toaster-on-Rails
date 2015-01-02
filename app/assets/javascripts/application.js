@@ -13,5 +13,8 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
+//= require bootstrap
 //= require main
 //= require_tree .
+
+var root_path = '<%= root_url %>';

@@ -10,43 +10,8 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
- *= require_tree .
+ *= require _bootstrap
+ *= require bootstrap-own
+ *= require main
  *= require_self
  */
-
-body{
-  margin: 0;
-}
-
-a:link
-{
-  color: black;
-}
-a:hover
-{
-  color: #bf8e62;
-}
-a:visited
-{
-  color: black;
-}
-
-.center{
-  text-align: center;
-}
-
-.right{
-  text-align: right;
-}
-
-.inline{
-  display: inline;
-}
-
-.red{
-  color: red;
-}
-
-.small-text{
-  font-size: 0.8em;
-}

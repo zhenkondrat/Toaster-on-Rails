@@ -1,23 +1,16 @@
-#default: &default
-#   adapter: mysql2
-#   encoding: utf8
-#   pool: 10
-#   username: <username>
-#   password: <password>
-#   socket: /var/run/mysqld/mysqld.sock
-#   reconnect: true
+postgresql_base: &postgresql_base
+  adapter: postgresql
+  host: localhost
+  username: <username>
+  password: <password>
+  encoding: utf8
+  reconnect: true
+  pool: 5
 
-#development:
-#  <<: *default
-#  database: toaster_dev
+development:
+  <<: *postgresql_base
+  database: toaster_dev
 
-# Warning: The database defined as "test" will be erased and
-# re-generated from your development database when you run "rake".
-# Do not set this db to the same as development or production.
-#test:
-#  <<: *default
-#  database: toaster_test
-#
-#production:
-#  <<: *default
-#  database: toaster_prod
+test:
+  <<: *postgresql_base
+  database: toaster_test

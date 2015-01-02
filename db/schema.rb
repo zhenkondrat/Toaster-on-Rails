@@ -13,67 +13,70 @@
 
 ActiveRecord::Schema.define(version: 20141116172606) do
 
-  create_table "answer1s", force: true do |t|
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "answer1s", force: :cascade do |t|
     t.integer "question_id"
     t.boolean "is_right"
   end
 
-  create_table "answer2s", force: true do |t|
+  create_table "answer2s", force: :cascade do |t|
     t.integer "question_id"
     t.string  "answer"
     t.boolean "is_right"
   end
 
-  create_table "answer3s", force: true do |t|
+  create_table "answer3s", force: :cascade do |t|
     t.integer "question_id"
     t.text    "field"
     t.boolean "side"
     t.integer "compare"
   end
 
-  create_table "groups", force: true do |t|
+  create_table "groups", force: :cascade do |t|
     t.string "name"
   end
 
-  create_table "invite_codes", force: true do |t|
+  create_table "invite_codes", force: :cascade do |t|
     t.string  "token"
     t.date    "date"
     t.boolean "admin"
   end
 
-  create_table "mark_systems", force: true do |t|
+  create_table "mark_systems", force: :cascade do |t|
     t.string "name"
   end
 
-  create_table "marks", force: true do |t|
-    t.integer "mark_system_id"
+  create_table "marks", force: :cascade do |t|
     t.string  "presentation"
     t.integer "percent"
+    t.integer "mark_system_id"
   end
 
-  create_table "questions", force: true do |t|
+  create_table "questions", force: :cascade do |t|
     t.integer "test_id"
     t.text    "condition"
     t.integer "question_type"
   end
 
-  create_table "results", force: true do |t|
+  create_table "results", force: :cascade do |t|
     t.integer  "test_id"
     t.integer  "user_id"
     t.decimal  "mark",       precision: 3, scale: 2
     t.datetime "created_at"
   end
 
-  create_table "subjects", force: true do |t|
+  create_table "subjects", force: :cascade do |t|
     t.string "subject_name"
   end
 
-  create_table "test_groups", force: true do |t|
+  create_table "test_groups", force: :cascade do |t|
     t.integer "group_id"
     t.integer "test_id"
   end
 
-  create_table "tests", force: true do |t|
+  create_table "tests", force: :cascade do |t|
     t.integer "subject_id"
     t.string  "name"
     t.integer "weight1"
@@ -84,12 +87,12 @@ ActiveRecord::Schema.define(version: 20141116172606) do
     t.integer "mark_system"
   end
 
-  create_table "user_groups", force: true do |t|
+  create_table "user_groups", force: :cascade do |t|
     t.integer "user_id"
     t.integer "group_id"
   end
 
-  create_table "users", force: true do |t|
+  create_table "users", force: :cascade do |t|
     t.string   "login",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
     t.string   "first_name"

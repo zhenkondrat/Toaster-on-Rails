@@ -45,6 +45,7 @@ group :test, :development do
   gem 'spring'
   gem 'rspec-rails'
   gem 'factory_girl_rails'
+  gem 'shoulda-matchers', require: false
 end
 
 group :test do

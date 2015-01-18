@@ -42,7 +42,7 @@ gem 'capistrano-rvm'
 
 group :test, :development do
   gem 'byebug'
-  gem 'spring'
+  # gem 'spring'
   gem 'rspec-rails'
   gem 'factory_girl_rails'
   gem 'shoulda-matchers', require: false

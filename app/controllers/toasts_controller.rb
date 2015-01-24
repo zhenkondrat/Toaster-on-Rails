@@ -15,12 +15,8 @@ class ToastsController < ApplicationController
   def reg_group
     toast = Toast.find(params[:toast_id])
     groups = params[:groups_check]
-
-    groups.each{ |id|
-      toast.gro
-    }
-
-    redirect_to edit_toast_path(toast.id)
+    groups.each{ |id| toast.toast_groups.create(group_id: id) }
+    redirect_to edit_toast_path(toast)
   end
 
   def results

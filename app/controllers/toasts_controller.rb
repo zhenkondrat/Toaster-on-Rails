@@ -17,7 +17,7 @@ class ToastsController < ApplicationController
     groups = params[:groups_check]
 
     groups.each{ |id|
-      toast.reg_group id
+      toast.gro
     }
 
     redirect_to edit_toast_path(toast.id)

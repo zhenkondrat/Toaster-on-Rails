@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   resources :mark_systems
 
-  resources :tests
+  resources :toasts
 
   resources :subjects
 
@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # user
-  post 'search_test' => 'users#admin'
+  post 'search_toast' => 'users#admin'
   get 'invite_code' => 'users#generate_invite_code'
   get 'admin' => 'users#admin'
   get 'student' => 'users#student'
@@ -24,12 +24,12 @@ Rails.application.routes.draw do
   get '/user_info/:id' => 'journal#user_info', :as => 'user_info'
   get '/delete_users_group' => 'journal#delete_users_group'
 
-  # test
-  post '/reg_group_test' => 'tests#reg_group'
-  post '/tests/:id' => 'tests#show'
-  get '/tests/content/:id' => 'tests#content'
-  get '/del_group_test' => 'tests#del_group_from_list'
-  get '/results' => 'tests#results'
+  # toast
+  post '/reg_group_toast' => 'toasts#reg_group'
+  post '/toasts/:id' => 'toasts#show'
+  get '/toasts/content/:id' => 'toasts#content'
+  get '/del_group_toast' => 'toasts#del_group_from_list'
+  get '/results' => 'toasts#results'
 
   # subject
   get '/subject/new' => 'subjects#new'

@@ -23,9 +23,9 @@
     <col width="340px">
     <col width="270px">
     <tr>
-      <td valign="top"> <!-- create test -->
+      <td valign="top"> <!-- create toast -->
         <p class="admin_small_header">Створити тест</p>
-        <%= form_for @test do |t| %>
+        <%= form_for @toast do |t| %>
           <table style="margin-bottom: 20px;">
             <tr><td>Оберіть предмет: <%= link_to "(створ.)", new_subject_path, :class => 'small_link' %></td></tr>
             <tr>
@@ -48,10 +48,10 @@
           <%= t.submit "Створити", :class => 'admin_buttons' %>
         <% end %>
       </td>
-      <td valign="top"> <!-- find test -->
+      <td valign="top"> <!-- find toast -->
         <p class="admin_small_header">Знайти існуючий тест</p>
         <p>Відомі дані для пошуку:</p>
-        <%= form_tag search_test_path, remote: true do |t| %>
+        <%= form_tag search_toast_path, remote: true do |t| %>
             <table id="search_form">
                 <col width="350">
                 <tr>
@@ -75,8 +75,8 @@
             </table>
             <%= submit_tag "Знайти", :name => nil, :class => 'admin_buttons' %>
         <% end %>
-        <!-- find test results -->
-        <%= render 'tests/tests' %>
+        <!-- find toast results -->
+        <%= render 'toasts/toasts' %>
       </td>
       <td valign="top"> <!-- last results -->
         <p class="admin_small_header">Остання активність</p>

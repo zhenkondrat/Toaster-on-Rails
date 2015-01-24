@@ -6,13 +6,13 @@ class UsersController < ApplicationController
   end
 
   def student
-    save_results if session[:pass_test]
+    save_results if session[:pass_toast]
     @results = current_user.results 5
   end
 
   def admin
-    find_test if params.include? :theme || :subject || :group
-    @test = Test.new
+    find_toast if params.include? :theme || :subject || :group
+    @toast = Toast.new
     @results = User.results 5
     @token = InviteCode.local
   end
@@ -33,15 +33,15 @@ class UsersController < ApplicationController
   end
 private
 
-  def search_test_params
+  def search_toast_params
     params.permit(:theme, :subject, :group)
   end
 
-  def find_test
+  def find_toasts
     subject = params[:subject]
     theme = params[:theme]
     group = params[:group]
-    @tests = Test.find_tests subject, theme, group
+    @toast = Toast.find_toasts subject, theme, group
     @select_find = subject.to_i unless subject.empty?
   end
 
@@ -50,10 +50,10 @@ private
     result.create_by_answers(
       session[:answers],
       session[:questions],
-      session[:test_id],
+      session[:toast_id],
       current_user.id
     )
-    session[:pass_test] = nil
+    session[:pass_toast] = nil
   end
 
   def authorization

@@ -1,4 +1,4 @@
-<% unless !@tests || @tests.empty? %>
+<% unless !@toasts || @toasts.empty? %>
 <div id= "find">
   <table>
     <col width="140">
@@ -6,15 +6,15 @@
     <col width="80">
     <col width="60">
     <col width="25">
-        <% @tests.each do |test| %>
+        <% @toasts.each do |toast| %>
             <tr>
-                <td><%= test.name %></td>
-                <td><%= test.get_subject_name %></td>
-                <td><%= link_to "info", edit_test_path(test.id) %></td>
+                <td><%= toast.name %></td>
+                <td><%= toast.subject.name %></td>
+                <td><%= link_to "info", edit_toast_path(toast.id) %></td>
                 <td style = "width: 40px;">
-                  <%= link_to "тар.", tests_path %>
+                  <%= link_to "тар.", toasts_path %>
                   &nbsp;
-                  <%= link_to test, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                  <%= link_to toast, method: :delete, data: { confirm: 'Are you sure?' } do %>
                       <%= image_tag 'delete.gif', style: "width: 10px;" %>
                   <% end %>
                 </td>

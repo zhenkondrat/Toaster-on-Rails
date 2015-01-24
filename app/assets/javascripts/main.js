@@ -13,7 +13,7 @@ $(function(){
     });
   });
 
-/* search test button */
+/* search toast button */
 
 
 });

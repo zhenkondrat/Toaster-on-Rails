@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Subject do
-  pending 'not all tests work correct'
+  pending 'not all toasts work correct'
   let(:subject) {FactoryGirl.create(:subject)}
 
   describe 'validates' do
@@ -9,6 +9,6 @@ describe Subject do
   end
 
   describe 'associations' do
-    # it { expect(subject).to have_many(:tests).dependent(:delete_all) }
+    # it { expect(subject).to have_many(:toasts).dependent(:delete_all) }
   end
 end

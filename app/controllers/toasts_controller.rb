@@ -1,71 +1,71 @@
-class TestsController < ApplicationController
+class ToastsController < ApplicationController
 
   def del_group_from_list
     group_id = params[:gid]
-    test_id = params[:tid]
+    toast_id = params[:tid]
 
-    TestGroup.where(
+    ToastGroup.where(
       :group_id => group_id,
-      :test_id => test_id
+      :toast_id => toast_id
     ).delete_all
 
-    redirect_to edit_test_path(test_id)
+    redirect_to edit_toast_path(toast_id)
   end
 
   def reg_group
-    test = Test.find(params[:test_id])
+    toast = Toast.find(params[:toast_id])
     groups = params[:groups_check]
 
     groups.each{ |id|
-      test.reg_group id
+      toast.reg_group id
     }
 
-    redirect_to edit_test_path(test.id)
+    redirect_to edit_toast_path(toast.id)
   end
 
   def results
     @results = []
-    test_id = params[:test]
+    toast_id = params[:toast]
     group_id = params[:group]
     @group_name = Group.find(params[:group]).name
-    @test_name = Test.find(params[:test]).name
+    @toast_name = Toast.find(params[:toast]).name
     users = User.joins('INNER JOIN user_groups ON user_groups.user_id = users.id').where('user_groups.group_id = '+group_id.to_s)
     users.each do |user|
-      result = user.result(test_id)
+      result = user.result(toast_id)
       @results.push [user.login, user.get_fio, result[0], result[1]]
     end
   end
 
   def create
-    test = Test.create!(test_params)
-    redirect_to edit_test_path(test.id)
+    toast = Toast.create!(toast_params)
+    redirect_to edit_toast_path(toast.id)
   end
 
   def edit
-    @test = Test.find(params[:id])
+    @toast = Toast.find(params[:id])
     @subjects = Subject.all
-    @questions = Question.where(:test_id => @test.id)
+    @questions = Question.where(:toast_id => @toast.id)
     @groups = Group.all
-    @test_groups = Group.joins('INNER JOIN test_groups ON test_groups.group_id = groups.id
-                                INNER JOIN tests ON test_groups.test_id = tests.id')
-                        .where("tests.id = #{@test.id}")
+    @toast_groups = Group.joins('INNER JOIN toast_groups ON toast_groups.group_id = groups.id
+                                INNER JOIN toasts ON toast_groups.toast_id = toasts.id')
+                        .where("toasts.id = #{@toast.id}")
   end
 
   def update
-    test = Test.find(params[:id])
-    test.update!(test_params)
-    redirect_to edit_test_path test.id
+    toast = Toast.find(params[:id])
+    toast.update!(toast_params)
+    redirect_to edit_toast_path toast.id
   end
 
   def show
-    if !session[:pass_test]      # if I just want start pass test
-      test = Test.find(params[:id])
-      session[:test_id] = test.id
-      session[:questions] = test.questions
+    if !session[:pass_toast]      # if I just want start pass toast
+      toast = Toast.find(params[:id])
+      session[:toast_id] = toast.id
+      session[:questions] = toast.questions
       session[:local] = 0
       session[:answers] = nil
-      session[:time] = test.question_time
-      session[:pass_test] = true
+      session[:time] = toast.question_time
+      session[:pass_toast] = true
     else
       save_answer
     end
@@ -80,7 +80,7 @@ class TestsController < ApplicationController
   end
 
   def destroy
-    Test.find(params[:id]).destroy
+    Toast.find(params[:id]).destroy
     flash[:notice] = 'Тест успішно видалено'
     redirect_to root_path
   end
@@ -117,8 +117,8 @@ class TestsController < ApplicationController
     session[:answers] = answers
   end
 
-  def test_params
-    params.require(:test)
+  def toast_params
+    params.require(:toast)
           .permit(:name,
                   :weight1,
                   :weight2,

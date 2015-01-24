@@ -2,18 +2,18 @@ class QuestionsController < ApplicationController
 
   def new
     @question = Question.new
-    @test = Test.find(params[:question_test_id])
+    @toasts = Toast.find(params[:question_toast_id])
   end
 
   def create
     type = question_params[:question_type]
-    test_id = question_params[:question_test_id]
+    toast_id = question_params[:question_toast_id]
 
     if type.nil?
       flash[:error] = "Ви не вказали тип питання"
     else
       question = Question.new
-      question.test_id = question_params[:question_test_id]
+      question.toast_id = question_params[:question_toast_id]
       question.condition = question_params[:condition]
       question.question_type = question_params[:question_type]
       question.save!
@@ -26,7 +26,7 @@ class QuestionsController < ApplicationController
         create_answer3 question
       end
     end
-    redirect_to new_question_path(:question_test_id => test_id)
+    redirect_to new_question_path(:question_toast_id => toast_id)
   end
 
   def edit
@@ -56,16 +56,16 @@ class QuestionsController < ApplicationController
       create_answer3 question
     end
     flash[:error] = 'Питання успішно оновлено'
-    redirect_to edit_test_path(question.test_id)
+    redirect_to edit_toast_path(question.toast_id)
   end
 
   def destroy
     question = Question.find(params[:id])
-    test_id = question.test_id
+    toast_id = question.toast_id
     question.destroy
 
     flash[:notice] = 'Питання успішно видалено'
-    redirect_to edit_test_path(test_id)
+    redirect_to edit_toast_path(toast_id)
   end
 
   private
@@ -115,6 +115,6 @@ class QuestionsController < ApplicationController
   end
 
   def question_params
-    params.require(:question).permit(:question_test_id, :condition, :question_type)
+    params.require(:question).permit(:question_toast_id, :condition, :question_type)
   end
 end

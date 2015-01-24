@@ -22,11 +22,11 @@ class User < ActiveRecord::Base
     groups_id.empty? ? nil : Group.where('id IN ('+groups_id.chop.chop+')')
   end
 
-  def tests
-    Test.joins('INNER JOIN test_groups ON test_groups.test_id = tests.id
-                INNER JOIN user_groups ON test_groups.group_id = user_groups.group_id
+  def toasts
+    Toast.joins('INNER JOIN toast_groups ON toast_groups.toast_id = toasts.id
+                INNER JOIN user_groups ON toast_groups.group_id = user_groups.group_id
                 INNER JOIN users ON users.id = '+self.id.to_s)
-              .select('tests.id, tests.name')
+              .select('toast.id, toast.name')
   end
 
   def results count = nil
@@ -38,15 +38,15 @@ class User < ActiveRecord::Base
     out = []
 
     results.each do |result|
-      test = Test.find(result.test_id)
-      out.push [test.get_subject_name, test.name, result.mark_presentation, result.created_at.to_formatted_s(:db)]
+      toast = Toast.find(result.toast_id)
+      out.push [toast.get_subject_name, toast.name, result.mark_presentation, result.created_at.to_formatted_s(:db)]
     end
 
     out
   end
 
-  def result test_id
-    results = Result.where(user_id: self.id, test_id: test_id).order(created_at: :desc)
+  def result toast_id
+    results = Result.where(user_id: self.id, toast_id: toast_id).order(created_at: :desc)
     out = ''
     results.each do |t|
       out += t.mark_presentation + ', '
@@ -68,8 +68,8 @@ class User < ActiveRecord::Base
     out = []
 
     results.each do |result|
-      test = Test.find(result.test_id)
-      out.push [test.get_subject_name, test.name, result.mark_presentation, result.created_at.to_formatted_s(:db)]
+      toast = Toast.find(result.toast_id)
+      out.push [toast.get_subject_name, toast.name, result.mark_presentation, result.created_at.to_formatted_s(:db)]
     end
 
     out

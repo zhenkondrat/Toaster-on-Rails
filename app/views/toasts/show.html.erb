@@ -2,7 +2,7 @@
   <div>_</div> <!-- without it something goes wrong -->
 <p id="user"><%= current_user.login %></p>
 
-<%= form_tag test_path(params[:id]) do %>
+<%= form_tag toast_path(params[:id]) do %>
   <div id="student_content">
     <h2>Питання №<%= @local+1 %><span id="time"></span></h2>
     <div id="center">

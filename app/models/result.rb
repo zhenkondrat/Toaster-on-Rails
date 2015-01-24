@@ -38,11 +38,11 @@ class Result < ActiveRecord::Base
     solution
   end
 
-  def create_by_answers (answers, questions, test_id, user_id)
-    @test = Test.find test_id
+  def create_by_answers (answers, questions, toast_id, user_id)
+    @toast = Toast.find toast_id
     set_tariffs
     sum = 0
-    self.test_id = @test.id
+    self.toast_id = @toast.id
 
     if answers
       answers.each do |answer|
@@ -68,13 +68,13 @@ class Result < ActiveRecord::Base
   end
 
   def set_tariffs
-    @tariff1 = @test.weight1 || 1
-    @tariff2 = @test.weight2 || 1
-    @tariff3 = @test.weight3 || 1
+    @tariff1 = @toast.weight1 || 1
+    @tariff2 = @toast.weight2 || 1
+    @tariff3 = @toast.weight3 || 1
   end
 
-  def get_test
-    Test.find(self.test_id)
+  def get_toast
+    Toast.find(self.toast_id)
   end
 
   def get_user_name
@@ -82,10 +82,10 @@ class Result < ActiveRecord::Base
   end
 
   def mark_presentation
-    test = Test.find(self.test_id)
+    toast = Toast.find(self.toast_id)
 
-    if test.mark_system
-      Mark.where("mark_system_id = #{test.mark_system} AND percent <= #{self.mark*100}").order(id: :desc).first.presentation
+    if toast.mark_system
+      Mark.where("mark_system_id = #{toast.mark_system} AND percent <= #{self.mark*100}").order(id: :desc).first.presentation
     else
       result.mark.to_s
     end

@@ -6,9 +6,9 @@
   </tr>
 </table>
 <div id = "question_content">
-  <p id="question_header">Питання № <%= @test.all_question_count + 1 %></p>
+  <p id="question_header">Питання № <%= @toast.all_question_count + 1 %></p>
   <%= form_for @question do |t| %>
-    <%= t.hidden_field "question_test_id", :value => @test.id %>
+    <%= t.hidden_field "question_toast_id", :value => @toast.id %>
     <table id = "question_form">
     <colgroup>
         <col width="200px">
@@ -46,7 +46,7 @@
     </tr>
   </table>
   <% end %>
-  <p id = "link_out"><%= link_to "Завершити", edit_test_path(@test.id) %></p>
+  <p id = "link_out"><%= link_to "Завершити", edit_toast_path(@toast.id) %></p>
 </div>
   <div id="error">
     <%= flash[:error] || flash[:notice] %>

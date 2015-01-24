@@ -53,7 +53,7 @@ RSpec.configure do |config|
   # instead of true.
   config.use_transactional_fixtures = true
 
-  # RSpec Rails can automatically mix in different behaviours to your tests
+  # RSpec Rails can automatically mix in different behaviours to your toasts
   # based on their file location, for example enabling you to call `get` and
   # `post` in specs under `spec/controllers`.
   #

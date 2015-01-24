@@ -10,6 +10,6 @@ describe Group do
 
   describe 'associations' do
     it { expect(group).to have_many(:user) }
-    it { expect(group).to have_many(:test) }
+    it { expect(group).to have_many(:toast) }
   end
 end

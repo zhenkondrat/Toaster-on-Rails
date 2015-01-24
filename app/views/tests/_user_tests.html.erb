@@ -1,6 +1,0 @@
-<% tests = current_user.tests %>
-<% if tests %>
-    <% tests.each do |test| %>
-        <span><%= link_to test.name, test_path(test) %> </span>
-    <% end %>
-<% end %>

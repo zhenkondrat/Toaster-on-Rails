@@ -1,21 +1,21 @@
 <div class="admin_bkg">
 <div class = "journal_content">
-  <table id = "edit_test_table">
+  <table id = "edit_toast_table">
     <colgroup>
       <col width="400">
       <col width="400">
     </colgroup>
     <tr style="vertical-align: top;">
       <td style="border-right: ridge">
-        <%= form_for @test do |t| %>
-        <div id = "test_info">
+        <%= form_for @toast do |t| %>
+        <div id = "toast_info">
           <h2>Інформація тесту</h2>
           <table>
-            <tr><td><h3>Назва:</h3><td><%= t.text_field :name, :value => @test.name %></td></tr>
+            <tr><td><h3>Назва:</h3><td><%= t.text_field :name, :value => @toast.name %></td></tr>
             <tr><td><h3>Предмет:</h3></td>
               <td>
               <%= t.select(:subject_id,
-                         Subject.all.collect {|p| [ p.subject_name, p.id ] }, {default: @test.id},
+                         Subject.all.collect {|p| [ p.subject_name, p.id ] }, {default: @toast.id},
                          class: "admin_selects",
                          id: "select_to_create",
                          style: "margin-top: 10px; margin-bottom: 10px; width: 155px;",
@@ -26,33 +26,33 @@
             </tr>
             <tr>
               <td>Кількість запитань:</td>
-              <td><%= t.text_field :questions_count, :value => @test.questions_count %></td>
+              <td><%= t.text_field :questions_count, :value => @toast.questions_count %></td>
             </tr>
             <tr>
               <td>Час відповіді(сек.):</td>
-              <td><%= t.text_field :question_time, :value => @test.question_time %></td>
+              <td><%= t.text_field :question_time, :value => @toast.question_time %></td>
             </tr>
           </table>
           <div>
             <h3>Вага питань:</h3>
             <table>
               <tr>
-                <td>Логічне:</td><td><%= t.text_field :weight1, :value => @test.weight1 %></td>
+                <td>Логічне:</td><td><%= t.text_field :weight1, :value => @toast.weight1 %></td>
               </tr>
               <tr>
-                <td>Звичайне:</td><td><%= t.text_field :weight2, :value => @test.weight2 %></td>
+                <td>Звичайне:</td><td><%= t.text_field :weight2, :value => @toast.weight2 %></td>
               </tr>
               <tr>
-                <td>Складне:</td><td><%= t.text_field :weight3, :value => @test.weight3 %></td>
+                <td>Складне:</td><td><%= t.text_field :weight3, :value => @toast.weight3 %></td>
               </tr>
             </table>
           </div>
           <div style="margin: 10px">
             <p>Система оцінювання:</p>
             <table>
-              <% @test.mark_systems.each do |system| %>
+              <% @toast.mark_systems.each do |system| %>
                 <tr>
-                  <td><%= t.radio_button :mark_system, system.id, checked: (system.id == @test.mark_system) %></td>
+                  <td><%= t.radio_button :mark_system, system.id, checked: (system.id == @toast.mark_system) %></td>
                   <td>
                     <%= link_to system.name, edit_mark_system_path(system.id) %>
                     <%= link_to system, method: :delete, data: { confirm: 'Are you sure?' } do %>
@@ -79,15 +79,15 @@
             <% end %>
             </ol>
           <% end %>
-          <%= link_to "Додати питання", new_question_path(:question_test_id => @test.id) %>
+          <%= link_to "Додати питання", new_question_path(:question_toast_id => @toast.id) %>
         </div>
         <% end %>
       </td>
       <td style="padding-left: 5%">
-        <%= form_tag reg_group_test_path do %>
-          <%= hidden_field_tag "test_id", @test.id %>
+        <%= form_tag reg_group_toast_path do %>
+          <%= hidden_field_tag "toast_id", @toast.id %>
           <h3 class="center">Групи</h3>
-          <div id="test_groups">
+          <div id="toast_groups">
             <%= render 'groups/groups'%>
           </div>
           <div class="right">
@@ -99,14 +99,14 @@
   </table>
   <div>
     Доступний для груп(натисніть аби вилучити зі списку):
-    <% @test_groups.each do |group| %>
-     <span><%= link_to group.name, del_group_test_path(:tid => @test.id, :gid => group.id) %></span>&nbsp
+    <% @toast_groups.each do |group| %>
+     <span><%= link_to group.name, del_group_toast_path(:tid => @toast.id, :gid => group.id) %></span>&nbsp
     <% end %>
   </div>
   <div>
     Результати проходження по групам:
-    <% @test_groups.each do |group| %>
-        <span><%= link_to group.name, results_path(test: @test.id, group: group.id) %></span>&nbsp
+    <% @toast_groups.each do |group| %>
+        <span><%= link_to group.name, results_path(toast: @toast.id, group: group.id) %></span>&nbsp
     <% end %>
   </div>
 

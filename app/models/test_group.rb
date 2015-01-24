@@ -1,4 +1,4 @@
-class TestGroup < ActiveRecord::Base
+class ToastGroup < ActiveRecord::Base
   belongs_to :group
-  belongs_to :test
+  belongs_to :toast
 end

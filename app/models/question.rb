@@ -1,15 +1,16 @@
 class Question < ActiveRecord::Base
-  has_many :answer1, :foreign_key => :question_id, :dependent => :delete_all
-  has_many :answer2, :foreign_key => :question_id, :dependent => :delete_all
-  has_many :answer3, :foreign_key => :question_id, :dependent => :delete_all
+  belongs_to :toast
+  has_many :answer1, dependent: :delete_all
+  has_many :answer2, dependent: :delete_all
+  has_many :answer3, dependent: :delete_all
+  validates :question_type, :condition, :toast, presence: true
 
   def answer
     case self.question_type
     when 2
-      Answer2.where(:question_id => self.id).shuffle
+      self.answer2.shuffle
     when 3
-      answers = Answer3.where(:question_id => self.id)
-      [answers.where(side: false).shuffle, answers.where(side: true).shuffle]
+      [self.answer3.where(side: false).shuffle, self.answer3.where(side: true).shuffle]
     else
       nil
     end

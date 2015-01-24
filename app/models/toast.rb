@@ -7,12 +7,12 @@ class Toast < ActiveRecord::Base
   has_many :results, dependent: :delete_all
   validates :subject, :name, :mark_system, presence: true
 
-  def self.find_toasts(subject, theme, group)
-    toast = Toast.all
-    toast = toast.where(subject_id: subject) unless subject.blank?
-    toast = toast.where(theme: theme) unless theme.blank?
-    toast = toast.where(group_id: group) unless group.blank?
-    toast
+  def self.find_toasts(params)
+    toasts = Toast.all
+    toasts = toasts.where(subject_id: params[:subject]) unless params[:subject].blank?
+    toasts = toasts.where(name: params[:name]) unless params[:name].blank?
+    toasts = toasts.joins(:toast_groups).where("toast_groups.group_id = #{params[:group]}") unless params[:group].blank?
+    toasts
   end
 
   def get_questions_list

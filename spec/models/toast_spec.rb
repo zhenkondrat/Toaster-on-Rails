@@ -44,7 +44,21 @@ describe Toast do
     end
 
     describe '#get_questions_list' do
-      pending 'there are no test here yet.'
+      before :each do
+        5.times{ toast.questions.create(condition: Faker::Lorem.paragraph, question_type: 1) }
+        5.times{ toast.questions.create(condition: Faker::Lorem.paragraph, question_type: 2) }
+        5.times{ toast.questions.create(condition: Faker::Lorem.paragraph, question_type: 3) }
+      end
+
+      it 'should find all questions if I give not limit' do
+        expect(toast.get_questions_list.size).to eq 15
+      end
+
+      it 'should find some count of questions if I give limit' do
+        toast.questions_count = 5
+        expect(toast.get_questions_list.size).to eq 5
+      end
     end
+
   end
 end

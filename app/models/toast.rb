@@ -17,9 +17,9 @@ class Toast < ActiveRecord::Base
 
   def get_questions_list
     if self.questions_count
-      questions.limit(self.questions_count).ids
+      questions.limit(self.questions_count).ids.shuffle
     else
-      questions.ids
+      questions.ids.shuffle
     end
   end
 end

@@ -11,15 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150124010317) do
+ActiveRecord::Schema.define(version: 20150130174736) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "answer1s", force: :cascade do |t|
-    t.integer "question_id"
-    t.boolean "is_right"
-  end
 
   create_table "answer2s", force: :cascade do |t|
     t.integer "question_id"
@@ -31,7 +26,7 @@ ActiveRecord::Schema.define(version: 20150124010317) do
     t.integer "question_id"
     t.text    "field"
     t.boolean "side"
-    t.integer "compare"
+    t.integer "answer3_id"
   end
 
   create_table "groups", force: :cascade do |t|
@@ -58,6 +53,7 @@ ActiveRecord::Schema.define(version: 20150124010317) do
     t.integer "toast_id"
     t.text    "condition"
     t.integer "question_type"
+    t.boolean "is_right"
   end
 
   create_table "results", force: :cascade do |t|

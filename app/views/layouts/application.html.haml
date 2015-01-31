@@ -1,13 +1,15 @@
 !!!
 %html
-%head
-  %title Toaster
-  = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
-  = yield :styles
-  = javascript_include_tag 'application', 'data-turbolinks-track' => true
-  = csrf_meta_tags
-%body{ onresize: "adaptation();" }
+  %head
+    %title Toaster
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
+    = yield :styles
+    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    = csrf_meta_tags
+  - if current_user
+    - background = current_user.admin ? 'admin-bkg' : 'user-bkg'
+  %body{ class: current_user ? background : ''}
 
-  = yield
+    = yield
 
-= yield :plugins
+  = yield :plugins

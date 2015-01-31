@@ -2,7 +2,7 @@ class Question < ActiveRecord::Base
   belongs_to :toast
   has_many :answer2, dependent: :delete_all
   has_many :answer3, dependent: :delete_all
-  validates :question_type, :condition, :toast, presence: true
+  validates :question_type, :text, :toast, presence: true
 
   def answers
     case self.question_type

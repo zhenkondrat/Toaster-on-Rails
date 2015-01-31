@@ -16,7 +16,7 @@
           %b.caret
         %ul.dropdown-menu
           %li= link_to 'Action', root_path
-          %li= link_to 'Вийти', destroy_user_session_path
+          %li= link_to 'Вийти', destroy_user_session_path, method: :delete
 
 .student_content
   %p.user_big_header Ласкаво просимо
@@ -33,9 +33,9 @@
         По-батькові:
         = current_user.father_name
       %p Групи до яких належить користувач:
-      %p= render 'groups/user_groups'
+      %p=# render 'groups/user_groups'
       %p Наявні для проходження тести
-      %p= render 'toasts/user_toasts'
+      %p=# render 'toasts/user_toasts'
     .right
       %p.user_small_header Останні результати
       .results

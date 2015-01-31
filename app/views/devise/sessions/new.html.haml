@@ -1,36 +1,13 @@
-<div class = "">
-<div class = "window_sign_in">
-  <p id="sign_header">Вхід</p>
-  <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-    <table id="sign_form">
-      <tr><td><br/></td></tr>
-      <tr><td>логін:</td></tr>
-      <tr>
-        <td><%= f.text_field :login, autofocus: true, class: "fields" %></td>
-      </tr>
-      <tr><td>пароль:</td></tr>
-      <tr>
-        <td><%= f.password_field :password, autocomplete: "off", class: "fields" %></td>
-      </tr>
-      <tr>
-        <td>
-        <% if devise_mapping.rememberable? %>
-           <%= f.check_box :remember_me %> <%= f.label "Запамятати" %>
-        <% end %>
-        </td>
-      </tr>
-      <tr class="center">
-        <td><%= f.submit "Вхід", id: "sign_in_button" %></td>
-      </tr>
-      <tr>
-        <td><%= link_to 'Реєстрація', new_user_registration_path, class: 'small-text' %></td>
-      </tr>
-    </table>
-  <% end %>
-</div>
-
-<div id="error">
-  <%= flash[:alert] %>
-</div>
-
-</div>
+.body-sign-in
+  .container.signin
+    = form_for resource, as: resource_name, url: session_path(resource_name), html: {class: "form-signin"} do |f|
+      %p
+        = f.label :login
+        = f.text_field :login, autofocus: true, class: 'form-control'
+      %p
+        = f.label :password
+        = f.password_field :password, autocomplete: 'off', class: 'form-control'
+      %p
+      = f.submit 'Sign in', class: 'btn btn-lg btn-primary btn-block'
+      = link_to 'Registration', new_user_registration_path
+  = flash[:alert]

@@ -9,9 +9,20 @@ describe Answer3 do
 
   describe 'validates' do
     it { expect(answer3).to validate_presence_of(:question) }
-    it { expect(answer3).to validate_presence_of(:field) }
-    it { expect(answer3).to validate_inclusion_of(:side).in_array([true, false]).allow_nil(false) }
-  end
+
+    context '#some_side_present?'
+      it %q|two sides can't be empty in one time| do
+        answer3.left_text = nil
+        answer3.right_text = ''
+        expect(answer3.valid?).to eq false
+      end
+
+      it %q|one side can be empty| do
+        answer3.left_text = nil
+        answer3.right_text = 'blabla'
+        expect(answer3.valid?).to eq true
+      end
+    end
 
   describe 'associations' do
     it { expect(answer3).to belong_to(:question) }

@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :answer3 do
-    side Random.rand(2).zero?
-    field Faker::Lorem.word
+    left_text Faker::Lorem.word
+    right_text Faker::Lorem.word
   end
 end

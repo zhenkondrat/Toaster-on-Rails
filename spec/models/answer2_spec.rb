@@ -9,8 +9,8 @@ describe Answer2 do
 
   describe 'validates' do
     it { expect(answer2).to validate_presence_of(:question) }
-    it { expect(answer2).to validate_presence_of(:answer) }
-    it { expect(answer2).to validate_inclusion_of(:is_right).in_array([true, false]).allow_nil(false) }
+    it { expect(answer2).to validate_presence_of(:text) }
+    it { expect(answer2).to validate_inclusion_of(:is_right).in_array([true, false]) }
   end
 
   describe 'associations' do

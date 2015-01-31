@@ -45,9 +45,9 @@ describe Toast do
 
     describe '#get_questions_list' do
       before :each do
-        5.times{ toast.questions.create(condition: Faker::Lorem.paragraph, question_type: 1) }
-        5.times{ toast.questions.create(condition: Faker::Lorem.paragraph, question_type: 2) }
-        5.times{ toast.questions.create(condition: Faker::Lorem.paragraph, question_type: 3) }
+        5.times{ toast.questions.create(text: Faker::Lorem.paragraph, question_type: 1) }
+        5.times{ toast.questions.create(text: Faker::Lorem.paragraph, question_type: 2) }
+        5.times{ toast.questions.create(text: Faker::Lorem.paragraph, question_type: 3) }
       end
 
       it 'should find all questions if I give not limit' do

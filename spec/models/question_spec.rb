@@ -14,19 +14,12 @@ describe Question do
 
   describe 'associations' do
     it { expect(question).to belong_to(:toast) }
-    it { expect(question).to have_many(:answer1) }
     it { expect(question).to have_many(:answer2) }
     it { expect(question).to have_many(:answer3) }
   end
 
   describe 'methods' do
     describe '#answers' do
-      it 'answers type 1 - logical' do
-        question.question_type = 1
-        question.answer1.create(is_right: true)
-        expect(question.answers).to eq nil
-      end
-
       it 'answer type 2 - many variants' do
         question.question_type = 2
         question.answer2.create(answer: Faker::Lorem.word, is_right: true)

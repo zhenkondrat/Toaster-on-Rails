@@ -15,7 +15,5 @@ describe Answer3 do
 
   describe 'associations' do
     it { expect(answer3).to belong_to(:question) }
-    pending 'there are not all test here yet.'
-    # it { expect(answer3).to belong_to(:answer3).inverse_of(:answer3) }
   end
 end

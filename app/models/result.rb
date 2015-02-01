@@ -1,71 +1,35 @@
 class Result < ActiveRecord::Base
 
-  def max_mark (questions)
+  def create_by_answers(user, questions, answers, toast)
+    @toast = toast || questions.first.toast
+    set_tariffs
     sum = 0
-    questions = Question.where('id IN ('+questions.join(', ')+')')
     questions.each do |question|
       case question.question_type
       when 1
-        sum += @tariff1
+        sum += @tariff1 if answers[question.id] == question.is_right
       when 2
-        sum += @tariff2
-      else
-        sum += @tariff3
+        sum += @tariff2 if answer2_right? question, answers[question.id]
+      when 3
+        sum += @tariff3 if answer3_right? question, answers[question.id]
       end
     end
-    sum
+    self.user, self.mark, self.created_at = user, sum.to_f/(max_mark questions), DateTime.now
+    self.save
   end
 
-  def answer2_right? (origin, answers)
-    solution = true
-    answers ||= []
-    origin.each do |el|
-      unless (el.is_right && (answers.include? el.id.to_s)) ||
-          (!el.is_right && !(answers.include? el.id.to_s))
-        solution = false
-      end
+  def show_mark
+    return 'error' unless self.toast
+    toast = self.toast
+
+    if toast.mark_system
+      toast.mark_system.marks.where("percent <= #{self.mark*100}").order(id: :desc).first.presentation
+    else
+      self.mark.to_s
     end
-    solution
   end
 
-  def answer3_right? (origin, left, right)
-    solution = true
-    origin.each do |e|
-      if e.compare
-        solution = false if left.key(right[e.id.to_s]) != e.compare.to_s
-      end
-    end
-    solution
-  end
-
-  def create_by_answers (answers, questions, toast_id, user_id)
-    @toast = Toast.find toast_id
-    set_tariffs
-    sum = 0
-    self.toast_id = @toast.id
-
-    if answers
-      answers.each do |answer|
-        question_id = answer[0]
-        case answer[1] # question type
-        when '1'
-          origin = Answer1.where(:question_id => question_id).first
-          sum += @tariff1 if origin.is_right.to_s == answer[2]
-        when '2'
-          origin = Answer2.where(:question_id => question_id)
-          sum += @tariff2 if answer2_right? origin, answer[2]
-        else
-          origin = Answer3.where(:question_id => question_id, :side => 1)
-          sum += @tariff3 if answer3_right? origin, answer[2][0], answer[2][1]
-        end
-      end
-    end
-
-    self.user_id = user_id
-    self.mark = sum.to_f / (max_mark questions)
-    self.created_at = DateTime.now
-    self.save!
-  end
+  private
 
   def set_tariffs
     @tariff1 = @toast.weight1 || 1
@@ -73,22 +37,39 @@ class Result < ActiveRecord::Base
     @tariff3 = @toast.weight3 || 1
   end
 
-  def get_toast
-    Toast.find(self.toast_id)
-  end
-
-  def get_user_name
-    User.find(self.user_id).login
-  end
-
-  def mark_presentation
-    toast = Toast.find(self.toast_id)
-
-    if toast.mark_system
-      Mark.where("mark_system_id = #{toast.mark_system} AND percent <= #{self.mark*100}").order(id: :desc).first.presentation
-    else
-      result.mark.to_s
+  def max_mark(questions)
+    sum = 0
+    questions = Question.where("id IN (#{questions.join(', ')})")
+    questions.each do |question|
+      case question.question_type
+        when 1
+          sum += @tariff1
+        when 2
+          sum += @tariff2
+        else
+          sum += @tariff3
+      end
     end
+    sum
   end
 
+  def answer2_right?(question, answer)
+    solution = true
+    question.answer2s.each do |supposition|
+      unless supposition.is_right == answer[supposition.id]
+        solution = false
+      end
+    end
+    solution
+  end
+
+  def answer3_right?(question, answer)
+    solution = true
+    question.answer3s.each do |supposition|
+      unless (supposition.left_text == answer[0]) && (supposition.right_text == answer[1])
+        solution = false
+      end
+    end
+    solution
+  end
 end

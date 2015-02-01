@@ -17,7 +17,7 @@ class Question < ActiveRecord::Base
       end
       return [left.shuffle, right.shuffle]
     else
-      return nil
+      return self.is_right
     end
   end
 

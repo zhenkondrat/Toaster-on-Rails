@@ -7,6 +7,13 @@ require 'faker'
 require 'factory_girl'
 require 'database_cleaner'
 require 'shoulda/matchers'
+require 'simplecov'
+SimpleCov.start 'rails'
+
+SimpleCov.at_exit do
+  SimpleCov.result.format!
+  puts "Click to open report file://#{Rails.root}/coverage/index.html#_AllFiles"
+end
 
 class ActiveRecord::Base
   mattr_accessor :shared_connection

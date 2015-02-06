@@ -1,4 +1,8 @@
 class Result < ActiveRecord::Base
+  belongs_to :user
+  belongs_to :toast
+  validates :mark, :created_at, :user, :toast, presence: true
+  validates :mark, numericality: { less_than_or_equal_to: 1 }
 
   def create_by_answers(user, questions, answers, toast)
     @toast = toast || questions.first.toast
@@ -19,11 +23,8 @@ class Result < ActiveRecord::Base
   end
 
   def show_mark
-    return 'error' unless self.toast
-    toast = self.toast
-
-    if toast.mark_system
-      toast.mark_system.marks.where("percent <= #{self.mark*100}").order(id: :desc).first.presentation
+    if self.toast.mark_system
+      self.toast.mark_system.marks.where("percent <= #{self.mark*100}").order(id: :desc).first.presentation
     else
       self.mark.to_s
     end

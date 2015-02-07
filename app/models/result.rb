@@ -5,7 +5,7 @@ class Result < ActiveRecord::Base
   validates :mark, numericality: { less_than_or_equal_to: 1 }
 
   def create_by_answers(user, questions, answers, toast = nil)
-    @toast = toast || self.toast ||questions.first.toast
+    @toast = toast || self.toast || questions.first.toast
     set_tariffs
     sum = 0
     questions.each do |question|

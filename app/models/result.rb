@@ -20,14 +20,14 @@ class Result < ActiveRecord::Base
     end
     self.user, self.mark, self.created_at = user, sum.to_f/(max_mark questions), DateTime.now
     self.save
-    self.show_mark
+    show_mark
   end
 
   def show_mark
-    if self.toast.mark_system
-      self.toast.mark_system.marks.where("percent <= #{self.mark*100}").order(id: :desc).first.presentation
+    if toast.mark_system
+      toast.mark_system.marks.where("percent <= #{self.mark*100}").order(id: :desc).first.presentation
     else
-      self.mark.to_s
+      mark.to_s
     end
   end
 

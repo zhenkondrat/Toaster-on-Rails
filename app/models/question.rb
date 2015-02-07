@@ -6,11 +6,11 @@ class Question < ActiveRecord::Base
   validates :question_type, :text, :toast, presence: true
 
   def answers
-    case self.question_type
+    case question_type
     when 2
-      return self.answer2s.shuffle
+      return answer2s.shuffle
     when 3
-      answers = self.answer3s
+      answers = answer3s
       left = []; right = []
       answers.each do |answer|
         left.push answer.left_text unless answer.left_text.blank?
@@ -18,7 +18,7 @@ class Question < ActiveRecord::Base
       end
       return [left.shuffle, right.shuffle]
     else
-      return self.is_right
+      return is_right
     end
   end
 

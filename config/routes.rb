@@ -7,35 +7,17 @@ Rails.application.routes.draw do
 
   resources :questions
 
+  resources :groups
+
   devise_for :users, controllers: { :registrations => 'registrations' }
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # user
-  post 'search_toast' => 'users#admin'
-  get 'invite_code' => 'users#generate_invite_code'
-  get 'admin' => 'users#admin'
-  get 'student' => 'users#student'
+  get 'invite_code', to: 'users#generate_invite_code'
 
-  # journal
-  post '/journal' => 'journal#index'
-  post '/save_user_info' => 'journal#save_user_info'
-  get '/journal' => 'journal#index'
-  get '/user_info/:id' => 'journal#user_info', :as => 'user_info'
-  get '/delete_users_group' => 'journal#delete_users_group'
-
-  # toast
-  post '/reg_group_toast' => 'toasts#reg_group'
-  post '/toasts/:id' => 'toasts#show'
-  get '/toasts/content/:id' => 'toasts#content'
-  get '/del_group_toast' => 'toasts#del_group_from_list'
-  get '/results' => 'toasts#results'
-
-  # subject
-  get '/subject/new' => 'subjects#new'
-  post '/subjects' => 'subjects#create'
-  get '/delete_subject' => 'subjects#delete'
-  post '/mark_systems/:id' => 'mark_systems#update'
+  # results
+  get 'results', to: 'results#index'
 
   # You can have the root of your site routed with "root"
   root 'users#index'

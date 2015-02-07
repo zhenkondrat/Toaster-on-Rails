@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'question_helper'
 
 describe Result do
   let(:mark_system) {FactoryGirl.create(:mark_system)}
@@ -45,7 +46,32 @@ describe Result do
     end
 
     describe '#create_by_answers' do
-
+      it 'should get the greatest mark if I know all right answers' do
+        user_answers, questions = {}, []
+        toast.update(mark_system: nil)
+        Random.rand(1..20).times do
+          question = Question.create(toast: toast,
+                                     text: Faker::Lorem.paragraph,
+                                     question_type: Random.rand(1..3),
+                                     is_right: (Random.rand(1).zero? ? false : true)
+                     )
+          question_answers = create_answers(question) unless question.question_type == 1
+          case question.question_type
+          when 1
+            user_answers[question.id] = question.is_right
+          when 2
+            local_answer = {}
+            question_answers[:right_answers].each{ |answer| local_answer[answer.id] = answer.is_right }
+            user_answers[question.id] = local_answer
+          when 3
+            local_answer = {}
+            question_answers[:correct_pairs].each{ |answer| local_answer[answer.id] = [answer.left_text, answer.right_text] }
+            user_answers[question.id] = local_answer
+          end
+          questions.push question
+        end
+        expect(result.create_by_answers(user, questions, user_answers)).to eq '1.0'
+      end
     end
   end
 end

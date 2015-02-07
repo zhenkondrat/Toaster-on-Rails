@@ -4,8 +4,8 @@ class Result < ActiveRecord::Base
   validates :mark, :created_at, :user, :toast, presence: true
   validates :mark, numericality: { less_than_or_equal_to: 1 }
 
-  def create_by_answers(user, questions, answers, toast)
-    @toast = toast || questions.first.toast
+  def create_by_answers(user, questions, answers, toast = nil)
+    @toast = toast || self.toast ||questions.first.toast
     set_tariffs
     sum = 0
     questions.each do |question|
@@ -20,6 +20,7 @@ class Result < ActiveRecord::Base
     end
     self.user, self.mark, self.created_at = user, sum.to_f/(max_mark questions), DateTime.now
     self.save
+    self.show_mark
   end
 
   def show_mark
@@ -40,7 +41,7 @@ class Result < ActiveRecord::Base
 
   def max_mark(questions)
     sum = 0
-    questions = Question.where("id IN (#{questions.join(', ')})")
+    questions = Question.where("id IN (#{questions.map{ |question| question.id.to_s }.join(', ')})")
     questions.each do |question|
       case question.question_type
         when 1
@@ -57,7 +58,7 @@ class Result < ActiveRecord::Base
   def answer2_right?(question, answer)
     solution = true
     question.answer2s.each do |supposition|
-      unless supposition.is_right == answer[supposition.id]
+      unless supposition.is_right == (answer[supposition.id] || false)
         solution = false
       end
     end
@@ -67,8 +68,10 @@ class Result < ActiveRecord::Base
   def answer3_right?(question, answer)
     solution = true
     question.answer3s.each do |supposition|
-      unless (supposition.left_text == answer[0]) && (supposition.right_text == answer[1])
-        solution = false
+      if supposition.correct_pair?
+        unless (supposition.left_text == answer[supposition.id][0]) && (supposition.right_text == answer[supposition.id][1])
+          solution = false
+        end
       end
     end
     solution

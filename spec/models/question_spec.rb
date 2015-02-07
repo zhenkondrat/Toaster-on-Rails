@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'question_helper'
 
 describe Question do
   let(:mark_system) {FactoryGirl.create(:mark_system)}
@@ -10,6 +11,7 @@ describe Question do
     it { expect(question).to validate_presence_of(:toast) }
     it { expect(question).to validate_presence_of(:text) }
     it { expect(question).to validate_presence_of(:question_type) }
+    it { expect(question).to validate_inclusion_of(:question_type).in_array([1, 2, 3]) }
   end
 
   describe 'associations' do
@@ -22,20 +24,16 @@ describe Question do
     describe '#answers' do
       it 'answer type 2 - many variants' do
         question.question_type = 2
-        question.answer2s.create(text: Faker::Lorem.word, is_right: true)
-        question.answer2s.create(text: Faker::Lorem.word, is_right: false)
-        question.answer2s.create(text: Faker::Lorem.word, is_right: true)
-        question.answer2s.create(text: Faker::Lorem.word, is_right: false)
-        expect(question.answers.size).to eq 4
+        answers = create_answers question
+        expect(question.answers.size).to eq (answers[:right_answers] + answers[:wrong_answers]).size
       end
 
       it 'answer type 3 - many to many variants' do
         question.question_type = 3
-        5.times { question.answer3s.create(left_text: Faker::Lorem.word, right_text: Faker::Lorem.word) }
-        3.times { question.answer3s.create(left_text: Faker::Lorem.word, right_text: nil) }
+        answers = create_answers question
         expect(question.answers.size).to eq 2
-        expect(question.answers[1].size).to eq 5
-        expect(question.answers[0].size).to eq 8
+        expect(question.answers[1].size).to eq answers[:correct_pairs].size
+        expect(question.answers[0].size).to eq (answers[:correct_pairs] + answers[:single_records]).size
       end
     end
   end

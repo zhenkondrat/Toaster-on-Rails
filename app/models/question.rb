@@ -2,6 +2,7 @@ class Question < ActiveRecord::Base
   belongs_to :toast
   has_many :answer2s, dependent: :delete_all
   has_many :answer3s, dependent: :delete_all
+  validates :question_type, inclusion: { in: [1, 2, 3] }
   validates :question_type, :text, :toast, presence: true
 
   def answers

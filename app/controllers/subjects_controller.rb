@@ -1,4 +1,5 @@
 class SubjectsController < ApplicationController
+  before_action :authenticate_user!
   before_filter :admin_lock
   before_action :set_subject, except: [:create, :index]
 

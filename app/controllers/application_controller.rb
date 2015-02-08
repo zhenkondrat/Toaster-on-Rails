@@ -9,4 +9,8 @@ class ApplicationController < ActionController::Base
   def configure_permitted_parameters
     devise_parameter_sanitizer.for(:sign_in) { |u| u.permit({ roles: [] }, :login, :password, :remember_me) }
   end
+
+  def admin_lock
+    redirect_to root_path, error: 'You are not have permission!' unless current_user.admin
+  end
 end

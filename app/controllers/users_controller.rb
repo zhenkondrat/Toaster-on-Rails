@@ -11,18 +11,8 @@ class UsersController < ApplicationController
   end
 
   def generate_invite_code
-    InviteCode.generate!
-    codes = InviteCode.local
-    msg = {:status => "ok",
-           :admin => codes[:admin],
-           :user  => codes[:user]
-          }
+    codes = InviteCode.generate!
+    msg = {status: 'ok', admin: codes[:admin], user: codes[:user]}
     render json: msg
   end
-
-  private
-
-    def admin_lock
-      redirect_to root_path, error: 'You are not have permission!' unless current_user.admin
-    end
 end

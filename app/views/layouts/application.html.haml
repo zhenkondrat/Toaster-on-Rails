@@ -9,7 +9,10 @@
   - if current_user
     - background = current_user.admin ? 'admin-bkg' : 'user-bkg'
   %body{ class: current_user ? background : ''}
-
-    = yield
+    = render partial: 'layouts/admin_bar' if current_user && current_user.admin
+    = render partial: 'layouts/user_bar' if current_user && !current_user.admin
+    .container
+      = render 'layouts/flash'
+      = yield
 
   = yield :plugins

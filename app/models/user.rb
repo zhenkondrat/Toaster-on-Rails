@@ -15,20 +15,24 @@ class User < ActiveRecord::Base
   end
 
   def full_name
-    if self.last_name.blank?
+    if last_name.blank?
       full_name = ''
     else
-      full_name = self.last_name
-      full_name += " #{self.first_name[0]}. #{self.father_name[0]}." unless self.first_name.blank? || self.father_name.blank?
+      full_name = last_name
+      full_name += " #{first_name[0]}. #{father_name[0]}." unless first_name.blank? || father_name.blank?
     end
 
     full_name
   end
 
+  def admin?
+    admin
+  end
+
   private
 
   def have_user_surname?
-    if self.last_name.blank? && !self.admin
+    if last_name.blank? && !admin?
       errors.add(:last_name, %q|Can't be empty for student(user)|)
     end
   end

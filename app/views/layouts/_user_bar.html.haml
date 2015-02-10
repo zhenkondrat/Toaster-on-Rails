@@ -6,42 +6,12 @@
       %span.icon-bar
     = link_to 'Toaster', root_path, class: 'navbar-brand'
   .navbar-collapse.collapse.navbar-responsive-collapse
-    %ul.nav.navbar-nav
-      %li.dropdown
-        %a.dropdown-toggle{data: {toggle: 'dropdown'}}
-          Manage Toasts
-          %b.caret
-        %ul.dropdown-menu
-          %li= link_to 'List', toasts_path
-          %li= link_to 'New', new_toast_path
-      %li.dropdown
-        %a.dropdown-toggle{data: {toggle: 'dropdown'}}
-          Manage Groups
-          %b.caret
-        %ul.dropdown-menu
-          %li= link_to 'List', groups_path
-          %li= link_to 'New', new_group_path
-      %li.dropdown
-        %a.dropdown-toggle{data: {toggle: 'dropdown'}}
-          Mange Subjects
-          %b.caret
-        %ul.dropdown-menu
-          %li= link_to 'List', subjects_path
-          %li= link_to 'New', new_subject_path
-      %li.dropdown
-        %a.dropdown-toggle{data: {toggle: 'dropdown'}}
-          Mark_systems
-          %b.caret
-        %ul.dropdown-menu
-          %li= link_to 'List', mark_systems_path
-          %li= link_to 'New', new_mark_system_path
-      %li
-        = link_to 'Results', results_path
     %ul.nav.navbar-nav.navbar-right
       %li.dropdown
         %a.dropdown-toggle{data: {toggle: 'dropdown'}}
           = current_user.login
           %b.caret
         %ul.dropdown-menu
-          %li= link_to 'Action', root_path
+          %li= link_to 'My Profile', root_path
+          %li= link_to 'My Results', results_path
           %li= link_to 'Logout', destroy_user_session_path, method: :delete

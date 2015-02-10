@@ -1,5 +1,7 @@
-- unless flash[:error].blank?
-  .alert.alert-danger= flash[:error]
+- unless flash[:error].blank? && flash[:alert].blank?
+  .alert.alert-danger
+    = flash[:error]
+    = flash[:alert]
 - unless flash[:warning].blank?
   .alert.alert-warning= flash[:warning]
 - unless flash[:notice].blank?

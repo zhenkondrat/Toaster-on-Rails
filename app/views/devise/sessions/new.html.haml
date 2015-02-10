@@ -1,13 +1,18 @@
-.body-sign-in
-  .container.signin
-    = form_for resource, as: resource_name, url: session_path(resource_name), html: {class: "form-signin"} do |f|
-      %p
-        = f.label :login
-        = f.text_field :login, autofocus: true, class: 'form-control'
-      %p
-        = f.label :password
-        = f.password_field :password, autocomplete: 'off', class: 'form-control'
-      %p
-      = f.submit 'Sign in', class: 'btn btn-lg btn-primary btn-block'
-      = link_to 'Registration', new_user_registration_path
-  = flash[:alert]
+- unless devise_error_messages!.blank?
+  .alert.alert-danger
+    = devise_error_messages!
+.form-signin
+  .panel.panel-primary
+    .panel-heading
+      %h2 Sign in
+    .panel-body
+      = form_for resource, as: resource_name, url: session_path(resource_name) do |f|
+        %p
+          = f.label :login
+          = f.text_field :login, autofocus: true, class: 'form-control'
+        %p
+          = f.label :password
+          = f.password_field :password, autocomplete: 'off', class: 'form-control'
+        %p
+        = f.submit 'Login', class: 'btn btn-lg btn-primary btn-block'
+        = link_to 'Registration', new_user_registration_path

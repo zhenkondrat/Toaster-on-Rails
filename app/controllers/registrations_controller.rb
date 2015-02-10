@@ -3,7 +3,7 @@ class RegistrationsController < Devise::RegistrationsController
   # POST /resource
   def create
     tokens = InviteCode.local
-    case params[:user][:token]
+    case params[:token]
     when tokens[:user]
       params[:user][:admin] = false
       super
@@ -11,7 +11,7 @@ class RegistrationsController < Devise::RegistrationsController
       params[:user][:admin] = true
       super
     else
-      flash[:alert] = 'Ключ-запрошення хибний!'
+      flash[:error] = 'Invite code is invalid'
       redirect_to new_user_registration_path
     end
   end

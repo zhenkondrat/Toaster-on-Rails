@@ -1,59 +1,65 @@
 class MarkSystemsController < ApplicationController
+  before_filter :admin_lock
+  before_action :set_mark_system, except: [:index, :new, :create]
 
-  def save_marks mark_system_id
-    marks = mark_systems_params[:marks]
-    i = 1
-    while marks.include? 'percent_'+i.to_s
-      mark = Mark.new
-      mark.mark_system_id = mark_system_id
-      mark.presentation = marks['presentation_'+i.to_s]
-      mark.percent = marks['percent_'+i.to_s]
-      mark.save!
-      i+=1
-    end
+  def index
+    @mark_systems = MarkSystem.all
   end
 
   def new
     @mark_system = MarkSystem.new
-    @marks = []
   end
 
   def create
-    mark_system = MarkSystem.create! name: mark_systems_params[:name]
-    save_marks mark_system.id
-
-    flash[:notice] = 'Система оцінювання створена'
-    redirect_to edit_mark_system_path(mark_system.id)
+    mark_system = MarkSystem.create(name: mark_system_params[:name])
+    if mark_system
+      mark_system_params[:marks][:new].each_value{ |mark_params| mark_system.marks.create(mark_params) }
+      flash[:success] = 'Mark system successfully created!'
+    else
+      flash[:error] = %q|Mark system can't be created|
+    end
+    redirect_to mark_systems_path
   end
 
   def edit
-    @mark_system = MarkSystem.find(params[:id])
-    @marks = Mark.where(mark_system: params[:id])
   end
 
   def update
-    @mark_system = MarkSystem.find(params[:id])
-    if @mark_system.name != mark_systems_params[:name]
-      @mark_system.name = mark_systems_params[:name]
-      @mark_system.save!
+    @mark_system.update(name: mark_system_params[:name])
+    if @mark_system.errors.empty?
+      mark_system_params[:marks][:old].each_key{ |id| Mark.find(id).update_all(mark_system_params[:marks][:old][id]) }
+      mark_system_params[:marks][:new].each_value{ |mark_params| @mark_system.marks.create(mark_params) }
+      flash[:success] = 'Mark system successfully updated!'
+    else
+      flash[:error] = %q|Mark system can't be updated|
     end
-
-    save_marks @mark_system.id
-
-    flash[:notice] = 'Система оцінювання оновлена'
-    redirect_to edit_mark_system_path(params[:id])
+    redirect_to mark_systems_path
   end
 
-
   def destroy
-    MarkSystem.find(params[:id]).destroy
-    flash[:notice] = 'Система оцінювання видалена'
-    redirect_to root_path
+    if @mark_system.destroy
+      flash[:success] = 'Mark system successfully deleted!'
+    else
+      flash[:error] = %q|Mark system can't be deleted|
+    end
+    redirect_to mark_systems_path
   end
 
   private
 
-  def mark_systems_params
-    params.require(:mark_system)
+  def set_mark_system
+    @mark_system = MarkSystem.find(params[:id])
+  end
+
+  def mark_system_params
+    mark_system = { name: params.require(:mark_system)[:name], marks: {new: {}, old: {}} }
+    params.require(:mark_system)[:marks].each_key do |key|
+      mark_system[:marks][key.index('new') ? :new : :old][key] =
+        {
+          presentation: params[:mark_system][:marks][key.to_sym]['presentation'],
+          percent: params[:mark_system][:marks][key.to_sym]['percent']
+        }
+    end
+    mark_system
   end
 end

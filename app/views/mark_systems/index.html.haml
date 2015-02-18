@@ -1,0 +1,15 @@
+%h2 Mark systems:
+%table.table.table-striped
+  %tr
+    %th Name
+    %th Marks
+    %th Actions
+  - @mark_systems.each do |mark_sytem|
+    %tr
+      %td= mark_sytem.name
+      %td= mark_sytem.marks.order(:percent).map{ |mark| mark.presentation }.join(', ') unless mark_sytem.marks.empty?
+      %td
+        = link_to edit_mark_system_path(mark_sytem) do
+          %span.fa.fa-edit
+        = link_to mark_system_path(mark_sytem), method: :delete, data: {confirm: 'Are you sure?'} do
+          %span.fa.fa-trash

@@ -1,0 +1,26 @@
+= form_for @mark_system, class: 'form' do |f|
+  .form-group
+    = f.label :name
+    = f.text_field :name, class: 'form-control'
+  %div
+    %h3 Marks:
+    .form-group
+      .col-lg-6.mark-operations
+        %button.btn.btn-success.btn-circle.btn-xl.add-mark{onclick: 'return false'} +
+      .col-lg-6.mark-operations
+        %button.btn.btn-danger.btn-circle.btn-xl.del-mark{onclick: 'return false'} -
+    .form-group
+      %strong.col-lg-6 Presentation
+      %strong.col-lg-6 Percent
+  - if @mark_system.marks.count.zero?
+    #marks{data: {count: 1}}
+      .form-group.number0
+        .presentation.col-lg-6= text_field_tag 'mark_system[marks[new1[presentation]]]', '', class: 'form-control'
+        .percent.col-lg-6= text_field_tag 'mark_system[marks[new1[percent]]]', '', class: 'form-control'
+  - else
+    #marks{data: {count: @mark_system.marks.count}}
+    - @mark_system.marks.order(percent: :desc).each do |mark|
+      .form-group
+        .presentation.col-lg-6= text_field_tag "mark_system[marks[#{mark.id}[presentation]]]", mark.presentation, class: 'form-control'
+        .percent.col-lg-6= text_field_tag "mark_system[marks[#{mark.id}[percent]]]", mark.percent, class: 'form-control'
+  = f.submit current_page?(new_mark_system_path) ? 'Create' : 'Save', class: 'btn btn-info col-lg-12'

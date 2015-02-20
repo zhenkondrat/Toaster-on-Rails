@@ -1,0 +1,17 @@
+%h2 Toasts:
+%table.table.table-striped
+  %tr
+    %th Name
+    %th Subject
+    %th Groups
+    %th Actions
+  - @toasts.each do |toast|
+    %tr
+      %td= toast.name
+      %td= toast.subject.name
+      %td= toast.groups.map{ |group| group.name }.join(', ') unless toast.groups.empty?
+      %td
+        = link_to edit_toast_path(toast) do
+          %span.fa.fa-edit
+        = link_to toast_path(toast), method: :delete, data: {confirm: 'Are you sure?'} do
+          %span.fa.fa-trash

@@ -1,12 +1,4 @@
-%h2 Create new subject
-= form_for @subject, class: 'form' do |f|
-  .form-group
-    .col-lg-1
-      = f.label :name
-    .col-lg-6
-      = f.text_field :name, class: 'form-control'
-    .col-lg-5
-      = f.submit 'Create subject', class: 'btn btn-default'
+= render partial: 'subjects/modal/add_subject'
 %h2 Subjects list
 %table.table.table-striped
   %tr
@@ -20,3 +12,5 @@
       %td
         = link_to edit_subject_path(subject) do
           %span.fa.fa-edit
+= link_to '#ModalAddSubject', data: {toggle: 'modal'} do
+  %h3 Create new

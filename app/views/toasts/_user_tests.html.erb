@@ -1,6 +1,0 @@
-<% toasts = current_user.toasts %>
-<% if toasts %>
-    <% toasts.each do |toast| %>
-        <span><%= link_to toast.name, toast_path(toast) %> </span>
-    <% end %>
-<% end %>

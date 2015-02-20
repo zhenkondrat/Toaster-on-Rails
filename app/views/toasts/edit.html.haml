@@ -1,0 +1,53 @@
+%h2 Manage toast:
+= form_for @toast, class: 'form' do |f|
+  %h2.center Base
+  .form-group
+    = f.label :subject_id, 'Subject'
+    = f.collection_select :subject_id, Subject.all, :id, :name, {prompt: true}, {class: 'form-control'}
+  .form-group
+    = f.label :mark_system_id, 'Mark system'
+    = f.collection_select :mark_system_id, MarkSystem.all, :id, :name, {prompt: true}, {class: 'form-control'}
+  .form-group
+    = f.label :name
+    = f.text_field :name, class: 'form-control'
+  %h2.center Additional configuration
+  .form-group
+    = f.label :weight1, 'Weight of question first type(logical)'
+    = f.text_field :weight1, class: 'form-control'
+  .form-group
+    = f.label :weight2, 'Weight of question second type(plural)'
+    = f.text_field :weight2, class: 'form-control'
+  .form-group
+    = f.label :weight3, 'Weight of question third type(many-to-many)'
+    = f.text_field :weight3, class: 'form-control'
+  .form-group
+    = f.label :questions_count, 'Questions count in one toast session'
+    = f.text_field :questions_count, class: 'form-control'
+  .form-group
+    = f.label :question_time, 'Time to answer question'
+    = f.text_field :question_time, class: 'form-control'
+  .col.col-lg-12
+    .pull-right
+      = f.submit 'Save', class: 'btn btn-success'
+      = link_to 'Cancel', toasts_path, class: 'btn btn-default'
+  %h2.center Questions list
+  %table.table.table-striped
+    %tr
+      %th Text
+      %th Type
+      %th Actions
+    - @toast.questions.each do |question|
+      %tr
+        %td= question.name
+        - type = case question.question_type
+          - when 1 then 'logical'
+          - when 2 then 'plural'
+          - when 3 then 'many to many'
+        %td= type
+        %td
+          = link_to edit_question_path(question) do
+            %span.fa.fa-edit
+          = link_to question_path(question), method: :delete, data: {confirm: 'Are you sure?'} do
+            %span.fa.fa-trash
+  .pull-right
+    %h3= link_to 'Add new', new_question_path(toast: @toast)

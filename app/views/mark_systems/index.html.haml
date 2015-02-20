@@ -4,12 +4,12 @@
     %th Name
     %th Marks
     %th Actions
-  - @mark_systems.each do |mark_sytem|
+  - @mark_systems.each do |mark_system|
     %tr
-      %td= mark_sytem.name
-      %td= mark_sytem.marks.order(:percent).map{ |mark| mark.presentation }.join(', ') unless mark_sytem.marks.empty?
+      %td= mark_system.name
+      %td= mark_system.marks.order(:percent).map{ |mark| mark.presentation }.join(', ') unless mark_system.marks.empty?
       %td
-        = link_to edit_mark_system_path(mark_sytem) do
+        = link_to edit_mark_system_path(mark_system) do
           %span.fa.fa-edit
-        = link_to mark_system_path(mark_sytem), method: :delete, data: {confirm: 'Are you sure?'} do
+        = link_to mark_system_path(mark_system), method: :delete, data: {confirm: 'Are you sure?'} do
           %span.fa.fa-trash

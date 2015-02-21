@@ -16,3 +16,4 @@
         = f.text_field :name, class: 'form-control'
     .panel-footer
       = f.submit 'Create toast', class: 'btn btn-info'
+      .pull-right= link_to 'All toasts', toasts_path, class: 'btn btn-warning'

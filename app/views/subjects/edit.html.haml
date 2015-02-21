@@ -1,7 +1,11 @@
-%h2 Edit Subject '#{@subject.name}'
-= form_for @subject, class: 'form' do |f|
-  .form-group
-    = f.label :name
-    = f.text_field :name, class: 'form-control'
-  %div
-    = f.submit 'Update subject', class: 'btn btn-default'
+.panel.panel-warning.different
+  .panel-heading
+    %h3 Edit subject
+  = form_for @subject, class: 'form' do |f|
+    .panel-body
+      .form-group
+        = f.label :name
+        = f.text_field :name, class: 'form-control'
+    .panel-footer
+      = f.submit 'Update subject', class: 'btn btn-info'
+      = link_to 'Cancel', subjects_path, class: 'btn btn-default'

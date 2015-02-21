@@ -1,17 +1,25 @@
-%h2 Toasts:
-%table.table.table-striped
-  %tr
-    %th Name
-    %th Subject
-    %th Groups
-    %th Actions
-  - @toasts.each do |toast|
-    %tr
-      %td= toast.name
-      %td= toast.subject.name
-      %td= toast.groups.map{ |group| group.name }.join(', ') unless toast.groups.empty?
-      %td
-        = link_to edit_toast_path(toast) do
-          %span.fa.fa-edit
-        = link_to toast_path(toast), method: :delete, data: {confirm: 'Are you sure?'} do
-          %span.fa.fa-trash
+.panel.panel-warning.main
+  .panel-heading
+    %h3 Toasts
+  .panel-body
+    %h4 Available toasts list:
+    %table.table.table-striped
+      %tr
+        %th Name
+        %th Subject
+        %th Groups
+        %th Actions
+      - @toasts.each do |toast|
+        %tr
+          %td= toast.name
+          %td= toast.subject.name
+          %td= toast.groups.map{ |group| group.name }.join(', ') unless toast.groups.empty?
+          %td.actions
+            = link_to edit_toast_path(toast) do
+              .btn.btn-sm.btn-info
+                %i.fa.fa-edit
+            = link_to toast_path(toast), method: :delete, data: {confirm: 'Are you sure?'} do
+              .btn.btn-sm.btn-danger
+                %i.fa.fa-trash
+  .panel-footer
+    = link_to 'Create toast', new_toast_path, class: 'btn btn-default'

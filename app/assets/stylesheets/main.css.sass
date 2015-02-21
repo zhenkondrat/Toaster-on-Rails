@@ -36,6 +36,9 @@ a
 .mark-operations
   text-align: center
 
+a:hover
+  color: red
+
 // bootstrap
 
 .container
@@ -59,5 +62,20 @@ a
   line-height: 1.33
   border-radius: 35px
 
-a:hover
-  color: red
+
+td.actions
+  a
+    margin-right: 10px
+    &:hover
+      text-decoration: none
+    i
+      width: 15px
+
+.panel.main
+  .panel-body
+    height: 500px
+
+.panel
+  h3
+    margin-top: 5px
+    margin-bottom: 5px

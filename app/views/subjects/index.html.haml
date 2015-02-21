@@ -1,16 +1,24 @@
 = render partial: 'subjects/modal/add_subject'
-%h2 Subjects list
-%table.table.table-striped
-  %tr
-    %th Name
-    %th Toasts
-    %th Actions
-  - @subjects.each do |subject|
-    %tr
-      %td= subject.name
-      %td= subject.toasts.map{|toast| toast.name}.join(', ')
-      %td
-        = link_to edit_subject_path(subject) do
-          %span.fa.fa-edit
-= link_to '#ModalAddSubject', data: {toggle: 'modal'} do
-  %h3 Create new
+.panel.panel-warning.main
+  .panel-heading
+    %h3 Subjects
+  .panel-body
+    %h4 Available subjects list:
+    %table.table.table-striped
+      %tr
+        %th Name
+        %th Toasts
+        %th Actions
+      - @subjects.each do |subject|
+        %tr
+          %td= subject.name
+          %td= subject.toasts.map{|toast| toast.name}.join(', ')
+          %td.actions
+            = link_to edit_subject_path(subject) do
+              .btn.btn-sm.btn-info
+                %i.fa.fa-edit
+            = link_to subject_path(subject), method: :delete, data: {confirm: 'Are you sure?'} do
+              .btn.btn-sm.btn-danger
+                %i.fa.fa-trash
+  .panel-footer
+    = link_to 'New Subject', '#ModalAddSubject', data: {toggle: 'modal'}, class: 'btn btn-default'

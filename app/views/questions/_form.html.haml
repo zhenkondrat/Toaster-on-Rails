@@ -1,0 +1,15 @@
+.row
+  .col-lg-4.center
+    %button.btn.btn-xl.btn-circle.btn-success{onclick: 'change_type(1)'}
+      %i.fa.fa-leaf
+  .col-lg-4.center
+    %button.btn.btn-xl.btn-circle.btn-warning{onclick: 'change_type(2)'}
+      %i.fa.fa-check-square
+  .col-lg-4.center
+    %button.btn.btn-xl.btn-circle.btn-danger{onclick: 'change_type(3)'}
+      %i.fa.fa-random
+.row.center
+  %h3#question-type Logical
+= render partial: 'logical_form' if @question.question_type == 1 || !@question.question_type
+= render partial: 'plural_form' if @question.question_type == 2 || !@question.question_type
+= render partial: 'many_to_many_form' if @question.question_type == 3 || !@question.question_type

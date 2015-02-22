@@ -8,11 +8,11 @@
     <%=
         case @question.question_type
         when 1
-          render 'type_1'
+          render 'logical_form'
         when 2
-          render 'type_2'
+          render 'plural_form'
         else
-          render 'type_3'
+          render 'many_to_many_form'
         end
     %>
     <p class="right"><%= t.submit "Зберегти" %></p>

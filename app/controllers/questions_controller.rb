@@ -1,8 +1,8 @@
 class QuestionsController < ApplicationController
 
   def new
-    @question = Question.new
-    @toasts = Toast.find(params[:question_toast_id])
+    @question = Question.new(toast_id: params[:toast])
+    @answers = [plural: Answer2.new, many_to_many: Answer3.new]
   end
 
   def create

@@ -36,6 +36,9 @@ a
 .mark-operations
   text-align: center
 
+a:hover
+  color: red
+
 // bootstrap
 
 .container
@@ -51,6 +54,9 @@ a
 .form-control
   margin: 10px 0
 
+.form-control.default
+  margin-top: 0
+
 .btn-circle.btn-xl
   width: 70px
   height: 70px
@@ -59,5 +65,35 @@ a
   line-height: 1.33
   border-radius: 35px
 
-a:hover
-  color: red
+.btn-square.btn-xl
+  width: 70px
+  height: 70px
+  padding: 10px 16px
+  font-size: 24px
+  line-height: 1.33
+  border-radius: 0
+
+td.actions
+  a
+    margin-right: 10px
+    &:hover
+      text-decoration: none
+    i
+      width: 15px
+
+.panel.main
+  .panel-body
+    height: 500px
+
+.panel.different
+  .panel-body
+    min-height: 500px
+
+.panel-heading
+  h3
+    margin-top: 5px
+    margin-bottom: 5px
+
+.input-group-addon
+  input[type= checkbox]
+    margin-top: 4px

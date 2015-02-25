@@ -15,5 +15,7 @@
 //= require turbolinks
 //= require bootstrap
 //= require main
+//= require question
+//= require ckeditor/init
 //= require_tree .
 

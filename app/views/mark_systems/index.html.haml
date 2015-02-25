@@ -1,15 +1,23 @@
-%h2 Mark systems:
-%table.table.table-striped
-  %tr
-    %th Name
-    %th Marks
-    %th Actions
-  - @mark_systems.each do |mark_system|
-    %tr
-      %td= mark_system.name
-      %td= mark_system.marks.order(:percent).map{ |mark| mark.presentation }.join(', ') unless mark_system.marks.empty?
-      %td
-        = link_to edit_mark_system_path(mark_system) do
-          %span.fa.fa-edit
-        = link_to mark_system_path(mark_system), method: :delete, data: {confirm: 'Are you sure?'} do
-          %span.fa.fa-trash
+.panel.panel-warning.main
+  .panel-heading
+    %h3 Mark systems
+  .panel-body
+    %h4 Available mark systems list:
+    %table.table.table-striped
+      %tr
+        %th Name
+        %th Marks
+        %th Actions
+      - @mark_systems.each do |mark_system|
+        %tr
+          %td= mark_system.name
+          %td= mark_system.marks.order(:percent).map{ |mark| mark.presentation }.join(', ') unless mark_system.marks.empty?
+          %td.actions
+            = link_to edit_mark_system_path(mark_system) do
+              .btn.btn-sm.btn-info
+                %i.fa.fa-edit
+            = link_to mark_system_path(mark_system), method: :delete, data: {confirm: 'Are you sure?'} do
+              .btn.btn-sm.btn-danger
+                %i.fa.fa-trash
+  .panel-footer
+    = link_to 'New Mark system', new_mark_system_path, class: 'btn btn-default'

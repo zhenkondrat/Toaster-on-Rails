@@ -1,0 +1,38 @@
+= form_for @question do |f|
+  .panel-body
+    .row
+      .col-lg-4.center
+        - config = {onclick: 'return false', data: {question_type: 1}}
+        - config[:disabled] = true unless @question.question_type == 1 && @question.question_type
+        %button.btn.btn-xl.btn-circle.btn-success.change-type{config}
+          %i.fa.fa-leaf
+      .col-lg-4.center
+        - config = {onclick: 'return false', data: {question_type: 2}}
+        - config[:disabled] = true unless @question.question_type == 2 && @question.question_type
+        %button.btn.btn-xl.btn-circle.btn-warning.change-type{config}
+          %i.fa.fa-check-square
+      .col-lg-4.center
+        - config = {onclick: 'return false', data: {question_type: 3}}
+        - config[:disabled] = true unless @question.question_type == 3 && @question.question_type
+        %button.btn.btn-xl.btn-circle.btn-danger.change-type{config}
+          %i.fa.fa-random
+    .row.center
+      - type = case @question.question_type
+      -   when 1 then 'Logical'
+      -   when 2 then 'Plural'
+      -   when 3 then 'Many to Many'
+      -   else 'Logical'
+      %h3#question-type #{type}
+    = f.hidden_field :question_type
+    = f.hidden_field :toast_id
+    .form-group
+      %h4 Question text:
+      = f.cktext_area :text
+    .form-group
+      %h4 Answers:
+      = render partial: 'logical_form', locals: {f: f} if @question.question_type == 1 && @question.question_type
+      = render partial: 'plural_form' if @question.question_type == 2 && @question.question_type
+      = render partial: 'many_to_many_form' if @question.question_type == 3 && @question.question_type
+  .panel-footer.right
+    = f.submit current_page?(new_question_path) ? 'Create' : 'Save', class: 'btn btn-info'
+    = link_to 'Cancel', edit_toast_path(@question.toast_id), class: 'btn btn-default'

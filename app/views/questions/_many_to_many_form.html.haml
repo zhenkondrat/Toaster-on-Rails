@@ -1,2 +1,17 @@
 #many-to-many-form.hidden
-  Many to Many can be now
+  .col-lg-6
+    .form-group.center
+      %button.btn.btn-square.btn-xl.btn-info.add-many-left{ onclick: 'return false' }
+        %i.fa.fa-plus
+      %button.btn.btn-square.btn-xl.btn-info.del-many-left{ onclick: 'return false' }
+        %i.fa.fa-minus
+    .form-group#many-answers-right{ data: {count: @question.answer3s.count} }
+      .form-group= text_field_tag 'many_answers[new0[text]]', '', class: 'form-control'
+  .col-lg-6
+    .form-group.center
+      %button.btn.btn-square.btn-xl.btn-info.add-many-right{ onclick: 'return false' }
+        %i.fa.fa-plus
+      %button.btn.btn-square.btn-xl.btn-info.del-many-right{ onclick: 'return false' }
+        %i.fa.fa-minus
+    .form-group#many-answers-right{ data: {count: @question.answer3s.count} }
+      .form-group= text_field_tag 'many_answers[new0[text]]', '', class: 'form-control'

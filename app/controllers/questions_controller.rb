@@ -1,120 +1,76 @@
 class QuestionsController < ApplicationController
+  before_action :set_question, except: [:new, :create]
 
   def new
     @question = Question.new(toast_id: params[:toast])
-    @answers = [plural: Answer2.new, many_to_many: Answer3.new]
+    @plural_answer, @many_to_many_answer = Answer2.new, Answer3.new
   end
 
   def create
-    type = question_params[:question_type]
-    toast_id = question_params[:question_toast_id]
-
-    if type.nil?
-      flash[:error] = "Ви не вказали тип питання"
-    else
-      question = Question.new
-      question.toast_id = question_params[:question_toast_id]
-      question.condition = question_params[:condition]
-      question.question_type = question_params[:question_type]
-      question.save!
-      case type
-      when "1"
-        create_answer1 question
-      when "2"
-        create_answer2 question
-      else
-        create_answer3 question
+    @question = Question.new(question_params)
+    if @question.save
+      case @question.question_type
+        when 2
+          plural_answers_params.each_value{ |answer| @question.answer2s.create(text: answer['text'], is_right: answer['is_right'] || false) }
+        when 3
+          nil
       end
+      flash[:success] = 'Question successfully created'
+    else
+      flash[:error] = %q|Question can't be created|
     end
-    redirect_to new_question_path(:question_toast_id => toast_id)
+    redirect_to edit_toast_path(@question.toast)
   end
 
   def edit
-    @question = Question.find(params[:id])
-    case @question.question_type
-    when 1
-      @answer = Answer1.where(:question_id => @question.id).first
-    when 2
-      @answers = Answer2.where(:question_id => @question.id)
-    else
-      answers = Answer3.where(:question_id => @question.id)
-      @answers1 = answers.where(:side => 0)
-      @answers2 = answers.where(:side => 1)
-    end
+    @answers = case @question.question_type
+               when 2 then @question.answer2s
+               when 3 then @question.answer3s
+               end
   end
 
   def update
-    question = Question.find(params[:id])
-    question.condition = question_params[:condition]
-    question.remove_answers
-    case question.question_type
-    when 1
-      create_answer1 question
-    when 2
-      create_answer2 question
+    if @question.update(question_params)
+      case @question.question_type
+        when 2
+          plural_answers_params.each_pair do |key, answer|
+            if key.index('new')
+              @question.answer2s.create(text: answer['text'], is_right: answer['is_right'] || false)
+            else
+              Answer2.find(key.to_s.to_i).update(text: answer['text'], is_right: answer['is_right'] || false)
+            end
+          end
+        when 3
+          nil
+      end
+      flash[:success] = 'Question successfully updated'
     else
-      create_answer3 question
+      flash[:error] = %q|Question can't be updated|
     end
-    flash[:error] = 'Питання успішно оновлено'
-    redirect_to edit_toast_path(question.toast_id)
+    redirect_to edit_toast_path(@question.toast)
   end
 
   def destroy
-    question = Question.find(params[:id])
-    toast_id = question.toast_id
-    question.destroy
-
-    flash[:notice] = 'Питання успішно видалено'
-    redirect_to edit_toast_path(toast_id)
+    toast = @question.toast
+    if @question.destroy
+      flash[:success] = 'Question is successfully deleted'
+    else
+      flash[:success] = %q|Question can't be deleted|
+    end
+    redirect_to edit_toast_path(toast)
   end
 
   private
 
-  def create_answer1 question
-    answer = Answer1.new
-    answer.question_id = question.id
-    answer.is_right = params[:answer1]
-    answer.save!
-  end
-
-  def create_answer2 question
-    i = 0
-    while params.include? ('answer_'+i.to_s)
-      answer = Answer2.new
-      answer.question_id = question.id
-      answer.answer = params['answer_'+i.to_s]
-      answer.is_right = params[:answer_check].include? i.to_s
-      answer.save!
-      i+=1
-    end
-  end
-
-  def create_answer3 question
-    compare = []
-    i = 0
-    while params.include? ('answer_left_'+i.to_s)
-      answer = Answer3.new
-      answer.question_id = question.id
-      answer.field = params['answer_left_'+i.to_s]
-      answer.side = 0
-      answer.save!
-      compare.push answer.id
-      i+=1
-    end
-    compare.reverse!
-    i = 0
-    while params.include? ('answer_right_'+i.to_s)
-      answer = Answer3.new
-      answer.question_id = question.id
-      answer.field = params['answer_right_'+i.to_s]
-      answer.side = 1
-      answer.compare = compare.pop
-      answer.save!
-      i+=1
-    end
+  def set_question
+    @question = Question.find(params[:id])
   end
 
   def question_params
-    params.require(:question).permit(:question_toast_id, :condition, :question_type)
+    params.require(:question).permit(:toast_id, :text, :question_type, :is_right)
+  end
+
+  def plural_answers_params
+    params.require(:plural_answers)
   end
 end

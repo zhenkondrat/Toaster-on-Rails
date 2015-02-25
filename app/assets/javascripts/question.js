@@ -2,32 +2,6 @@
  * Created by kris on 05.10.14.
  */
 
-function change_type(choice){
-  var text = '';
-  console.log(choice);
-  switch(choice){
-    case 1:
-      text = 'Logical';
-      $('#logical-form')[0].className = '';
-      $('#plural-form')[0].className = 'hidden';
-      $('#many-to-many-form')[0].className = 'hidden';
-      break;
-    case 2:
-      text = 'Plural';
-      $('#logical-form')[0].className = 'hidden';
-      $('#plural-form')[0].className = '';
-      $('#many-to-many-form')[0].className = 'hidden';
-      break;
-    case 3:
-      text = 'Many to Many';
-      $('#logical-form')[0].className = 'hidden';
-      $('#plural-form')[0].className = 'hidden';
-      $('#many-to-many-form')[0].className = '';
-      break;
-  }
-  $('#question-type')[0].textContent = text;
-}
-
 //var ks = 0;
 //var kl = 0;
 //var kr = 0;

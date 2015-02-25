@@ -1,16 +1,7 @@
 #logical-form
-  = form_for @question do |f|
-    .form-group
-      %h4 Question text:
-      = f.cktext_area :text
-    .form-group
-      %h4 Answer:
-    .form-group
-      = f.radio_button :is_right, true
-      Yes
-    .form-group
-      = f.radio_button :is_right, false
-      No
-    .form-group.pull-right
-      = f.submit current_page?(new_question_path) ? 'Create' : 'Save', class: 'btn btn-info'
-      = link_to 'Cancel', edit_toast_path(@question.toast_id), class: 'btn btn-default'
+  .form-group
+    = f.radio_button :is_right, true
+    Yes
+  .form-group
+    = f.radio_button :is_right, false
+    No

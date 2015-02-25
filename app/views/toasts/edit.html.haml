@@ -41,7 +41,7 @@
           %th Actions
         - @toast.questions.each do |question|
           %tr
-            %td= question.text
+            %td= question.text.html_safe
             - type = case question.question_type
               - when 1 then 'logical'
               - when 2 then 'plural'

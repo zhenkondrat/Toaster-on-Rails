@@ -7,6 +7,8 @@ class Toast < ActiveRecord::Base
   has_many :results, dependent: :delete_all
   validates :subject, :name, :mark_system, presence: true
 
+  self.per_page = 10
+
   def self.find_toasts(params)
     toasts = Toast.all
     toasts = toasts.where(subject_id: params[:subject]) unless params[:subject].blank?

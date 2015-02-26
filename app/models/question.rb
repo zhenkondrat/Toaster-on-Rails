@@ -5,6 +5,8 @@ class Question < ActiveRecord::Base
   validates :question_type, inclusion: { in: [1, 2, 3] }
   validates :question_type, :text, :toast, presence: true
 
+  self.per_page = 10
+
   def answers
     case question_type
     when 2

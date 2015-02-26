@@ -5,4 +5,6 @@ class Group < ActiveRecord::Base
   has_many :toasts, through: :toast_groups
 
   validates :name, presence: true
+
+  self.per_page = 10
 end

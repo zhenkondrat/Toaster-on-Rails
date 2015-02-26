@@ -1,8 +1,0 @@
-<% if @action == :reg_group_to_toast %>
-    <%= render 'reg_group' %>
-<% else %>
-    <h2 style="text-align: center">Групи</h2>
-    <div class="page_content">
-      <%= render 'groups/groups' if @groups %>
-    </div>
-<% end %>

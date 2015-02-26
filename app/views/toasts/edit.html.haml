@@ -39,7 +39,7 @@
           %th Text
           %th Type
           %th Actions
-        - @toast.questions.each do |question|
+        - @questions.each do |question|
           %tr
             %td= question.text.html_safe
             - type = case question.question_type
@@ -54,5 +54,6 @@
               = link_to question_path(question), method: :delete, data: {confirm: 'Are you sure?'} do
                 .btn.btn-sm.btn-danger
                   %i.fa.fa-trash
-      .pull-right
+      .right= will_paginate @questions
+      .right
         %h3= link_to 'Add new', new_question_path(toast: @toast)

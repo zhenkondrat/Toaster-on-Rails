@@ -3,7 +3,7 @@ class ToastsController < ApplicationController
   before_action :set_toast, except: [:new, :create, :index]
 
   def index
-    @toasts = Toast.all
+    @toasts = Toast.paginate(page: params[:page])
   end
 
   def new
@@ -20,10 +20,18 @@ class ToastsController < ApplicationController
   end
 
   def edit
+    @questions = @toast.questions.paginate(page: params[:page])
+  end
+
+  def update
+    if @toast.update(toast_params)
+      redirect_to edit_toast_path(@toast), notice: 'Toast successfully updated'
+    else
+      redirect_to new_toast_path(@toast), error: 'Something went wrong'
+    end
   end
 
   def show
-
   end
 
   private

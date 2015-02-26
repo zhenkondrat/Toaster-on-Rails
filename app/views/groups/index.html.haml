@@ -1,0 +1,25 @@
+= render partial: 'groups/modal/add_group'
+.panel.panel-warning.main
+  .panel-heading
+    %h3 Groups
+  .panel-body
+    %h4 Available groups list:
+    %table.table.table-striped
+      %tr
+        %th Name
+        %th Joined users
+        %th Actions
+      - @groups.each do |group|
+        %tr
+          %td= group.name
+          %td= group.users.map{|user| user.last_name}.join(', ')
+          %td.actions
+            = link_to edit_group_path(group) do
+              .btn.btn-sm.btn-info
+                %i.fa.fa-edit
+            = link_to group_path(group), method: :delete, data: {confirm: 'Are you sure?'} do
+              .btn.btn-sm.btn-danger
+                %i.fa.fa-trash
+    .right= will_paginate @groups
+  .panel-footer
+    = link_to 'New Group', '#ModalAddGroup', data: {toggle: 'modal'}, class: 'btn btn-default'

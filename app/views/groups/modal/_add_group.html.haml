@@ -1,0 +1,14 @@
+#ModalAddGroup.modal.fade{'aria-hidden' => 'true', 'aria-labelledby' => 'myModalLabel', role: 'dialog', tabindex: '-1'}
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button.close{'aria-hidden' => 'true', 'data-dismiss' => 'modal', :type => 'button'} &times;
+        %h4.modal-title Add new group
+      = form_for @group, class: 'form' do |f|
+        .modal-body
+          = f.label :name
+          = f.text_field :name, class: 'form-control'
+        .modal-footer
+          .actions
+            = submit_tag 'Create', class: 'btn btn-info'
+            %button.btn.btn-default{'data-dismiss' => 'modal', :type => 'button'} Close

@@ -43,6 +43,9 @@ gem 'capistrano-rails'
 gem 'capistrano-bundler'
 gem 'capistrano-rvm'
 
+# Paginate
+gem 'will_paginate', '~> 3.0.6'
+
 group :test, :development do
   gem 'byebug'
   # gem 'spring'

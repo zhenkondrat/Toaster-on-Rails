@@ -1,9 +1,0 @@
-<% if page == 0 && @users %>
-        <%= button_tag 'Видалити', :name => 'rm_users', :class => 'admin_buttons_small' , :value => true %>
-        <%= button_tag 'Реєструвати', :name => 'reg_users_in_group', :class => 'admin_buttons_small', :value => true %>
-<% end %>
-
-<% if page == 1 && @groups %>
-        <%= button_tag 'Додати', :name => 'reg_group', :class => 'admin_buttons_small', :value => true %>
-        <%= button_tag 'Видалити', :name => 'rm_groups', :class => 'admin_buttons_small', :value => true %>
-<% end %>

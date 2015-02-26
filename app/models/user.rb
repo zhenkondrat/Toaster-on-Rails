@@ -6,6 +6,8 @@ class User < ActiveRecord::Base
   validates :login, uniqueness: true
   validate :have_user_surname?
 
+  self.per_page = 30
+
   def email_required?
     false
   end

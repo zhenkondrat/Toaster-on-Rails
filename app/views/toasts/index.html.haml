@@ -21,5 +21,6 @@
             = link_to toast_path(toast), method: :delete, data: {confirm: 'Are you sure?'} do
               .btn.btn-sm.btn-danger
                 %i.fa.fa-trash
+    .right= will_paginate @toasts
   .panel-footer
     = link_to 'New toast', new_toast_path, class: 'btn btn-default'

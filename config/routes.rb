@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # user
+  resource :users
   get 'invite_code', to: 'users#generate_invite_code'
 
   # results

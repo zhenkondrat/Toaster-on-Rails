@@ -1,58 +1,59 @@
 .panel.panel-warning
   .panel-heading
-    %h3 Manage toast
+    %h3 #{I18n.t 'interface.toast.edit_toast'}
   .panel-body
     = form_for @toast, class: 'form' do |f|
-      %h2.center Base
+      %h2.center #{I18n.t 'interface.toast.base'}
       .form-group
-        = f.label :subject_id, 'Subject'
+        = f.label :subject_id, I18n.t('interface.subject.subject')
         = f.collection_select :subject_id, Subject.all, :id, :name, {prompt: true}, {class: 'form-control'}
       .form-group
-        = f.label :mark_system_id, 'Mark system'
+        = f.label :mark_system_id, I18n.t('interface.mark.mark_system')
         = f.collection_select :mark_system_id, MarkSystem.all, :id, :name, {prompt: true}, {class: 'form-control'}
       .form-group
-        = f.label :name
+        = f.label :name, I18n.t('interface.name')
         = f.text_field :name, class: 'form-control'
       %h2.center Additional configuration
       .form-group
-        = f.label :weight1, 'Weight of question first type(logical)'
+        = f.label :weight1, I18n.t('interface.toast.weight_logical')
         = f.text_field :weight1, class: 'form-control'
       .form-group
-        = f.label :weight2, 'Weight of question second type(plural)'
+        = f.label :weight2, I18n.t('interface.toast.weight_plural')
         = f.text_field :weight2, class: 'form-control'
       .form-group
-        = f.label :weight3, 'Weight of question third type(many-to-many)'
+        = f.label :weight3, I18n.t('interface.toast.weight_many_to_many')
         = f.text_field :weight3, class: 'form-control'
       .form-group
-        = f.label :questions_count, 'Questions count in one toast session'
+        = f.label :questions_count, I18n.t('interface.toast.question_count')
         = f.text_field :questions_count, class: 'form-control'
       .form-group
-        = f.label :question_time, 'Time to answer question'
+        = f.label :question_time, I18n.t('interface.toast.question_time')
         = f.text_field :question_time, class: 'form-control'
       .col.col-lg-12
         .pull-right
-          = f.submit 'Save', class: 'btn btn-success'
-          = link_to 'Cancel', toasts_path, class: 'btn btn-default'
-      %h2.center Questions list
+          = f.submit I18n.t('interface.save'), class: 'btn btn-success'
+          = link_to I18n.t('interface.cancel'), toasts_path, class: 'btn btn-default'
+      %h2.center #{I18n.t 'interface.toast.question_list'}
       %table.table.table-striped
         %tr
-          %th Text
-          %th Type
-          %th Actions
-        - @toast.questions.each do |question|
+          %th #{I18n.t 'interface.text'}
+          %th #{I18n.t 'interface.type'}
+          %th #{I18n.t 'interface.actions'}
+        - @questions.each do |question|
           %tr
             %td= question.text.html_safe
             - type = case question.question_type
-              - when 1 then 'logical'
-              - when 2 then 'plural'
-              - when 3 then 'many to many'
+              - when 1 then I18n.t('interface.question.logical_sm')
+              - when 2 then I18n.t('interface.question.plural_sm')
+              - when 3 then I18n.t('interface.question.many_to_many_sm')
             %td= type
             %td.actions
               = link_to edit_question_path(question) do
                 .btn.btn-sm.btn-info
                   %i.fa.fa-edit
-              = link_to question_path(question), method: :delete, data: {confirm: 'Are you sure?'} do
+              = link_to question_path(question), method: :delete, data: {confirm: I18n.t('interface.del_attention')} do
                 .btn.btn-sm.btn-danger
                   %i.fa.fa-trash
-      .pull-right
-        %h3= link_to 'Add new', new_question_path(toast: @toast)
+      .right= will_paginate @questions
+      .right
+        %h3= link_to I18n.t('interface.toast.add_new'), new_question_path(toast: @toast)

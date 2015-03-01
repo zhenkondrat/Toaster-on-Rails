@@ -4,7 +4,7 @@ class SubjectsController < ApplicationController
   before_action :set_subject, except: [:create, :index]
 
   def index
-    @subjects = Subject.all
+    @subjects = Subject.paginate(page: params[:page])
     @subject = Subject.new
   end
 

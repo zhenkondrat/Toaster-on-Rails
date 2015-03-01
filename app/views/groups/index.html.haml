@@ -1,0 +1,25 @@
+= render partial: 'groups/modal/add_group'
+.panel.panel-warning.main
+  .panel-heading
+    %h3 #{I18n.t 'interface.group.groups'}
+  .panel-body
+    %h4 #{I18n.t 'interface.group.available_groups_list'}:
+    %table.table.table-striped
+      %tr
+        %th #{I18n.t 'interface.name'}
+        %th #{I18n.t 'interface.group.joined_users'}
+        %th #{I18n.t 'interface.actions'}
+      - @groups.each do |group|
+        %tr
+          %td= group.name
+          %td= group.users.map{|user| user.last_name}.join(', ')
+          %td.actions
+            = link_to edit_group_path(group) do
+              .btn.btn-sm.btn-info
+                %i.fa.fa-edit
+            = link_to group_path(group), method: :delete, data: {confirm: I18n.t('interface.del_attention')} do
+              .btn.btn-sm.btn-danger
+                %i.fa.fa-trash
+    .right= will_paginate @groups
+  .panel-footer
+    = link_to I18n.t('interface.group.new_group'), '#ModalAddGroup', data: {toggle: 'modal'}, class: 'btn btn-default'

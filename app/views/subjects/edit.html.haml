@@ -1,11 +1,11 @@
 .panel.panel-warning.different
   .panel-heading
-    %h3 Edit subject
+    %h3 #{I18n.t 'interface.subject.edit_subject'}
   = form_for @subject, class: 'form' do |f|
     .panel-body
       .form-group
-        = f.label :name
+        = f.label :name, I18n.t('interface.name')
         = f.text_field :name, class: 'form-control'
     .panel-footer
-      = f.submit 'Update subject', class: 'btn btn-info'
-      = link_to 'Cancel', subjects_path, class: 'btn btn-default'
+      = f.submit I18n.t('interface.subject.update_subject'), class: 'btn btn-info'
+      = link_to I18n.t('interface.cancel'), subjects_path, class: 'btn btn-default'

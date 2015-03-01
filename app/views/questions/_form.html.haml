@@ -18,10 +18,10 @@
           %i.fa.fa-random
     .row.center
       - type = case @question.question_type
-      -   when 1 then 'Logical'
-      -   when 2 then 'Plural'
-      -   when 3 then 'Many to Many'
-      -   else 'Logical'
+      -   when 1 then I18n.t('interface.question.logical')
+      -   when 2 then I18n.t('interface.question.plural')
+      -   when 3 then I18n.t('interface.question.many_to_many')
+      -   else I18n.t('interface.question.logical')
       %h3#question-type #{type}
     = f.hidden_field :question_type
     = f.hidden_field :toast_id
@@ -34,5 +34,5 @@
       = render partial: 'plural_form' if @question.question_type == 2 && @question.question_type
       = render partial: 'many_to_many_form' if @question.question_type == 3 && @question.question_type
   .panel-footer.right
-    = f.submit current_page?(new_question_path) ? 'Create' : 'Save', class: 'btn btn-info'
-    = link_to 'Cancel', edit_toast_path(@question.toast_id), class: 'btn btn-default'
+    = f.submit current_page?(new_question_path) ? I18n.t('interface.create') : I18n.t('interface.save'), class: 'btn btn-info'
+    = link_to I18n.t('interface.cancel'), edit_toast_path(@question.toast_id), class: 'btn btn-default'

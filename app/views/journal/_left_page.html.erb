@@ -1,7 +1,0 @@
-<% if @action == :reg_user %>
-    <%= render 'reg_user' %>
-<% elsif @action == :user_info %>
-    <%= render 'user_info' %>
-<% else %>
-    <%= render 'users' if @users %>
-<% end %>

@@ -4,15 +4,15 @@
 .form-signin
   .panel.panel-primary
     .panel-heading
-      %h2 Sign in
+      %h2 #{I18n.t 'interface.sign_in'}
     .panel-body
       = form_for resource, as: resource_name, url: session_path(resource_name) do |f|
         %p
-          = f.label :login
+          = f.label :login, I18n.t('interface.login')
           = f.text_field :login, autofocus: true, class: 'form-control'
         %p
-          = f.label :password
+          = f.label :password, I18n.t('interface.password')
           = f.password_field :password, autocomplete: 'off', class: 'form-control'
         %p
-        = f.submit 'Login', class: 'btn btn-lg btn-primary btn-block'
-        = link_to 'Registration', new_user_registration_path
+        = f.submit I18n.t('interface.sign_in'), class: 'btn btn-lg btn-primary btn-block'
+        = link_to I18n.t('interface.registration'), new_user_registration_path

@@ -225,6 +225,8 @@ en:
     del_attention: Are you sure?
     text: Text
     type: Type
+    change: change
+    check: Check
     menu:
       manage_toasts: Manage Toasts
       list: List
@@ -248,6 +250,8 @@ en:
       available_groups_list: Available groups list
       joined_users: Joined users
       new_group: New Group
+      add_users: Add users
+      all_groups: All groups
     mark:
       marks: Marks
       mark_system: Mark system

@@ -256,7 +256,7 @@ uk:
     login: Логін
     last_name: Прізвище
     first_name: Ім'я
-    father_name: По-батьлкові
+    father_name: По-батькові
     invite_code: Код-запрошення
     password: Пароль
     password_confirmation: Пароль ще раз
@@ -271,6 +271,8 @@ uk:
     del_attention: Ви впевнені?
     text: Текст
     type: Тип
+    change: редаг.
+    check: Познач.
     menu:
       manage_toasts: Менеджер тестів
       list: Список
@@ -294,6 +296,8 @@ uk:
       available_groups_list: Список груп
       joined_users: Користувачі
       new_group: Нова група
+      add_users: Додати користувачів
+      all_groups: Список груп
     mark:
       marks: Оцінки
       mark_system: Система оцінювання
@@ -301,7 +305,7 @@ uk:
       presentation: Оцінка
       percent: Відсоток
       edit_mark_system: Редагувати систему оцінювання
-      all_mark_systems: Всі системи оцінювання
+      all_mark_systems: Список систем оцінювання
       available_mark_systems_list: Список систем оцінювання
       new_mark_system: Нова система оцінювання
       create_new_mark_system: Створити нову систему оцінювання
@@ -346,4 +350,4 @@ uk:
       new_toast: Новий тест
       create_new_toast: Створити новий тест
       create_toast: Створити тест
-      all_toasts: Всі тести
+      all_toasts: Список тестів

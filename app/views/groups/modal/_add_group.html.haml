@@ -10,5 +10,5 @@
           = f.text_field :name, class: 'form-control'
         .modal-footer
           .actions
-            = submit_tag I18n.t('interface.create'), class: 'btn btn-info'
+            = submit_tag @group.name.nil? ? I18n.t('interface.create') : I18n.t('interface.save'), class: 'btn btn-info'
             %button.btn.btn-default{'data-dismiss' => 'modal', :type => 'button'} #{I18n.t 'interface.close'}

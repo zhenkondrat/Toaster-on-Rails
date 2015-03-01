@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
   validates :login, uniqueness: true
   validate :have_user_surname?
 
-  self.per_page = 30
+  self.per_page = 10
 
   def email_required?
     false
@@ -29,6 +29,16 @@ class User < ActiveRecord::Base
 
   def admin?
     admin
+  end
+
+  class << self
+    def admins
+      User.where(admin: true)
+    end
+
+    def users
+      User.where(admin: false)
+    end
   end
 
   private

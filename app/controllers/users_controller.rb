@@ -20,4 +20,20 @@ class UsersController < ApplicationController
     msg = {status: 'ok', admin: codes[:admin], user: codes[:user]}
     render json: msg
   end
+
+  def join_group
+    @group = Group.find(params[:group])
+    params[:reg_users].each{ |user_id| @group.user_groups.create(user_id: user_id) }
+    redirect_to edit_group_path(@group), success: 'Users are successfully joined to group'
+  end
+
+  def leave_group
+    @group = Group.find(params[:group])
+    if @group.out(params[:id])
+      flash[:success] = 'User is successfully expelled from group'
+    else
+      flash[:error] = 'Something went wrong'
+    end
+    redirect_to edit_group_path(@group)
+  end
 end

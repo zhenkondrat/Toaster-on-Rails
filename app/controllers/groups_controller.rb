@@ -18,16 +18,17 @@ class GroupsController < ApplicationController
   end
 
   def edit
-    @users = @group.users.paginate(page: params[:page])
+    @group_users = @group.users
+    @users = @group.foreign_users.paginate(page: params[:page])
   end
 
   def update
-    if @group.update subject_params
+    if @group.update group_params
       flash[:notice] = 'Group is successfully updated'
     else
       flash[:error] = 'Something went wrong'
     end
-    redirect_to groups_path
+    redirect_to edit_group_path(@group)
   end
 
   def delete

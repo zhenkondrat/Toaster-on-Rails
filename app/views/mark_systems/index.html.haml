@@ -1,13 +1,13 @@
 .panel.panel-warning.main
   .panel-heading
-    %h3 Mark systems
+    %h3 #{I18n.t 'interface.mark.mark_systems'}
   .panel-body
-    %h4 Available mark systems list:
+    %h4 #{I18n.t 'interface.mark.available_mark_systems_list'}:
     %table.table.table-striped
       %tr
-        %th Name
-        %th Marks
-        %th Actions
+        %th #{I18n.t 'interface.name'}
+        %th #{I18n.t 'interface.mark.marks'}
+        %th #{I18n.t 'interface.actions'}
       - @mark_systems.each do |mark_system|
         %tr
           %td= mark_system.name
@@ -16,9 +16,9 @@
             = link_to edit_mark_system_path(mark_system) do
               .btn.btn-sm.btn-info
                 %i.fa.fa-edit
-            = link_to mark_system_path(mark_system), method: :delete, data: {confirm: 'Are you sure?'} do
+            = link_to mark_system_path(mark_system), method: :delete, data: {confirm: I18n.t('interface.del_attention')} do
               .btn.btn-sm.btn-danger
                 %i.fa.fa-trash
     .right= will_paginate @mark_systems
   .panel-footer
-    = link_to 'New Mark system', new_mark_system_path, class: 'btn btn-default'
+    = link_to I18n.t('interface.mark.new_mark_system'), new_mark_system_path, class: 'btn btn-default'

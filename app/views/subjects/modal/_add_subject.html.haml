@@ -3,12 +3,12 @@
     .modal-content
       .modal-header
         %button.close{'aria-hidden' => 'true', 'data-dismiss' => 'modal', :type => 'button'} &times;
-        %h4.modal-title Add new subject
+        %h4.modal-title #{I18n.t 'interface.subject.add_new_subject'}
       = form_for @subject, class: 'form' do |f|
         .modal-body
-          = f.label :name
+          = f.label :name, I18n.t('interface.name')
           = f.text_field :name, class: 'form-control'
         .modal-footer
           .actions
-            = submit_tag 'Create', class: 'btn btn-info'
-            %button.btn.btn-default{'data-dismiss' => 'modal', :type => 'button'} Close
+            = submit_tag I18n.t('interface.create'), class: 'btn btn-info'
+            %button.btn.btn-default{'data-dismiss' => 'modal', :type => 'button'} #{I18n.t 'interface.cancel'}

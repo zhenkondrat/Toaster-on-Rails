@@ -1,7 +1,7 @@
 #logical-form
   .form-group
     = f.radio_button :is_right, true
-    Yes
+    #{I18n.t 'interface.question.yes'}
   .form-group
     = f.radio_button :is_right, false
-    No
+    #{I18n.t 'interface.question.no'}

@@ -46,6 +46,9 @@ gem 'capistrano-rvm'
 # Paginate
 gem 'will_paginate', '~> 3.0.6'
 
+# Localization
+gem 'rails-i18n', '~> 4.0.0'
+
 group :test, :development do
   gem 'byebug'
   # gem 'spring'

@@ -1,19 +1,19 @@
 .panel.panel-warning.different
   .panel-heading
-    %h3 Create new toast
+    %h3 #{I18n.t 'interface.toast.create_new_toast'}
   = form_for @toast, class: 'form' do |f|
     .panel-body
       .form-group
         = f.label :subject_id, 'Subject'
-        = link_to '(add new)', subjects_path
+        = link_to I18n.t('interface.toast.add_new'), subjects_path
         = f.collection_select :subject_id, Subject.all, :id, :name, {prompt: false}, {class: 'form-control'}
       .form-group
         = f.label :mark_system_id, 'Mark system'
-        = link_to '(add new)', new_mark_system_path
+        = link_to I18n.t('interface.toast.add_new'), new_mark_system_path
         = f.collection_select :mark_system_id, MarkSystem.all, :id, :name, {prompt: false}, {class: 'form-control'}
       .form-group
-        = f.label :name
+        = f.label :name, I18n.t('interface.name')
         = f.text_field :name, class: 'form-control'
     .panel-footer
-      = f.submit 'Create toast', class: 'btn btn-info'
-      .pull-right= link_to 'All toasts', toasts_path, class: 'btn btn-warning'
+      = f.submit I18n.t('interface.toast.create_toast'), class: 'btn btn-info'
+      .pull-right= link_to I18n.t('interface.toast.all_toasts'), toasts_path, class: 'btn btn-warning'

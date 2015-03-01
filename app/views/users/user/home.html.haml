@@ -2,18 +2,18 @@
 = content_for :styles do
   = stylesheet_link_tag 'student'
 .student_content
-  %p.user_big_header Ласкаво просимо
+  %p.user_big_header #{I18n.t 'interface.welcome'}
   .user_info
     .left
       %p.user_small_header Особисті дані
       %p
-        Прізвище:
+        #{I18n.t 'interface.last_name'}:
         = current_user.last_name
       %p
-        Ім'я:
+        #{I18n.t 'interface.first_name'}:
         = current_user.first_name
       %p
-        По-батькові:
+        #{I18n.t 'interface.father_name'}:
         = current_user.father_name
       %p Групи до яких належить користувач:
       %p=# render 'groups/user_groups'
@@ -24,7 +24,7 @@
       .results
         %table.table
           %tr
-            %th Предмет
+            %th #{I18n.t 'interface.subject.subject'}
             %th Назва тесту
             %th Бал
             %th Дата

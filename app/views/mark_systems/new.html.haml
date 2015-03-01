@@ -1,7 +1,7 @@
 .panel.panel-warning.different
   .panel-heading
-    %h3 Create new mark system
+    %h3 #{I18n.t 'interface.mark.create_new_mark_system'}
   .panel-body
     = render partial: 'form'
   .panel-footer.right
-    = link_to 'All toasts', toasts_path, class: 'btn btn-warning'
+    = link_to I18n.t('interface.mark.all_mark_systems'), toasts_path, class: 'btn btn-warning'

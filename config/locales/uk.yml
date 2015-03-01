@@ -1,0 +1,349 @@
+---
+uk:
+  date:
+    abbr_day_names:
+    - нд.
+    - пн.
+    - вт.
+    - ср.
+    - чт.
+    - пт.
+    - сб.
+    abbr_month_names:
+    - 
+    - січ.
+    - лют.
+    - бер.
+    - квіт.
+    - трав.
+    - черв.
+    - лип.
+    - серп.
+    - вер.
+    - жовт.
+    - лист.
+    - груд.
+    day_names:
+    - неділя
+    - понеділок
+    - вівторок
+    - середа
+    - четвер
+    - п'ятниця
+    - субота
+    formats:
+      default: "%d.%m.%Y"
+      long: "%d %B %Y"
+      short: "%d %b"
+    month_names:
+    - 
+    - Січня
+    - Лютого
+    - Березня
+    - Квітня
+    - Травня
+    - Червня
+    - Липня
+    - Серпня
+    - Вересня
+    - Жовтня
+    - Листопада
+    - Грудня
+    order:
+    - :day
+    - :month
+    - :year
+  datetime:
+    distance_in_words:
+      about_x_hours:
+        few: близько %{count} години
+        many: близько %{count} годин
+        one: близько %{count} година
+        other: близько %{count} години
+      about_x_months:
+        few: близько %{count} місяців
+        many: близько %{count} місяців
+        one: близько %{count} місяця
+        other: близько %{count} місяця
+      about_x_years:
+        few: близько %{count} років
+        many: близько %{count} років
+        one: близько %{count} року
+        other: близько %{count} року
+      almost_x_years:
+        few: майже %{count} років
+        many: майже %{count} років
+        one: майже %{count} роки
+        other: майже %{count} років
+      half_a_minute: півхвилини
+      less_than_x_minutes:
+        few: менше %{count} хвилин
+        many: менше %{count} хвилин
+        one: менше %{count} хвилини
+        other: менше %{count} хвилини
+      less_than_x_seconds:
+        few: менше %{count} секунд
+        many: менше %{count} секунд
+        one: менше %{count} секунди
+        other: менше %{count} секунди
+      over_x_years:
+        few: більше %{count} років
+        many: більше %{count} років
+        one: більше %{count} року
+        other: більше %{count} року
+      x_days:
+        few: "%{count} дні"
+        many: "%{count} днів"
+        one: "%{count} день"
+        other: "%{count} дня"
+      x_minutes:
+        few: "%{count} хвилини"
+        many: "%{count} хвилин"
+        one: "%{count} хвилина"
+        other: "%{count} хвилини"
+      x_months:
+        few: "%{count} місяці"
+        many: "%{count} місяців"
+        one: "%{count} місяць"
+        other: "%{count} місяця"
+      x_seconds:
+        few: "%{count} секунди"
+        many: "%{count} секунд"
+        one: "%{count} секунда"
+        other: "%{count} секунди"
+    prompts:
+      day: День
+      hour: Година
+      minute: Хвилина
+      month: Місяць
+      second: Секунда
+      year: Рік
+  errors:
+    format: "%{attribute} %{message}"
+    messages:
+      accepted: має бути прийнятий
+      blank: не може бути пустим
+      confirmation: не збігається з підтвердженням
+      empty: не може бути порожнім
+      equal_to: має дорівнювати %{count}
+      even: має бути парним
+      exclusion: зарезервовано
+      greater_than: має бути більше ніж %{count}
+      greater_than_or_equal_to: має бути більше ніж або дорівнювати %{count}
+      inclusion: не включено до переліку
+      invalid: недійсний
+      less_than: має бути менше ніж %{count}
+      less_than_or_equal_to: має бути менше ніж або дорівнювати %{count}
+      not_a_number: не число
+      not_an_integer: не э цілим числом
+      odd: має бути непарним
+      record_invalid: 'Виникли помилки: %{errors}'
+      taken: вже зайнятий
+      too_long:
+        few: занадто довгий (максимум %{count} знаки)
+        many: занадто довгий (максимум %{count} знаків)
+        one: занадто довгий (максимум %{count} знак)
+        other: занадто довгий (максимум %{count} знаку)
+      too_short:
+        few: занадто короткий (мінімум %{count} знаки)
+        many: занадто короткий (мінімум %{count} знаків)
+        one: занадто короткий (мінімум %{count} знак)
+        other: занадто короткий (мінімум %{count} знаку)
+      wrong_length:
+        few: неправильна довжина (має бути %{count} знаки)
+        many: неправильна довжина (має бути %{count} знаків)
+        one: неправильна довжина (має бути %{count} знак)
+        other: неправильна довжина (має бути %{count} знаку)
+    template:
+      body: 'Помилки виявлено в таких полях:'
+      header:
+        few: "%{model} не збережено через %{count} помилки"
+        many: "%{model} не збережено через %{count} помилок"
+        one: "%{model} не збережено через %{count} помилку"
+        other: "%{model} не збережено через %{count} помилки"
+  helpers:
+    select:
+      prompt: 'Оберіть: '
+    submit:
+      create: Створити %{model}
+      submit: Зберегти %{model}
+      update: Зберегти %{model}
+  number:
+    currency:
+      format:
+        delimiter: " "
+        format: "%n %u"
+        precision: 2
+        separator: ","
+        significant: false
+        strip_insignificant_zeros: false
+        unit: грн.
+    format:
+      delimiter: " "
+      precision: 3
+      separator: ","
+      significant: false
+      strip_insignificant_zeros: false
+    human:
+      decimal_units:
+        format: "%n %u"
+        units:
+          billion:
+            few: Мільярдів
+            many: Мільярдів
+            one: Мільярд
+            other: Мільярдів
+          million:
+            few: Мільйонів
+            many: Мільйонів
+            one: Мільйон
+            other: Мільйонів
+          quadrillion:
+            few: Квадрильйонів
+            many: Квадрильйонів
+            one: Кквадрильйон
+            other: Квадрильйонів
+          thousand:
+            few: Тисяч
+            many: Тисяч
+            one: Тисяча
+            other: Тисяч
+          trillion:
+            few: Трильйонів
+            many: Трильйонів
+            one: Трильйон
+            other: Трильйонів
+          unit: ''
+      format:
+        delimiter: ''
+        precision: 1
+        significant: false
+        strip_insignificant_zeros: false
+      storage_units:
+        format: "%n %u"
+        units:
+          byte:
+            few: байти
+            many: байтів
+            one: байт
+            other: байту
+          gb: ГБ
+          kb: кБ
+          mb: МБ
+          tb: ТБ
+    percentage:
+      format:
+        delimiter: ''
+    precision:
+      format:
+        delimiter: ''
+  support:
+    array:
+      last_word_connector: " та "
+      two_words_connector: " і "
+      words_connector: ", "
+  time:
+    am: до полудня
+    formats:
+      default: "%a, %d %b %Y, %H:%M:%S %z"
+      long: "%d %B %Y, %H:%M"
+      short: "%d %b, %H:%M"
+    pm: по полудні
+  interface:
+    toast: тест
+    welcome: Ласкаво просимо
+    registration: Реєстрація
+    login: Логін
+    last_name: Прізвище
+    first_name: Ім'я
+    father_name: По-батьлкові
+    invite_code: Код-запрошення
+    password: Пароль
+    password_confirmation: Пароль ще раз
+    sign_up: Зареєструватись!
+    sign_in: Ввійти
+    name: І'мя
+    create: Створити
+    save: Зберегти
+    close: Закрити
+    cancel: Назад
+    actions: Дії
+    del_attention: Ви впевнені?
+    text: Текст
+    type: Тип
+    menu:
+      manage_toasts: Менеджер тестів
+      list: Список
+      new: Новий
+      manage_groups: Менеджер груп
+      manage_subjects: Менеджер предметів
+      mark_systems: Системи оцінювання
+      results: Результати
+      invite_codes: Коди запрошення
+      regenerate: Регенерувати
+      my_profile: Мій профіль
+      my_results: Мої результати
+      logout: Вихід
+    group:
+      groups: Групи
+      group: Група
+      add_new_group: Додати нову групу
+      edit_group: Редагувати групу
+      users_list: Список користувачів
+      update_group: Зберегти
+      available_groups_list: Список груп
+      joined_users: Користувачі
+      new_group: Нова група
+    mark:
+      marks: Оцінки
+      mark_system: Система оцінювання
+      mark_systems: Системи оінювання
+      presentation: Оцінка
+      percent: Відсоток
+      edit_mark_system: Редагувати систему оцінювання
+      all_mark_systems: Всі системи оцінювання
+      available_mark_systems_list: Список систем оцінювання
+      new_mark_system: Нова система оцінювання
+      create_new_mark_system: Створити нову систему оцінювання
+    question:
+      question: Питання
+      logical: Логінчне
+      plural: Множинне
+      many_to_many: Асоціативне
+      question_sm: запитання
+      logical_sm: логічне
+      plural_sm: множинне
+      many_to_many_sm: асоціативне
+      question_text: Текст питання
+      answers: Відповіді
+      yes: Так
+      no: Ні
+      edit_question: Редагувати питання
+      create_new_question: Створити нове питання
+    subject:
+      subject: Предмет
+      subjects: Предмети
+      add_new_subject: Додати новий предмет
+      edit_subject: Редагувати предмет
+      update_subject: Зберегти
+      available_subjects_list: Список предметів
+      toasts: Тести
+      new_subject: Новий предмет
+    toast:
+      toast: Тест
+      toasts: Тести
+      edit_toast: Редагувати тест
+      base: Базові
+      additional_configuration: Додаткові налаштування
+      weight_logical: Вага логічного питання
+      weight_plural: Вага множинного питання
+      weight_many_to_many: Вага асоціативного питання
+      question_count: Кількість питаннь які будуть вибрані для проходження
+      question_time: Час на відповідь одного питання
+      question_list: Список питань
+      add_new: Додати нове
+      available_toasts_list: Список тестів
+      new_toast: Новий тест
+      create_new_toast: Створити новий тест
+      create_toast: Створити тест
+      all_toasts: Всі тести

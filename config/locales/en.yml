@@ -274,8 +274,8 @@ en:
       many_to_many_sm: many to many
       question_text: Question text
       answers: Answers
-      yes: Yes
-      no: No
+      answer_yes: Yes
+      answer_no: No
       edit_question: Edit question
       create_new_question: Create new question
     subject:

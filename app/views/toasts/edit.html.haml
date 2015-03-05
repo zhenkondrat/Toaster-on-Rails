@@ -13,7 +13,7 @@
       .form-group
         = f.label :name, I18n.t('interface.name')
         = f.text_field :name, class: 'form-control'
-      %h2.center Additional configuration
+      %h2.center #{I18n.t 'interface.toast.additional_configuration'}
       .form-group
         = f.label :weight1, I18n.t('interface.toast.weight_logical')
         = f.text_field :weight1, class: 'form-control'

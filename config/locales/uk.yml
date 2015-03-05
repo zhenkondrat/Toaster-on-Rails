@@ -311,7 +311,7 @@ uk:
       create_new_mark_system: Створити нову систему оцінювання
     question:
       question: Питання
-      logical: Логінчне
+      logical: Логічне
       plural: Множинне
       many_to_many: Асоціативне
       question_sm: запитання
@@ -320,8 +320,8 @@ uk:
       many_to_many_sm: асоціативне
       question_text: Текст питання
       answers: Відповіді
-      yes: Так
-      no: Ні
+      answer_yes: Так
+      answer_no: Ні
       edit_question: Редагувати питання
       create_new_question: Створити нове питання
     subject:

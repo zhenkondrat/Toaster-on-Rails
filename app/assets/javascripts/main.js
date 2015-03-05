@@ -52,28 +52,29 @@ ready = function(){
   /* question change type */
   $('.change-type').click(function(){
     var text = '';
+    var header = $('#QuestionType:first');
     switch($(this).data('question-type')){
       case 1:
-        text = 'Logical';
-        $('#logical-form')[0].className = '';
-        $('#plural-form')[0].className = 'hidden';
-        $('#many-to-many-form')[0].className = 'hidden';
+        text = header.data('logical');
+        $('#LogicalForm')[0].className = '';
+        $('#PluralForm')[0].className = 'hidden';
+        $('#AssociativeForm')[0].className = 'hidden';
         break;
       case 2:
-        text = 'Plural';
-        $('#logical-form')[0].className = 'hidden';
-        $('#plural-form')[0].className = '';
-        $('#many-to-many-form')[0].className = 'hidden';
+        text = header.data('plural');
+        $('#LogicalForm')[0].className = 'hidden';
+        $('#PluralForm')[0].className = '';
+        $('#AssociativeForm')[0].className = 'hidden';
         break;
       case 3:
-        text = 'Many to Many';
-        $('#logical-form')[0].className = 'hidden';
-        $('#plural-form')[0].className = 'hidden';
-        $('#many-to-many-form')[0].className = '';
+        text = header.data('manytomany');
+        $('#LogicalForm')[0].className = 'hidden';
+        $('#PluralForm')[0].className = 'hidden';
+        $('#AssociativeForm')[0].className = '';
         break;
     }
-    $('#question_question_type')[0].value = $(this).data('question-type');
-    $('#question-type')[0].textContent = text;
+    $('#question_question_type')[0].value = $(this).data('QuestionType');
+    $('#QuestionType')[0].textContent = text;
     return false
   });
 

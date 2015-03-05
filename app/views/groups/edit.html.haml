@@ -2,36 +2,14 @@
 .panel.panel-warning.different
   .panel-heading
     %h3 #{I18n.t 'interface.group.edit_group'}
-  = form_tag join_group_path do
-    = hidden_field_tag :group, @group.id
-    .panel-body
+  .panel-body
+    .form-group
+      %strong #{I18n.t 'interface.name'}:
+      = @group.name
+      = link_to "(#{I18n.t('interface.change')})", '#ModalAddGroup', data: {toggle: 'modal'}
+    - unless @group_users.empty?
       .form-group
-        %strong #{I18n.t 'interface.name'}:
-        = @group.name
-        = link_to "(#{I18n.t('interface.change')})", '#ModalAddGroup', data: {toggle: 'modal'}
-      - unless @group_users.empty?
-        .form-group
-          %h2.center #{I18n.t 'interface.group.users_list'}
-          %table.table.table-striped
-            %tr
-              %th #{I18n.t 'interface.login'}
-              %th #{I18n.t 'interface.last_name'}
-              %th #{I18n.t 'interface.first_name'}
-              %th #{I18n.t 'interface.father_name'}
-              %th #{I18n.t 'interface.group.groups'}
-              %th #{I18n.t 'interface.check'}
-            - @group_users.each do |user|
-              %tr
-                %td= user.login
-                %td= user.last_name
-                %td= user.first_name
-                %td= user.father_name
-                %td= user.groups.map{|group| group.name}.join(', ')
-                %td
-                  = link_to leave_group_path(user, params: {group: @group}), data: {confirm: I18n.t('interface.del_attention')} do
-                    %i.fa.fa-user-times
-      .form-group
-        %h2.center #{I18n.t 'interface.group.add_users'}
+        %h2.center #{I18n.t 'interface.group.users_list'}
         %table.table.table-striped
           %tr
             %th #{I18n.t 'interface.login'}
@@ -40,15 +18,15 @@
             %th #{I18n.t 'interface.father_name'}
             %th #{I18n.t 'interface.group.groups'}
             %th #{I18n.t 'interface.check'}
-          - @users.each do |user|
+          - @group_users.each do |user|
             %tr
               %td= user.login
               %td= user.last_name
               %td= user.first_name
               %td= user.father_name
               %td= user.groups.map{|group| group.name}.join(', ')
-              %td= check_box_tag 'reg_users[]', user.id, false
-        .right= will_paginate @users
+              %td
+                = link_to leave_group_path(user, params: {group: @group}), data: {confirm: I18n.t('interface.del_attention')} do
+                  %i.fa.fa-user-times
     .panel-footer
-      = submit_tag I18n.t('interface.save'), class: 'btn btn-info'
       = link_to I18n.t('interface.group.all_groups'), groups_path, class: 'btn btn-default'

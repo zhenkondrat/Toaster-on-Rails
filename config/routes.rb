@@ -9,12 +9,16 @@ Rails.application.routes.draw do
 
   resources :groups
 
-  devise_for :users, controllers: { :registrations => 'registrations' }
+  devise_for :users, controllers: { registrations: 'registrations' }
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # user
-  resource :users
+  resource :users do
+    get '/search', to: 'users#search'
+    get '/', to: 'users#index'
+  end
+
   get 'invite_code', to: 'users#generate_invite_code'
   post 'join_group', to: 'users#join_group'
   get 'leave_group/:id', to: 'users#leave_group', as: :leave_group
@@ -23,7 +27,7 @@ Rails.application.routes.draw do
   get 'results', to: 'results#index'
 
   # You can have the root of your site routed with "root"
-  root 'users#index'
+  root 'users#main'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

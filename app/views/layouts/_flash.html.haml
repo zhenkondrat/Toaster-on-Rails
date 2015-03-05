@@ -4,7 +4,7 @@
     = flash[:alert]
 - unless flash[:warning].blank?
   .alert.alert-warning= flash[:warning]
-- unless flash[:notice].blank?
-  .alert.alert-warning= flash[:notice]
-- unless flash[:success].blank?
-  .alert.alert-success= flash[:success]
+- unless flash[:notice].blank? && flash[:success].blank?
+  .alert.alert-success
+    = flash[:notice]
+    = flash[:success]

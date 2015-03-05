@@ -104,7 +104,7 @@ ready = function(){
     answers.append(new_input_group);
   });
 
-  $(".del-plural").click(function() {
+  $('.del-plural').click(function() {
     if ($answers_count != 0){
       $('.number' + $answers_count).remove();
       $answers_count--;

@@ -278,6 +278,7 @@ uk:
       list: Список
       new: Новий
       manage_groups: Менеджер груп
+      manage_users: Менеджер користувачів
       manage_subjects: Менеджер предметів
       mark_systems: Системи оцінювання
       results: Результати
@@ -296,7 +297,6 @@ uk:
       available_groups_list: Список груп
       joined_users: Користувачі
       new_group: Нова група
-      add_users: Додати користувачів
       all_groups: Список груп
     mark:
       marks: Оцінки
@@ -351,3 +351,9 @@ uk:
       create_new_toast: Створити новий тест
       create_toast: Створити тест
       all_toasts: Список тестів
+    user:
+      users: Користувачі
+      available_users_list: Наявні користувачі
+      registrate: Зареєструвати
+      reg_in_group: Реєструвати користувачів у групу
+      reg_in_group_text: Оберіть групу в яку зареєструвати виділених користувачів

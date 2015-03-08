@@ -4,8 +4,6 @@ class Result < ActiveRecord::Base
   validates :mark, :created_at, :user, :toast, presence: true
   validates :mark, numericality: { less_than_or_equal_to: 1 }
 
-  self.per_page = 30
-
   def create_by_answers(user, questions, answers, toast = nil)
     @toast = toast || self.toast || questions.first.toast
     set_tariffs

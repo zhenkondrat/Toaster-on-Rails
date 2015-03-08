@@ -20,6 +20,6 @@
             = link_to group_path(group), method: :delete, data: {confirm: I18n.t('interface.del_attention')} do
               .btn.btn-sm.btn-danger
                 %i.fa.fa-trash
-    .right= will_paginate @groups
+    .right= paginate @groups
   .panel-footer
     = link_to I18n.t('interface.group.new_group'), '#ModalAddGroup', data: {toggle: 'modal'}, class: 'btn btn-default'

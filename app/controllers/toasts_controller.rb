@@ -3,7 +3,7 @@ class ToastsController < ApplicationController
   before_action :set_toast, except: [:new, :create, :index]
 
   def index
-    @toasts = Toast.paginate(page: params[:page])
+    @toasts = Toast.page(params[:page]).per(10)
   end
 
   def new
@@ -20,7 +20,7 @@ class ToastsController < ApplicationController
   end
 
   def edit
-    @questions = @toast.questions.paginate(page: params[:page])
+    @questions = @toast.questions.page(params[:page]).per(10)
   end
 
   def update

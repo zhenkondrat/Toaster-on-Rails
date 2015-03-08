@@ -54,6 +54,6 @@
               = link_to question_path(question), method: :delete, data: {confirm: I18n.t('interface.del_attention')} do
                 .btn.btn-sm.btn-danger
                   %i.fa.fa-trash
-      .right= will_paginate @questions
+      .right= paginate @questions
       .right
         %h3= link_to I18n.t('interface.toast.add_new'), new_question_path(toast: @toast)

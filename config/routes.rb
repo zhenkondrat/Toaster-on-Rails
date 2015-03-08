@@ -15,8 +15,8 @@ Rails.application.routes.draw do
 
   # user
   resource :users do
-    get '/search', to: 'users#search'
     get '/', to: 'users#index'
+    post '/search', to: 'users#index', as: 'search'
   end
 
   get 'invite_code', to: 'users#generate_invite_code'

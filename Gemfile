@@ -44,7 +44,7 @@ gem 'capistrano-bundler'
 gem 'capistrano-rvm'
 
 # Paginate
-gem 'will_paginate', '~> 3.0.6'
+gem 'kaminari'
 
 # Localization
 gem 'rails-i18n', '~> 4.0.0'

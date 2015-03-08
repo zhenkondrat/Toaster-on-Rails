@@ -104,11 +104,17 @@ ready = function(){
     answers.append(new_input_group);
   });
 
-  $('.del-plural').click(function() {
+  $('.del-plural').click(function(){
     if ($answers_count != 0){
       $('.number' + $answers_count).remove();
       $answers_count--;
     }
+  });
+
+  $('#registrate').click(function() {
+    var ids = new Array();
+    $.each($("input[name='reg_users[]']:checked"), function(){ ids.push($(this).val()); });
+    $.post( "/join_group", {users: ids, group: $('#group_id')[0].value})
   });
 };
 

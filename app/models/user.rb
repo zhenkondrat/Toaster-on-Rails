@@ -6,14 +6,21 @@ class User < ActiveRecord::Base
   validates :login, uniqueness: true
   validate :have_user_surname?
 
-  self.per_page = 25
-
-  # def self.search(search_filter, page)
-  #   search_filter.gsub(/\s+/, ' ').strip.split
-  #   query = "first_name LIKE %#{search_filter[0]}%" << ("last_name LIKE %#{search_filter[0]}%")
-  #   paginate per_page: 25, page: page,
-  #            conditions: [query], :order => 'name'
-  # end
+  def self.search(search_filter)
+    return User.all unless search_filter.present?
+    search_filter = search_filter.gsub(/\s+/, ' ').strip.split
+    query = case search_filter.size
+            when 1
+              "last_name LIKE '%#{search_filter.first}%' OR login LIKE '%#{search_filter.first}%'"
+            when 2
+              "last_name LIKE '%#{search_filter.first}%' AND first_name LIKE '%#{search_filter.last}%'"
+            when 3
+              "last_name LIKE '%#{search_filter.first}%' AND first_name LIKE '%#{search_filter[1]}%' AND father_name LIKE '%#{search_filter.last}%'"
+            else
+              'true'
+            end
+    User.where(query)
+  end
 
   def email_required?
     false

@@ -19,6 +19,6 @@
             = link_to mark_system_path(mark_system), method: :delete, data: {confirm: I18n.t('interface.del_attention')} do
               .btn.btn-sm.btn-danger
                 %i.fa.fa-trash
-    .right= will_paginate @mark_systems
+    .right= paginate @mark_systems
   .panel-footer
     = link_to I18n.t('interface.mark.new_mark_system'), new_mark_system_path, class: 'btn btn-default'

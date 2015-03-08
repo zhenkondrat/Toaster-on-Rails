@@ -20,6 +20,6 @@
             = link_to subject_path(subject), method: :delete, data: {confirm: I18n.t('interface.del_attention')} do
               .btn.btn-sm.btn-danger
                 %i.fa.fa-trash
-    .right= will_paginate @subjects
+    .right= paginate @subjects
   .panel-footer
     = link_to I18n.t('interface.subject.new_subject'), '#ModalAddSubject', data: {toggle: 'modal'}, class: 'btn btn-default'

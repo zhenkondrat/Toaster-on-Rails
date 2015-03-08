@@ -1,10 +1,13 @@
-= form_tag join_group_path do
-  = render partial: 'users/modal/reg_in_group'
-  .panel.panel-warning.main
-    .panel-heading
-      %h3 #{I18n.t 'interface.user.users'}
-    .panel-body
-      %h4 #{I18n.t 'interface.user.available_users_list'}:
+= render partial: 'users/modal/reg_in_group'
+.panel.panel-warning.main
+  .panel-heading
+    %h3 #{I18n.t 'interface.user.users'}
+  .panel-body
+    %h4 #{I18n.t 'interface.user.available_users_list'}:
+    = form_tag search_users_path do
+      .form-group
+        = text_field_tag :search_filter, '', class: 'form-control'
+        = submit_tag :search, class: 'btn btn-success'
       %table.table.table-striped.search-results
         %tr.header
           %th #{I18n.t 'interface.login'}
@@ -21,6 +24,6 @@
             %td= user.father_name
             %td= user.groups.map{|group| group.name}.join(', ')
             %td= check_box_tag 'reg_users[]', user.id, false
-      .right= will_paginate @users
-    .panel-footer
-      = link_to I18n.t('interface.user.registrate'), '#ModalRegInGroup', data: {toggle: 'modal'}, class: 'btn btn-default'
+      .right= paginate @users
+  .panel-footer
+    = link_to I18n.t('interface.user.registrate'), '#ModalRegInGroup', data: {toggle: 'modal'}, class: 'btn btn-default'

@@ -3,7 +3,7 @@ class MarkSystemsController < ApplicationController
   before_action :set_mark_system, except: [:index, :new, :create]
 
   def index
-    @mark_systems = MarkSystem.paginate(page: params[:page])
+    @mark_systems = MarkSystem.page(params[:page]).per(10)
   end
 
   def new

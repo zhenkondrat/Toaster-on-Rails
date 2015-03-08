@@ -6,8 +6,6 @@ class Group < ActiveRecord::Base
 
   validates :name, presence: true
 
-  self.per_page = 10
-
   def foreign_users
     User.users.joins('LEFT JOIN user_groups ON user_groups.user_id = users.id').where("user_groups.group_id != #{id} OR user_groups.group_id IS null")
   end

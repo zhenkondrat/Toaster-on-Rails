@@ -16,14 +16,8 @@ class UsersController < ApplicationController
   end
 
   def index
-    @users = User.paginate(page: params[:page])
+    @users = User.search(params[:search_filter]).page(params[:page]).per(30)
   end
-
-  # def search
-  #   search_filter = params[:search_filter]
-  #   byebug
-  #   render json: User.all.to_json
-  # end
 
   def generate_invite_code
     codes = InviteCode.generate!
@@ -32,9 +26,10 @@ class UsersController < ApplicationController
   end
 
   def join_group
-    @group = Group.find(params[:group][:id])
-    params[:reg_users].each{ |user_id| @group.user_groups.create(user_id: user_id) }
-    redirect_to users_path, notice: 'Users are successfully joined to group'
+    @group = Group.find(params[:group])
+    params[:users].each{ |user_id| @group.user_groups.create(user_id: user_id) }
+    flash[:notice] = 'Users are successfully joined to group'
+    render js: "window.location = '#{users_path}'"
   end
 
   def leave_group

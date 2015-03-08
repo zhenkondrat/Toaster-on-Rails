@@ -4,7 +4,7 @@ class GroupsController < ApplicationController
   before_action :set_group, except: [:create, :index]
 
   def index
-    @groups = Group.paginate(page: params[:page])
+    @groups = Group.page(params[:page]).per(10)
     @group = Group.new
   end
 

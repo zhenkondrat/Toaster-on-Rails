@@ -116,6 +116,14 @@ ready = function(){
     $.each($("input[name='reg_users[]']:checked"), function(){ ids.push($(this).val()); });
     $.post( "/join_group", {users: ids, group: $('#group_id')[0].value})
   });
+
+  $('.mark-list').click(function(){
+    if ($("input[type='checkbox']")[0].checked) {
+      $.each($("input[type='checkbox']"), function () {this.checked = false})
+    } else {
+      $.each($("input[type='checkbox']"), function () {this.checked = true})
+    }
+  });
 };
 
 $(document).ready(ready);

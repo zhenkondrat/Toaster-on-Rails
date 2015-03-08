@@ -4,7 +4,7 @@
     %h3 #{I18n.t 'interface.user.users'}
   .panel-body
     %h4 #{I18n.t 'interface.user.available_users_list'}:
-    = form_tag search_users_path do
+    = form_tag users_search_path do
       .form-group
         = text_field_tag :search_filter, '', class: 'form-control'
         = submit_tag :search, class: 'btn btn-success'
@@ -18,7 +18,7 @@
           %th #{I18n.t 'interface.check'}
         - @users.each do |user|
           %tr
-            %td= user.login
+            %td= link_to user.login, edit_user_path(user)
             %td= user.last_name
             %td= user.first_name
             %td= user.father_name

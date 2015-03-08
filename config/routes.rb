@@ -14,10 +14,11 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # user
-  resource :users do
+  resources :users do
     get '/', to: 'users#index'
-    post '/search', to: 'users#index', as: 'search'
   end
+
+  post '/users/search', to: 'users#index', as: 'users_search'
 
   get 'invite_code', to: 'users#generate_invite_code'
   post 'join_group', to: 'users#join_group'

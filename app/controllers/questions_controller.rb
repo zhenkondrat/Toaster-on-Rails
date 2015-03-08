@@ -17,7 +17,7 @@ class QuestionsController < ApplicationController
         when 3
           nil
       end
-      flash[:success] = 'Question successfully created'
+      flash[:notice] = 'Question successfully created'
     else
       flash[:error] = %q|Question can't be created|
     end
@@ -45,7 +45,7 @@ class QuestionsController < ApplicationController
         when 3
           nil
       end
-      flash[:success] = 'Question successfully updated'
+      flash[:notice] = 'Question successfully updated'
     else
       flash[:error] = %q|Question can't be updated|
     end
@@ -55,9 +55,9 @@ class QuestionsController < ApplicationController
   def destroy
     toast = @question.toast
     if @question.destroy
-      flash[:success] = 'Question is successfully deleted'
+      flash[:notice] = 'Question is successfully deleted'
     else
-      flash[:success] = %q|Question can't be deleted|
+      flash[:error] = %q|Question can't be deleted|
     end
     redirect_to edit_toast_path(toast)
   end

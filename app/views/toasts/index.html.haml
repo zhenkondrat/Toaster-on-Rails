@@ -21,6 +21,6 @@
             = link_to toast_path(toast), method: :delete, data: {confirm: I18n.t('interface.del_attention')} do
               .btn.btn-sm.btn-danger
                 %i.fa.fa-trash
-    .right= will_paginate @toasts
+    .right= paginate @toasts
   .panel-footer
     = link_to I18n.t('interface.toast.new_toast'), new_toast_path, class: 'btn btn-default'

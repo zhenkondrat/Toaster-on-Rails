@@ -1,34 +1,32 @@
+= render partial: 'groups/modal/add_group'
 .panel.panel-warning.different
   .panel-heading
     %h3 #{I18n.t 'interface.group.edit_group'}
-  = form_for @group, class: 'form' do |f|
-    .panel-body
-      .form-group
-        = f.label :name, I18n.t('interface.name')
-        = f.text_field :name, class: 'form-control'
+  .panel-body
+    .form-group
+      %strong #{I18n.t 'interface.name'}:
+      = @group.name
+      = link_to "(#{I18n.t('interface.change')})", '#ModalAddGroup', data: {toggle: 'modal'}
+    - unless @group_users.empty?
       .form-group
         %h2.center #{I18n.t 'interface.group.users_list'}
         %table.table.table-striped
           %tr
+            %th #{I18n.t 'interface.login'}
             %th #{I18n.t 'interface.last_name'}
             %th #{I18n.t 'interface.first_name'}
             %th #{I18n.t 'interface.father_name'}
             %th #{I18n.t 'interface.group.groups'}
-            %th #{I18n.t 'interface.actions'}
-          - @users.each do |user|
+            %th #{I18n.t 'interface.check'}
+          - @group_users.each do |user|
             %tr
+              %td= user.login
               %td= user.last_name
               %td= user.first_name
               %td= user.father_name
               %td= user.groups.map{|group| group.name}.join(', ')
-              %td.actions
-                = link_to edit_user_path(user) do
-                  .btn.btn-sm.btn-info
-                    %i.fa.fa-edit
-                = link_to user_path(user), method: :delete, data: {confirm: I18n.t('interface.del_attention')} do
-                  .btn.btn-sm.btn-danger
-                    %i.fa.fa-trash
-        .right= will_paginate @users
+              %td
+                = link_to leave_group_path(user, params: {group: @group}), data: {confirm: I18n.t('interface.del_attention')} do
+                  %i.fa.fa-user-times
     .panel-footer
-      = f.submit I18n.t('interface.group.update_group'), class: 'btn btn-info'
-      = link_to I18n.t('interface.cancel'), groups_path, class: 'btn btn-default'
+      = link_to I18n.t('interface.group.all_groups'), groups_path, class: 'btn btn-default'

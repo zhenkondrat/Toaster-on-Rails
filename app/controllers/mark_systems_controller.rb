@@ -3,7 +3,7 @@ class MarkSystemsController < ApplicationController
   before_action :set_mark_system, except: [:index, :new, :create]
 
   def index
-    @mark_systems = MarkSystem.paginate(page: params[:page])
+    @mark_systems = MarkSystem.page(params[:page]).per(10)
   end
 
   def new
@@ -14,7 +14,7 @@ class MarkSystemsController < ApplicationController
     mark_system = MarkSystem.create(name: mark_system_params[:name])
     if mark_system
       mark_system_params[:marks][:new].each_value{ |mark_params| mark_system.marks.create(mark_params) }
-      flash[:success] = 'Mark system successfully created!'
+      flash[:notice] = 'Mark system successfully created!'
     else
       flash[:error] = %q|Mark system can't be created|
     end
@@ -29,7 +29,7 @@ class MarkSystemsController < ApplicationController
     if @mark_system.errors.empty?
       mark_system_params[:marks][:old].each_key{ |id| Mark.find(id).update_all(mark_system_params[:marks][:old][id]) }
       mark_system_params[:marks][:new].each_value{ |mark_params| @mark_system.marks.create(mark_params) }
-      flash[:success] = 'Mark system successfully updated!'
+      flash[:notice] = 'Mark system successfully updated!'
     else
       flash[:error] = %q|Mark system can't be updated|
     end
@@ -38,7 +38,7 @@ class MarkSystemsController < ApplicationController
 
   def destroy
     if @mark_system.destroy
-      flash[:success] = 'Mark system successfully deleted!'
+      flash[:notice] = 'Mark system successfully deleted!'
     else
       flash[:error] = %q|Mark system can't be deleted|
     end

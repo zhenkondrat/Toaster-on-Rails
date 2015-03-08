@@ -1,0 +1,12 @@
+#ModalRegInGroup.modal.fade{'aria-hidden' => 'true', 'aria-labelledby' => 'myModalLabel', role: 'dialog', tabindex: '-1'}
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button.close{'aria-hidden' => 'true', 'data-dismiss' => 'modal', :type => 'button'} &times;
+        %h4.modal-title #{I18n.t 'interface.user.reg_in_group'}
+      .modal-body
+        %p #{I18n.t 'interface.user.reg_in_group_text'}:
+        = collection_select :group, :id, Group.all, :id, :name, {prompt: false}, {class: 'form-control'}
+      .modal-footer
+        .pull-left
+          %button.btn.btn-default#registrate{type: 'button'} Registrate

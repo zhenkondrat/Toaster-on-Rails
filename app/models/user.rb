@@ -6,7 +6,21 @@ class User < ActiveRecord::Base
   validates :login, uniqueness: true
   validate :have_user_surname?
 
-  self.per_page = 30
+  def self.search(search_filter)
+    return User.all unless search_filter.present?
+    search_filter = search_filter.gsub(/\s+/, ' ').strip.split
+    query = case search_filter.size
+            when 1
+              "last_name LIKE '%#{search_filter.first}%' OR login LIKE '%#{search_filter.first}%'"
+            when 2
+              "last_name LIKE '%#{search_filter.first}%' AND first_name LIKE '%#{search_filter.last}%'"
+            when 3
+              "last_name LIKE '%#{search_filter.first}%' AND first_name LIKE '%#{search_filter[1]}%' AND father_name LIKE '%#{search_filter.last}%'"
+            else
+              'true'
+            end
+    User.where(query)
+  end
 
   def email_required?
     false
@@ -29,6 +43,16 @@ class User < ActiveRecord::Base
 
   def admin?
     admin
+  end
+
+  class << self
+    def admins
+      User.where(admin: true)
+    end
+
+    def users
+      User.where(admin: false)
+    end
   end
 
   private

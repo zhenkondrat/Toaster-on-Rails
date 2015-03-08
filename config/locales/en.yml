@@ -225,11 +225,14 @@ en:
     del_attention: Are you sure?
     text: Text
     type: Type
+    change: change
+    check: Check
     menu:
       manage_toasts: Manage Toasts
       list: List
       new: New
       manage_groups: Manage Groups
+      manage_users: Manage Users
       manage_subjects: Manage Subjects
       mark_systems: Mark Systems
       results: Results
@@ -248,6 +251,7 @@ en:
       available_groups_list: Available groups list
       joined_users: Joined users
       new_group: New Group
+      all_groups: All groups
     mark:
       marks: Marks
       mark_system: Mark system
@@ -270,8 +274,8 @@ en:
       many_to_many_sm: many to many
       question_text: Question text
       answers: Answers
-      yes: Yes
-      no: No
+      answer_yes: Yes
+      answer_no: No
       edit_question: Edit question
       create_new_question: Create new question
     subject:
@@ -301,3 +305,9 @@ en:
       create_new_toast: Create new toast
       create_toast: Create toast
       all_toasts: All toasts
+    user:
+      users: Users
+      available_users_list: Available users list
+      registrate: Registrate
+      reg_in_group: Registrate users in group
+      reg_in_group_text: Select group to wich you want registrate selected users

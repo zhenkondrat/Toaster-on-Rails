@@ -256,7 +256,7 @@ uk:
     login: Логін
     last_name: Прізвище
     first_name: Ім'я
-    father_name: По-батьлкові
+    father_name: По-батькові
     invite_code: Код-запрошення
     password: Пароль
     password_confirmation: Пароль ще раз
@@ -271,11 +271,14 @@ uk:
     del_attention: Ви впевнені?
     text: Текст
     type: Тип
+    change: редаг.
+    check: Познач.
     menu:
       manage_toasts: Менеджер тестів
       list: Список
       new: Новий
       manage_groups: Менеджер груп
+      manage_users: Менеджер користувачів
       manage_subjects: Менеджер предметів
       mark_systems: Системи оцінювання
       results: Результати
@@ -294,6 +297,7 @@ uk:
       available_groups_list: Список груп
       joined_users: Користувачі
       new_group: Нова група
+      all_groups: Список груп
     mark:
       marks: Оцінки
       mark_system: Система оцінювання
@@ -301,13 +305,13 @@ uk:
       presentation: Оцінка
       percent: Відсоток
       edit_mark_system: Редагувати систему оцінювання
-      all_mark_systems: Всі системи оцінювання
+      all_mark_systems: Список систем оцінювання
       available_mark_systems_list: Список систем оцінювання
       new_mark_system: Нова система оцінювання
       create_new_mark_system: Створити нову систему оцінювання
     question:
       question: Питання
-      logical: Логінчне
+      logical: Логічне
       plural: Множинне
       many_to_many: Асоціативне
       question_sm: запитання
@@ -316,8 +320,8 @@ uk:
       many_to_many_sm: асоціативне
       question_text: Текст питання
       answers: Відповіді
-      yes: Так
-      no: Ні
+      answer_yes: Так
+      answer_no: Ні
       edit_question: Редагувати питання
       create_new_question: Створити нове питання
     subject:
@@ -346,4 +350,10 @@ uk:
       new_toast: Новий тест
       create_new_toast: Створити новий тест
       create_toast: Створити тест
-      all_toasts: Всі тести
+      all_toasts: Список тестів
+    user:
+      users: Користувачі
+      available_users_list: Наявні користувачі
+      registrate: Зареєструвати
+      reg_in_group: Реєструвати користувачів у групу
+      reg_in_group_text: Оберіть групу в яку зареєструвати виділених користувачів

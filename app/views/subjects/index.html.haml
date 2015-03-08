@@ -12,7 +12,7 @@
       - @subjects.each do |subject|
         %tr
           %td= subject.name
-          %td= subject.toasts.map{|toast| toast.name}.join(', ')
+          %td= truncate(subject.toasts.map{|toast| toast.name}.join(', '), length: 100)
           %td.actions
             = link_to edit_subject_path(subject) do
               .btn.btn-sm.btn-info

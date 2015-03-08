@@ -22,7 +22,7 @@
             %td= user.last_name
             %td= user.first_name
             %td= user.father_name
-            %td= user.groups.map{|group| group.name}.join(', ')
+            %td= truncate(user.groups.map{|group| group.name}.join(', '), length: 100)
             %td= check_box_tag 'reg_users[]', user.id, false
       .right= paginate @users
   .panel-footer

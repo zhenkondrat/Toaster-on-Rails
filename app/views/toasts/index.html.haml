@@ -13,7 +13,7 @@
         %tr
           %td= toast.name
           %td= toast.subject.name
-          %td= toast.groups.map{ |group| group.name }.join(', ') unless toast.groups.empty?
+          %td= truncate(toast.groups.map{ |group| group.name }.join(', '), length: 100) unless toast.groups.empty?
           %td.actions
             = link_to edit_toast_path(toast) do
               .btn.btn-sm.btn-info

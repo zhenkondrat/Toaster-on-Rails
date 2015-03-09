@@ -73,7 +73,7 @@ ready = function(){
         $('#AssociativeForm')[0].className = '';
         break;
     }
-    $('#question_question_type')[0].value = $(this).data('QuestionType');
+    $('#question_question_type')[0].value = $(this).data('question-type');
     $('#QuestionType')[0].textContent = text;
     return false
   });

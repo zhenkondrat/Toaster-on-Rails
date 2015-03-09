@@ -16,9 +16,11 @@
         #{I18n.t 'interface.father_name'}:
         = current_user.father_name
       %p Групи до яких належить користувач:
-      %p=# render 'groups/user_groups'
-      %p Наявні для проходження тести
-      %p=# render 'toasts/user_toasts'
+      %p= current_user.groups.map{ |group| group.name }.join(', ') unless current_user.groups.empty?
+      %p Наявні для проходження тести:
+      %p
+        - Toast.joins(groups: :users).where(users: {id: current_user.id}).each do |toast|
+          = "#{link_to toast.name, toast_path(toast), data: {confirm: I18n.t('interface.del_attention')}}  ".html_safe
     .right
       %p.user_small_header Останні результати
       .results

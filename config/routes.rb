@@ -2,6 +2,8 @@ Rails.application.routes.draw do
   resources :mark_systems
 
   resources :toasts
+  post '/toasts/:id/share_to_group', to: 'toasts#share_to_group', as: 'share_to_group'
+  post '/toasts/:id/deny_group', to: 'toasts#deny_group'
 
   resources :subjects
 

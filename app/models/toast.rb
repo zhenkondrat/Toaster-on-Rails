@@ -22,4 +22,8 @@ class Toast < ActiveRecord::Base
       questions.ids.shuffle
     end
   end
+
+  def foreign_groups
+    Group.joins('LEFT JOIN toast_groups ON toast_groups.group_id = groups.id').where("toast_groups.toast_id != #{id} OR toast_groups.group_id IS null")
+  end
 end

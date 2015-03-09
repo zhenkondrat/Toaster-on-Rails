@@ -1,8 +1,11 @@
+= render 'toasts/modal/add_group'
 .panel.panel-warning
   .panel-heading
     %h3 #{I18n.t 'interface.toast.edit_toast'}
   .panel-body
     = form_for @toast, class: 'form' do |f|
+      = f.hidden_field :id
+      = hidden_field_tag :del_attention, I18n.t('interface.del_attention')
       %h2.center #{I18n.t 'interface.toast.base'}
       .form-group
         = f.label :subject_id, I18n.t('interface.subject.subject')
@@ -33,6 +36,9 @@
         .pull-right
           = f.submit I18n.t('interface.save'), class: 'btn btn-success'
           = link_to I18n.t('interface.cancel'), toasts_path, class: 'btn btn-default'
+      %h2.center #{I18n.t 'interface.toast.group_list'}
+      = link_to I18n.t('interface.toast.share_to_group'), '#ModalAddGroup', data: {toggle: 'modal'}, class: 'btn btn-default'
+      .tag-container= hidden_field_tag :groups, @toast.groups.select(:id, :name).to_json
       %h2.center #{I18n.t 'interface.toast.question_list'}
       %table.table.table-striped
         %tr

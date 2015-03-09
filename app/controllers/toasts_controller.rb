@@ -34,6 +34,24 @@ class ToastsController < ApplicationController
   def show
   end
 
+  def share_to_group
+    if @toast.toast_groups.create(group_id: params[:group][:id])
+      flash[:notice] = 'Toast successfully shared'
+    else
+      flash[:error] = 'Something went wrong'
+    end
+    redirect_to edit_toast_path(@toast)
+  end
+
+  def deny_group
+    if @toast.toast_groups.find_by_group_id(params[:group]).delete
+      flash[:notice] = 'Group successfully deleted from shared list'
+    else
+      flash[:error] = 'Something went wrong'
+    end
+    render js: "window.location = '#{edit_toast_path(@toast)}'"
+  end
+
   private
 
   def set_toast

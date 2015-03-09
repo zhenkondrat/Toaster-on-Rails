@@ -305,6 +305,10 @@ en:
       create_new_toast: Create new toast
       create_toast: Create toast
       all_toasts: All toasts
+      group_list: Group list
+      share_to_group: Share to group..
+      share_to_group_text: Select group which you want to share this toast
+      share: Share
     user:
       users: Users
       available_users_list: Available users list

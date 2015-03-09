@@ -19,6 +19,9 @@ Rails.application.routes.draw do
   end
 
   post '/users/search', to: 'users#index', as: 'users_search'
+  post '/toasts/search', to: 'toasts#index', as: 'toasts_search'
+  post '/groups/search', to: 'groups#index', as: 'groups_search'
+  post '/subjects/search', to: 'subjects#index', as: 'subjects_search'
 
   get 'invite_code', to: 'users#generate_invite_code'
   post 'join_group', to: 'users#join_group'

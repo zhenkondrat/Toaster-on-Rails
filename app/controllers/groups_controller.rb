@@ -4,7 +4,9 @@ class GroupsController < ApplicationController
   before_action :set_group, except: [:create, :index]
 
   def index
-    @groups = Group.page(params[:page]).per(10)
+    @groups = Group.all
+    @groups = @groups.where("name LIKE '%#{params[:search_filter]}%'") if params[:search_filter].present?
+    @groups = @groups.page(params[:page]).per(10)
     @group = Group.new
   end
 

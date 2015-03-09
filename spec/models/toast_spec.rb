@@ -25,21 +25,21 @@ describe Toast do
 
     describe '#find_toasts' do
       it 'should find toast by subject id' do
-        expect(Toast.find_toasts({subject: subject.id})).to include toast
+        expect(Toast.search({subject: subject.id})).to include toast
       end
 
       it 'should find toast by group id' do
         group.toast_groups.create(toast_id: toast.id)
-        expect(Toast.find_toasts({group: group.id})).to include toast
+        expect(Toast.search({group: group.id})).to include toast
       end
 
       it 'should find toast by name' do
-        expect(Toast.find_toasts({name: toast.name})).to include toast
+        expect(Toast.search({name: toast.name})).to include toast
       end
 
       it 'should find toast with few parameters' do
         group.toast_groups.create(toast_id: toast.id)
-        expect(Toast.find_toasts({subject: subject.id, group: group.id, name: toast.name})).to include toast
+        expect(Toast.search({subject: subject.id, group: group.id, name: toast.name})).to include toast
       end
     end
 

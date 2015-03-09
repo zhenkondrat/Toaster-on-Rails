@@ -4,7 +4,9 @@ class SubjectsController < ApplicationController
   before_action :set_subject, except: [:create, :index]
 
   def index
-    @subjects = Subject.page(params[:page]).per(10)
+    @subjects = Subject.all
+    @subjects = @subjects.where("name LIKE '%#{params[:search_filter]}%'") if params[:search_filter].present?
+    @subjects = @subjects.page(params[:page]).per(10)
     @subject = Subject.new
   end
 

@@ -1,0 +1,34 @@
+- provide(:title, 'Привіт студент')
+= content_for :styles do
+  = stylesheet_link_tag 'student'
+.student_content
+  = form_tag passing_path do
+    = hidden_field_tag :id, @toast.id
+    .panel.panel-success.main
+      .panel-heading
+        %h3
+          #{I18n.t('interface.toast.question_number')+(session[:last_question]+1).to_s}
+          #{I18n.t('interface.toast.of')}
+          #{session[:questions].size}
+      .panel-body
+        .question-text= @question.text.html_safe
+        %hr
+        .asnwers
+          %h4 #{I18n.t 'interface.question.answers'}
+          - case @question.question_type
+          - when 1
+            .form-group
+              = radio_button_tag :is_right, true
+              #{I18n.t 'interface.question.answer_yes'}
+            .form-group
+              = radio_button_tag :is_right, false
+              #{I18n.t 'interface.question.answer_no'}
+          - when 2
+            - @question.answer2s.each do |answer|
+              .form-group
+                %span= check_box_tag "plural_answers[#{answer.id}[is_right]]"
+                %span= answer.text
+      .panel-footer
+        = link_to I18n.t('interface.toast.exit_toast'), root_path, class: 'btn btn-danger'
+        = submit_tag I18n.t('interface.toast.next'), class: 'btn btn-default pull-right'
+%p.user_footer#user_footer

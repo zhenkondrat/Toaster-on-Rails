@@ -356,6 +356,10 @@ uk:
       share_to_group: Надати доступ групі..
       share_to_group_text: Оберіть групу для надання доступу проходження тесту
       share: Надати доступ
+      question_number: Питання №
+      exit_toast: На головну
+      next: Наступне »
+      of: з
     user:
       users: Користувачі
       available_users_list: Наявні користувачі

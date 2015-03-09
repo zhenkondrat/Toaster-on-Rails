@@ -32,6 +32,21 @@ class ToastsController < ApplicationController
   end
 
   def show
+    if !session[:toast_started]
+      session[:toast_started] = true
+      session[:questions] = @toast.get_questions_list
+      session[:last_question] = 0
+      @question = Question.find(session[:questions].first)
+    else
+      current_question = session[:last_question] + 1
+      if current_question == session[:questions].size
+        session[:toast_started] = false
+        redirect_to root_path
+      else
+        @question = Question.find(session[:questions][current_question]) if current_question
+        session[:last_question] = current_question
+      end
+    end
   end
 
   def share_to_group

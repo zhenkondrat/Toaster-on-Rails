@@ -310,6 +310,10 @@ en:
       share_to_group: Share to group..
       share_to_group_text: Select group which you want to share this toast
       share: Share
+      question_number: Question №
+      exit_toast: Exit toast
+      next: Next »
+      of: of
     user:
       users: Users
       available_users_list: Available users list

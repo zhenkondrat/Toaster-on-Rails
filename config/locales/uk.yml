@@ -351,6 +351,10 @@ uk:
       create_new_toast: Створити новий тест
       create_toast: Створити тест
       all_toasts: Список тестів
+      group_list: Список груп
+      share_to_group: Надати доступ групі..
+      share_to_group_text: Оберіть групу для надання доступу проходження тесту
+      share: Надати доступ
     user:
       users: Користувачі
       available_users_list: Наявні користувачі

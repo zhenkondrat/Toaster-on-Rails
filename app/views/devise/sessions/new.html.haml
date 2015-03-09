@@ -3,8 +3,8 @@
     = devise_error_messages!
 .form-signin
   .panel.panel-primary
-    .panel-heading
-      %h2 #{I18n.t 'interface.sign_in'}
+    .panel-heading.center
+      %h2 #{I18n.t 'interface.login_system'}
     .panel-body
       = form_for resource, as: resource_name, url: session_path(resource_name) do |f|
         %p

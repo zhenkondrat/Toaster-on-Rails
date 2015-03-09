@@ -23,7 +23,7 @@
       -   when 3 then I18n.t('interface.question.many_to_many')
       -   else I18n.t('interface.question.logical')
       %h3#QuestionType{data: {logical: I18n.t('interface.question.logical'), plural: I18n.t('interface.question.plural'), manytomany: I18n.t('interface.question.many_to_many')}} #{type}
-    = f.hidden_field :question_type
+    = f.hidden_field :question_type, value: @question.question_type || 1
     = f.hidden_field :toast_id
     .form-group
       %h4 #{I18n.t 'interface.question.question_text'}:

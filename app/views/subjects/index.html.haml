@@ -4,6 +4,10 @@
     %h3 #{I18n.t 'interface.subject.subjects'}
   .panel-body
     %h4 #{I18n.t 'interface.subject.available_subjects_list'}:
+    = form_tag subjects_search_path do
+      .form-group
+        .col-lg-7= text_field_tag :search_filter, '', class: 'form-control'
+        .col-lg-2= submit_tag 'Search', class: 'btn btn-warning form-control'
     %table.table.table-striped
       %tr
         %th #{I18n.t 'interface.name'}
@@ -12,7 +16,7 @@
       - @subjects.each do |subject|
         %tr
           %td= subject.name
-          %td= subject.toasts.map{|toast| toast.name}.join(', ')
+          %td= truncate(subject.toasts.map{|toast| toast.name}.join(', '), length: 100)
           %td.actions
             = link_to edit_subject_path(subject) do
               .btn.btn-sm.btn-info

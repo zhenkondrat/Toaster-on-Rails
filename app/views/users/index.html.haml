@@ -4,10 +4,11 @@
     %h3 #{I18n.t 'interface.user.users'}
   .panel-body
     %h4 #{I18n.t 'interface.user.available_users_list'}:
-    = form_tag search_users_path do
+    = form_tag users_search_path do
+      .col-lg-10 Mask: %#{I18n.t 'interface.last_name'}% %#{I18n.t 'interface.first_name'}% %#{I18n.t 'interface.father_name'}%
       .form-group
-        = text_field_tag :search_filter, '', class: 'form-control'
-        = submit_tag :search, class: 'btn btn-success'
+        .col-lg-7= text_field_tag :search_filter, '', class: 'form-control'
+        .col-lg-2= submit_tag 'Search', class: 'btn btn-warning form-control'
       %table.table.table-striped.search-results
         %tr.header
           %th #{I18n.t 'interface.login'}
@@ -15,14 +16,15 @@
           %th #{I18n.t 'interface.first_name'}
           %th #{I18n.t 'interface.father_name'}
           %th #{I18n.t 'interface.group.groups'}
-          %th #{I18n.t 'interface.check'}
+          %th
+            %button.btn.btn-default.mark-list{type: 'button'} #{I18n.t 'interface.check'}
         - @users.each do |user|
           %tr
-            %td= user.login
+            %td= link_to user.login, edit_user_path(user)
             %td= user.last_name
             %td= user.first_name
             %td= user.father_name
-            %td= user.groups.map{|group| group.name}.join(', ')
+            %td= truncate(user.groups.map{|group| group.name}.join(', '), length: 100)
             %td= check_box_tag 'reg_users[]', user.id, false
       .right= paginate @users
   .panel-footer

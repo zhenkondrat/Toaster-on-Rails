@@ -41,7 +41,7 @@
           %th #{I18n.t 'interface.actions'}
         - @questions.each do |question|
           %tr
-            %td= question.text.html_safe
+            %td= truncate(strip_tags(question.text), length: 100)
             - type = case question.question_type
               - when 1 then I18n.t('interface.question.logical_sm')
               - when 2 then I18n.t('interface.question.plural_sm')

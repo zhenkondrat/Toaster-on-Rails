@@ -3,7 +3,7 @@ class ToastsController < ApplicationController
   before_action :set_toast, except: [:new, :create, :index]
 
   def index
-    @toasts = Toast.page(params[:page]).per(10)
+    @toasts = Toast.search({name: params[:search_filter]}).page(params[:page]).per(10)
   end
 
   def new

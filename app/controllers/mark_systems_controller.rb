@@ -27,7 +27,7 @@ class MarkSystemsController < ApplicationController
   def update
     @mark_system.update(name: mark_system_params[:name])
     if @mark_system.errors.empty?
-      mark_system_params[:marks][:old].each_key{ |id| Mark.find(id).update_all(mark_system_params[:marks][:old][id]) }
+      mark_system_params[:marks][:old].each_key{ |id| Mark.find(id).update(mark_system_params[:marks][:old][id]) }
       mark_system_params[:marks][:new].each_value{ |mark_params| @mark_system.marks.create(mark_params) }
       flash[:notice] = 'Mark system successfully updated!'
     else

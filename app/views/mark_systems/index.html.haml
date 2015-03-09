@@ -11,7 +11,7 @@
       - @mark_systems.each do |mark_system|
         %tr
           %td= mark_system.name
-          %td= mark_system.marks.order(:percent).map{ |mark| mark.presentation }.join(', ') unless mark_system.marks.empty?
+          %td= truncate(mark_system.marks.order(:percent).map{ |mark| mark.presentation }.join(', '), length: 100) unless mark_system.marks.empty?
           %td.actions
             = link_to edit_mark_system_path(mark_system) do
               .btn.btn-sm.btn-info

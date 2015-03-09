@@ -21,7 +21,7 @@ class GroupsController < ApplicationController
 
   def edit
     @group_users = @group.users
-    @users = @group.foreign_users.paginate(page: params[:page])
+    @users = @group.foreign_users.page(params[:page]).per(10)
   end
 
   def update

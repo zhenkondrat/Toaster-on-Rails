@@ -262,6 +262,7 @@ uk:
     password_confirmation: Пароль ще раз
     sign_up: Зареєструватись!
     sign_in: Ввійти
+    login_system: Вхід в систему
     name: І'мя
     create: Створити
     save: Зберегти

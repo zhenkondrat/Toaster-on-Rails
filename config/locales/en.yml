@@ -216,6 +216,7 @@ en:
     password_confirmation: Password confirmation
     sign_up: Sign up me now!
     sign_in: Sign in
+    login_system: Login
     name: Name
     create: Create
     save: Save

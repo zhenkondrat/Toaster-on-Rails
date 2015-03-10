@@ -26,16 +26,13 @@
       .results
         %table.table
           %tr
-            %th #{I18n.t 'interface.subject.subject'}
             %th Назва тесту
             %th Бал
             %th Дата
-          - @results = [] # temporary
           - @results.each do |result|
             %tr
-              %td=result[0]
-              %td=result[1]
-              %td=result[2]
-              %td=result[3]
+              %td=result['toast_name']
+              %td=result['f_mark']
+              %td= l Time.parse(result['created_at']), format: :short
 
 %p.user_footer#user_footer

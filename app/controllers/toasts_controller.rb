@@ -49,6 +49,15 @@ class ToastsController < ApplicationController
     end
   end
 
+  def destroy
+    if @toast.delete
+      flash[:notice] = 'Toast successfully deleted'
+    else
+      flash[:error] = 'Something went wrong'
+    end
+    redirect_to toasts_path
+  end
+
   def share_to_group
     if @toast.toast_groups.create(group_id: params[:group][:id])
       flash[:notice] = 'Toast successfully shared'

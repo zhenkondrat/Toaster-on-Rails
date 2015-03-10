@@ -26,7 +26,7 @@
           - when 2
             - @question.answer2s.each do |answer|
               .form-group
-                %span= check_box_tag "plural_answers[#{answer.id}[is_right]]"
+                %span= check_box_tag "plural_answers[#{answer.id}]"
                 %span= answer.text
       .panel-footer
         = link_to I18n.t('interface.toast.exit_toast'), root_path, class: 'btn btn-danger'

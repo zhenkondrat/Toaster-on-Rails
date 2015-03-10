@@ -8,6 +8,8 @@ class UsersController < ApplicationController
     respond_with do |format|
       format.html do
         if user_signed_in?
+          save_result if session[:toast_started]
+          prepare_results unless current_user.admin
           render current_user.admin ? 'users/admin/home' : 'users/user/home'
         else
           redirect_to new_user_session_path
@@ -63,5 +65,26 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:login, :first_name, :last_name, :father_name)
+  end
+
+  def save_result
+    result = current_user.results.new
+    mark = result.create_by_answers(Question.where("id IN (#{session[:questions].join(', ')})"), session[:answers])
+    flash[:success] = "Your mark is: #{mark}"
+    session[:toast_started] = false
+  end
+
+  def prepare_results
+    sql = <<-SQL
+      SELECT subjects.name AS subject_name, toasts.name AS toast_name, marks.presentation AS f_mark, results.created_at FROM results
+      INNER JOIN users ON results.user_id = users.id
+      INNER JOIN toasts ON results.toast_id = toasts.id
+      INNER JOIN subjects ON toasts.subject_id = subjects.id
+      INNER JOIN mark_systems ON toasts.mark_system_id = mark_systems.id
+      INNER JOIN marks ON marks.mark_system_id = mark_systems.id
+      WHERE marks.percent <= results.mark*100
+      ORDER BY results.created_at DESC
+    SQL
+    @results = ActiveRecord::Base.connection.execute(sql)
   end
 end

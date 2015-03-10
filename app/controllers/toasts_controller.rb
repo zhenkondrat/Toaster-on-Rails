@@ -32,21 +32,32 @@ class ToastsController < ApplicationController
   end
 
   def show
+    redirect_to root_path, error: 'You are not able to pass toast' if current_user.admin?
     if !session[:toast_started]
       session[:toast_started] = true
       session[:questions] = @toast.get_questions_list
       session[:last_question] = 0
+      session[:answers] = {}
       @question = Question.find(session[:questions].first)
     else
       current_question = session[:last_question] + 1
+      save_answer
       if current_question == session[:questions].size
-        session[:toast_started] = false
         redirect_to root_path
       else
         @question = Question.find(session[:questions][current_question]) if current_question
         session[:last_question] = current_question
       end
     end
+  end
+
+  def destroy
+    if @toast.delete
+      flash[:notice] = 'Toast successfully deleted'
+    else
+      flash[:error] = 'Something went wrong'
+    end
+    redirect_to toasts_path
   end
 
   def share_to_group
@@ -68,6 +79,17 @@ class ToastsController < ApplicationController
   end
 
   private
+
+  def save_answer
+    question_id = session[:questions][session[:last_question]]
+    case Question.find(session[:questions][session[:last_question]]).question_type
+      when 1
+        session[:answers][question_id.to_i] = params[:is_right]
+      when 2
+        session[:answers][question_id.to_i] = {}
+        params[:plural_answers].each_key{ |key| session[:answers][question_id][key] = true }
+    end
+  end
 
   def set_toast
     @toast = Toast.find(params[:id])

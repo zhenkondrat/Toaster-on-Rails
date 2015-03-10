@@ -4,22 +4,22 @@ class Result < ActiveRecord::Base
   validates :mark, :created_at, :user, :toast, presence: true
   validates :mark, numericality: { less_than_or_equal_to: 1 }
 
-  def create_by_answers(user, questions, answers, toast = nil)
+  def create_by_answers(questions, answers, toast = nil)
     @toast = toast || self.toast || questions.first.toast
     set_tariffs
     sum = 0
     questions.each do |question|
       case question.question_type
-      when 1
-        sum += @tariff1 if answers[question.id] == question.is_right
-      when 2
-        sum += @tariff2 if answer2_right? question, answers[question.id]
+        when 1
+        sum += @tariff1 if answers[question.id.to_s] == question.is_right.to_s
+        when 2
+        sum += @tariff2 if answer2_right? question, answers[question.id.to_s]
       when 3
         sum += @tariff3 if answer3_right? question, answers[question.id]
       end
     end
-    self.user, self.mark, self.created_at = user, sum.to_f/(max_mark questions), DateTime.now
-    self.save
+    self.mark, self.created_at, self.toast = sum.to_f/(max_mark questions), DateTime.now, @toast
+    self.save!
     show_mark
   end
 
@@ -58,7 +58,7 @@ class Result < ActiveRecord::Base
   def answer2_right?(question, answer)
     solution = true
     question.answer2s.each do |supposition|
-      unless supposition.is_right == (answer[supposition.id] || false)
+      unless supposition.is_right == (answer[supposition.id.to_s] || false)
         solution = false
       end
     end

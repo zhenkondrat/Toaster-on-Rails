@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   # user
   resources :users do
     get '/', to: 'users#index'
+    get '/results', to: 'users#results'
   end
 
   post '/users/search', to: 'users#index', as: 'users_search'

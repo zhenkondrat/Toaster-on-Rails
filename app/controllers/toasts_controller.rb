@@ -87,7 +87,7 @@ class ToastsController < ApplicationController
         session[:answers][question_id.to_i] = params[:is_right]
       when 2
         session[:answers][question_id.to_i] = {}
-        params[:plural_answers].each_key{ |key| session[:answers][question_id][key] = true }
+        params[:plural_answers].each_key{ |key| session[:answers][question_id][key] = true } if params[:plural_answers]
     end
   end
 

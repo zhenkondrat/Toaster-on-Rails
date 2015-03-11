@@ -58,6 +58,10 @@ class Result < ActiveRecord::Base
   def answer2_right?(question, answer)
     solution = true
     question.answer2s.each do |supposition|
+      unless answer
+        solution = false
+        next
+      end
       unless supposition.is_right == (answer[supposition.id.to_s] || false)
         solution = false
       end

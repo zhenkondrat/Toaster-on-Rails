@@ -4,11 +4,11 @@
   = form_for @toast, class: 'form' do |f|
     .panel-body
       .form-group
-        = f.label :subject_id, 'Subject'
+        = f.label :subject_id, I18n.t('interface.subject.subject')
         = link_to I18n.t('interface.toast.add_new'), subjects_path
         = f.collection_select :subject_id, Subject.all, :id, :name, {prompt: false}, {class: 'form-control'}
       .form-group
-        = f.label :mark_system_id, 'Mark system'
+        = f.label :mark_system_id, I18n.t('interface.mark.mark_system')
         = link_to I18n.t('interface.toast.add_new'), new_mark_system_path
         = f.collection_select :mark_system_id, MarkSystem.all, :id, :name, {prompt: false}, {class: 'form-control'}
       .form-group

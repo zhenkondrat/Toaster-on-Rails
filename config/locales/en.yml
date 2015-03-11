@@ -228,6 +228,7 @@ en:
     type: Type
     change: change
     check: Check
+    date: Date
     menu:
       manage_toasts: Manage Toasts
       list: List
@@ -254,6 +255,7 @@ en:
       new_group: New Group
       all_groups: All groups
     mark:
+      mark: Mark
       marks: Marks
       mark_system: Mark system
       mark_systems: Mark systems
@@ -321,3 +323,9 @@ en:
       reg_in_group: Registrate users in group
       reg_in_group_text: Select group to wich you want registrate selected users
       edit_user: Edit user
+    results:
+      results: Results
+      build_results_table: Build table
+      build_another: Build another
+      last_results: Last results
+      create_result_table: Create result table

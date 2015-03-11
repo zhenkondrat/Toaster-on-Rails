@@ -274,6 +274,7 @@ uk:
     type: Тип
     change: редаг.
     check: Познач.
+    date: Дата
     menu:
       manage_toasts: Менеджер тестів
       list: Список
@@ -300,6 +301,7 @@ uk:
       new_group: Нова група
       all_groups: Список груп
     mark:
+      mark: Оцінка
       marks: Оцінки
       mark_system: Система оцінювання
       mark_systems: Системи оінювання
@@ -367,3 +369,9 @@ uk:
       reg_in_group: Реєструвати користувачів у групу
       reg_in_group_text: Оберіть групу в яку зареєструвати виділених користувачів
       edit_user: Редагувати користувача
+    results:
+      results: Результати
+      build_results_table: Вивести таблицю
+      build_another: Вивести інші
+      last_results: Останні результати
+      create_result_table: Створити таблицю результатів

@@ -32,8 +32,8 @@
             %th Дата
           - @results.each do |result|
             %tr
-              %td=result.toast.subject.name
-              %td=result.toast.name
-              %td=result.show_mark
-              %td= l result['created_at'], format: :short
+              %td=result['subject_name']
+              %td=result['toast_name']
+              %td=result['mark']
+              %td= l Time.parse(result['created_at']), format: :short
 %p.user_footer#user_footer

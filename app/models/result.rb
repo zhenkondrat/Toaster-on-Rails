@@ -25,7 +25,7 @@ class Result < ActiveRecord::Base
 
   def show_mark
     if toast.mark_system
-      toast.mark_system.marks.where("percent <= #{self.mark*100}").order(id: :desc).first.presentation
+      toast.mark_system.marks.where("percent <= #{self.mark*100}").order(percent: :desc).first.presentation
     else
       mark.to_s
     end

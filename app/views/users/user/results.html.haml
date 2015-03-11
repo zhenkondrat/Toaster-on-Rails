@@ -1,0 +1,24 @@
+- provide(:title, 'Привіт студент')
+= content_for :styles do
+  = stylesheet_link_tag 'student'
+.student_content
+  .panel.panel-success.main
+    .panel-heading
+      %h3 #{I18n.t 'interface.menu.my_results'}
+    .panel-body
+      %table.table.table-striped
+        %tr
+          %th Предмет
+          %th Назва тесту
+          %th Бал
+          %th Дата
+        - @results.each do |result|
+          %tr
+            %td=result.toast.subject.name
+            %td=result.toast.name
+            %td=result.show_mark
+            %td= l result['created_at'], format: :short
+      .right-align= paginate @results
+    .panel-footer
+      = link_to I18n.t('interface.menu.my_profile'), root_path, class: 'btn btn-warning'
+%p.user_footer#user_footer

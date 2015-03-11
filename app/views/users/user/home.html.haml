@@ -26,13 +26,14 @@
       .results
         %table.table
           %tr
+            %th Предмет
             %th Назва тесту
             %th Бал
             %th Дата
           - @results.each do |result|
             %tr
-              %td=result['toast_name']
-              %td=result['f_mark']
-              %td= l Time.parse(result['created_at']), format: :short
-
+              %td=result.toast.subject.name
+              %td=result.toast.name
+              %td=result.show_mark
+              %td= l result['created_at'], format: :short
 %p.user_footer#user_footer

@@ -1,0 +1,17 @@
+.panel.panel-warning.main
+  .panel-heading
+    %h3 #{I18n.t 'interface.results.results'}
+  .panel-body
+    %h4 #{I18n.t 'interface.group.group'}: #{Group.find(params[:group][:id]).name} - #{I18n.t 'interface.toast.toast'}: #{Toast.find(params[:toast][:id]).name}
+    %table.table.table-striped
+      %tr
+        %th #{I18n.t 'interface.last_name'}
+        %th #{I18n.t 'interface.mark.marks'}
+        %th #{I18n.t 'interface.date'}
+      - @results.each_key do |user_id|
+        %tr
+          - user = User.find(user_id)
+          %td= link_to user.last_name, edit_user_path(user)
+          %td= @results[user_id].sort_by{|m| m.created_at}.map{ |m| m.show_mark }.join(', ')
+          %td= l @results[user_id].max_by{|m| m.created_at}.created_at, format: :short
+  .panel-footer= link_to I18n.t('interface.results.build_another'), results_path, class: 'btn btn-warning'

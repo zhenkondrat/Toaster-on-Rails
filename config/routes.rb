@@ -26,6 +26,7 @@ Rails.application.routes.draw do
   post '/toasts/search', to: 'toasts#index', as: 'toasts_search'
   post '/groups/search', to: 'groups#index', as: 'groups_search'
   post '/subjects/search', to: 'subjects#index', as: 'subjects_search'
+  post '/results/search', to: 'results#show', as: 'results_show'
 
   get 'invite_code', to: 'users#generate_invite_code'
   post 'join_group', to: 'users#join_group'

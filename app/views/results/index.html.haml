@@ -1,0 +1,29 @@
+.panel.panel-warning.different
+  .panel-heading
+    %h3 #{I18n.t 'interface.results.results'}
+  = form_tag results_show_path do
+    .panel-body
+      .col-lg-6
+        %h3.center #{I18n.t 'interface.results.create_result_table'}
+        .form-group
+          = label_tag :group_id, I18n.t('interface.group.group')
+          = collection_select :group, :id, Group.all, :id, :name, {prompt: false}, {class: 'form-control'}
+        .form-group
+          = label_tag :toast_id, I18n.t('interface.toast.toast')
+          = collection_select :toast, :id, Toast.all, :id, :name, {prompt: false}, {class: 'form-control'}
+        .form-group= submit_tag I18n.t('interface.results.build_results_table'), class: 'btn btn-info'
+      .col-lg-6
+        %h3.center #{I18n.t 'interface.results.last_results'}
+        %table.table.table-striped
+          %tr
+            %th #{I18n.t 'interface.login'}
+            %th #{I18n.t 'interface.toast.toast'}
+            %th #{I18n.t 'interface.mark.mark'}
+            %th #{I18n.t 'interface.date'}
+          - @results.each do |result|
+            %tr
+              %td=result['user_login']
+              %td=result['toast_name']
+              %td=result['mark']
+              %td= l Time.parse(result['created_at']), format: :short
+    .panel-footer

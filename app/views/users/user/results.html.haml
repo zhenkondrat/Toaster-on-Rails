@@ -8,16 +8,16 @@
     .panel-body
       %table.table.table-striped
         %tr
-          %th Предмет
-          %th Назва тесту
-          %th Бал
-          %th Дата
+          %th #{I18n.t 'interface.subject.subject'}
+          %th #{I18n.t 'interface.toast.toast'}
+          %th #{I18n.t 'interface.mark.mark'}
+          %th #{I18n.t 'interface.date'}
         - @results.each do |result|
           %tr
             %td=result.toast.subject.name
             %td=result.toast.name
             %td=result.show_mark
-            %td= l result['created_at'], format: :short
+            %td= l result.created_at, format: :short
       .right-align= paginate @results
     .panel-footer
       = link_to I18n.t('interface.menu.my_profile'), root_path, class: 'btn btn-warning'

@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   respond_to :html, :json
   before_action :authenticate_user!, except: [:index, :main]
-  before_action :set_user, only: [:edit, :update]
+  before_action :set_user, only: [:edit, :update, :destroy]
   before_filter :admin_lock, except: [:main, :results]
 
   def main
@@ -30,6 +30,15 @@ class UsersController < ApplicationController
       flash[:notice] = 'User is successfully updated'
     else
       flash[:error] = %q|User can't be updated|
+    end
+    redirect_to users_path
+  end
+
+  def destroy
+    if @user.delete
+      flash[:notice] = 'User is successfully destroyed'
+    else
+      flash[:error] = %q|User can't be destroyed|
     end
     redirect_to users_path
   end

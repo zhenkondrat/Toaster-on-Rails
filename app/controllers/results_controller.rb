@@ -18,8 +18,7 @@ class ResultsController < ApplicationController
   end
 
   def show
-    toast_id = params[:toast][:id]
     group_id = params[:group][:id]
-    @results = Result.includes(user: :groups).joins(user: :groups).where(toast_id: toast_id).where(groups: {id: group_id}).order('users.last_name ASC').group_by(&:user_id)
+    @users = User.joins(:groups).where(groups: {id: group_id}).order(last_name: :asc)
   end
 end

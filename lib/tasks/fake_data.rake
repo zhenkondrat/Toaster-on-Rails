@@ -1,18 +1,19 @@
-require 'faker'
-
 namespace :fake_data do
   desc 'generate fake subjects'
   task subjects: :environment do
+    require 'faker'
     10.times{ Subject.create(name: Faker::Lorem.word.capitalize) }
   end
 
   desc 'generate fake groups'
   task groups: :environment do
+    require 'faker'
     10.times{ Group.create(name: Faker::Lorem.word.capitalize) }
   end
 
   desc 'generate fake users'
   task users: :environment do
+    require 'faker'
     10.times do
       User.create({login: Faker::Internet.user_name,
                   password: 'qwe123',

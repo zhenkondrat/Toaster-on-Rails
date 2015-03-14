@@ -242,6 +242,7 @@ en:
       regenerate: Regenerate
       my_profile: My Profile
       my_results: My Results
+      change_locale: Українська
       logout: Logout
     group:
       groups: Groups

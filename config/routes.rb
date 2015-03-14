@@ -31,6 +31,7 @@ Rails.application.routes.draw do
   get 'invite_code', to: 'users#generate_invite_code'
   post 'join_group', to: 'users#join_group'
   get 'leave_group/:id', to: 'users#leave_group', as: :leave_group
+  get 'change_locale', to: 'users#change_locale'
 
   # results
   get 'results', to: 'results#index'

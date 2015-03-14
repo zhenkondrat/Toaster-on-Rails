@@ -43,4 +43,5 @@
           %b.caret
         %ul.dropdown-menu
           %li= link_to I18n.t('interface.menu.my_profile'), edit_user_path(current_user)
+          %li= link_to I18n.t('interface.menu.change_locale'), change_locale_path
           %li= link_to I18n.t('interface.menu.logout'), destroy_user_session_path, method: :delete

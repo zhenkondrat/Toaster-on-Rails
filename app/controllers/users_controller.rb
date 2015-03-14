@@ -83,6 +83,11 @@ class UsersController < ApplicationController
     redirect_to edit_group_path(@group)
   end
 
+  def change_locale
+    I18n.locale = (I18n.locale == :en ? :uk : :en)
+    redirect_to root_path, notice: 'Locale successfully changed'
+  end
+
   private
 
   def set_user

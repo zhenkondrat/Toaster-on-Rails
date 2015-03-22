@@ -24,7 +24,7 @@
         = f.label :weight2, I18n.t('interface.toast.weight_plural')
         = f.text_field :weight2, class: 'form-control'
       .form-group
-        = f.label :weight3, I18n.t('interface.toast.weight_many_to_many')
+        = f.label :weight3, I18n.t('interface.toast.weight_associative')
         = f.text_field :weight3, class: 'form-control'
       .form-group
         = f.label :questions_count, I18n.t('interface.toast.question_count')
@@ -51,7 +51,7 @@
             - type = case question.question_type
               - when 1 then I18n.t('interface.question.logical_sm')
               - when 2 then I18n.t('interface.question.plural_sm')
-              - when 3 then I18n.t('interface.question.many_to_many_sm')
+              - when 3 then I18n.t('interface.question.associative_sm')
             %td= type
             %td.actions
               = link_to edit_question_path(question) do

@@ -56,25 +56,25 @@ ready = function(){
     switch($(this).data('question-type')){
       case 1:
         text = header.data('logical');
-        $('#LogicalForm')[0].className = '';
-        $('#PluralForm')[0].className = 'hidden';
-        $('#AssociativeForm')[0].className = 'hidden';
+        $('#LogicalForm').removeClass('hidden');
+        $('#PluralForm').addClass('hidden');
+        $('#AssociativeForm').addClass('hidden');
         break;
       case 2:
         text = header.data('plural');
-        $('#LogicalForm')[0].className = 'hidden';
-        $('#PluralForm')[0].className = '';
-        $('#AssociativeForm')[0].className = 'hidden';
+        $('#LogicalForm').addClass('hidden');
+        $('#PluralForm').removeClass('hidden');
+        $('#AssociativeForm').addClass('hidden');
         break;
       case 3:
         text = header.data('manytomany');
-        $('#LogicalForm')[0].className = 'hidden';
-        $('#PluralForm')[0].className = 'hidden';
-        $('#AssociativeForm')[0].className = '';
+        $('#LogicalForm').addClass('hidden');
+        $('#PluralForm').addClass('hidden');
+        $('#AssociativeForm').removeClass('hidden');
         break;
     }
-    $('#question_question_type')[0].value = $(this).data('question-type');
-    $('#QuestionType')[0].textContent = text;
+    $('#question_question_type').val($(this).data('question-type'));
+    $('#QuestionType').html(text);
     return false
   });
 

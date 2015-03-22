@@ -1,4 +1,4 @@
-#LogicalForm
+#LogicalForm{class: @question.logical? || @question.no_type? ? '' : 'hidden'}
   .form-group
     = f.radio_button :is_right, true
     #{I18n.t 'interface.question.answer_yes'}

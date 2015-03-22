@@ -271,11 +271,11 @@ en:
       question: Question
       logical: Logical
       plural: Plural
-      many_to_many: Many to Many
+      associative: Associative
       question_sm: question
       logical_sm: logical
       plural_sm: plural
-      many_to_many_sm: many to many
+      associative_sm: Associative
       question_text: Question text
       answers: Answers
       answer_yes: Yes
@@ -299,7 +299,7 @@ en:
       additional_configuration: Additional configuration
       weight_logical: Weight of question first type(logical)
       weight_plural: Weight of question second type(plural)
-      weight_many_to_many: Weight of question third type(many-to-many)
+      weight_associative: Weight of question third type(associative)
       question_count: Questions count in one toast session
       question_time: Time to answer one question
       question_list: Question list

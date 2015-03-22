@@ -4,25 +4,23 @@
       .col-lg-4.center
         - config = {onclick: 'return false', data: {question_type: 1}}
         - config[:disabled] = true if @question.question_type != 1 && @question.question_type
-        %button.btn.btn-xl.btn-circle.btn-success.change-type{config}
+        %button.btn.btn-xl.btn-circle.btn-success.change-type{onclick: 'return false', data: {question_type: 1}, disabled: @question.logical? || @question.no_type? ? nil : true}
           %i.fa.fa-leaf
       .col-lg-4.center
         - config = {onclick: 'return false', data: {question_type: 2}}
         - config[:disabled] = true if @question.question_type != 2 && @question.question_type
-        %button.btn.btn-xl.btn-circle.btn-warning.change-type{config}
+        %button.btn.btn-xl.btn-circle.btn-warning.change-type{onclick: 'return false', data: {question_type: 2}, disabled: @question.plural? || @question.no_type? ? nil : true}
           %i.fa.fa-check-square
       .col-lg-4.center
-        - config = {onclick: 'return false', data: {question_type: 3}}
-        - config[:disabled] = true if @question.question_type != 3 && @question.question_type
-        %button.btn.btn-xl.btn-circle.btn-danger.change-type{config}
+        %button.btn.btn-xl.btn-circle.btn-danger.change-type{onclick: 'return false', data: {question_type: 3}, disabled: @question.associative? || @question.no_type? ? nil : true}
           %i.fa.fa-random
     .row.center
       - type = case @question.question_type
       -   when 1 then I18n.t('interface.question.logical')
       -   when 2 then I18n.t('interface.question.plural')
-      -   when 3 then I18n.t('interface.question.many_to_many')
+      -   when 3 then I18n.t('interface.question.associative')
       -   else I18n.t('interface.question.logical')
-      %h3#QuestionType{data: {logical: I18n.t('interface.question.logical'), plural: I18n.t('interface.question.plural'), manytomany: I18n.t('interface.question.many_to_many')}} #{type}
+      %h3#QuestionType{data: {logical: I18n.t('interface.question.logical'), plural: I18n.t('interface.question.plural'), manytomany: I18n.t('interface.question.associative')}} #{type}
     = f.hidden_field :question_type, value: @question.question_type || 1
     = f.hidden_field :toast_id
     .form-group
@@ -32,7 +30,7 @@
       %h4 #{I18n.t 'interface.question.answers'}:
       = render partial: 'logical_form', locals: {f: f} if @question.question_type == 1 || !@question.question_type
       = render partial: 'plural_form' if @question.question_type == 2 || !@question.question_type
-      = render partial: 'many_to_many_form' if @question.question_type == 3 || !@question.question_type
+      = render partial: 'associative_form' if @question.question_type == 3 || !@question.question_type
   .panel-footer.right
     = f.submit current_page?(new_question_path) ? I18n.t('interface.create') : I18n.t('interface.save'), class: 'btn btn-info'
     = link_to I18n.t('interface.cancel'), edit_toast_path(@question.toast_id), class: 'btn btn-default'

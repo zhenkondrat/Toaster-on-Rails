@@ -317,11 +317,11 @@ uk:
       question: Питання
       logical: Логічне
       plural: Множинне
-      many_to_many: Асоціативне
+      associative: Асоціативне
       question_sm: запитання
       logical_sm: логічне
       plural_sm: множинне
-      many_to_many_sm: асоціативне
+      associative_sm: асоціативне
       question_text: Текст питання
       answers: Відповіді
       answer_yes: Так
@@ -345,7 +345,7 @@ uk:
       additional_configuration: Додаткові налаштування
       weight_logical: Вага логічного питання
       weight_plural: Вага множинного питання
-      weight_many_to_many: Вага асоціативного питання
+      weight_associative: Вага асоціативного питання
       question_count: Кількість питаннь які будуть вибрані для проходження
       question_time: Час на відповідь одного питання
       question_list: Список питань

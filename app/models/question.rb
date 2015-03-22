@@ -22,4 +22,19 @@ class Question < ActiveRecord::Base
     end
   end
 
+  def no_type?
+    question_type.nil?
+  end
+
+  def logical?
+    question_type == 1
+  end
+
+  def plural?
+    question_type == 2
+  end
+
+  def associative?
+    question_type == 3
+  end
 end

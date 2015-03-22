@@ -5,7 +5,7 @@ class QuestionsController < ApplicationController
 
   def new
     @question = Question.new(toast_id: params[:toast])
-    @plural_answer, @many_to_many_answer = Answer2.new, Answer3.new
+    @plural_answer, @associative_answer = Answer2.new, Answer3.new
   end
 
   def create

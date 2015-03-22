@@ -1,4 +1,4 @@
-#PluralForm.hidden
+#PluralForm{class: @question.plural? ? '' : 'hidden'}
   .form-group.center
     %button.btn.btn-square.btn-xl.btn-info.add-plural{ onclick: 'return false' }
       %i.fa.fa-plus

@@ -16,3 +16,4 @@ public/system/*
 config/unicorn.rb
 gem_graph.png
 coverage/
+public/ckeditor_assets

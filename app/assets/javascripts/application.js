@@ -18,6 +18,6 @@
 //= require main
 //= require question
 //= require ckeditor/init
+//= require ckeditor/config
 //= require ckeditor/own_config
 //= require_tree .
-

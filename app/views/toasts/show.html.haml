@@ -1,7 +1,10 @@
-- provide(:title, 'Привіт студент')
 = content_for :styles do
   = stylesheet_link_tag 'student'
+= content_for :plugins do
+  = javascript_include_tag 'question_time'
 .student_content
+  - unless @toast.question_time.nil?
+    .timer{data: {time: @toast.question_time}}
   = form_tag passing_path do
     = hidden_field_tag :id, @toast.id
     .panel.panel-success.main
@@ -30,5 +33,5 @@
                 %span= answer.text
       .panel-footer
         = link_to I18n.t('interface.toast.exit_toast'), root_path, class: 'btn btn-danger'
-        = submit_tag I18n.t('interface.toast.next'), class: 'btn btn-default pull-right'
+        = submit_tag I18n.t('interface.toast.next'), class: 'btn btn-default pull-right next_question'
 %p.user_footer#user_footer

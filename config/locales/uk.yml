@@ -276,15 +276,15 @@ uk:
     check: Познач.
     date: Дата
     menu:
-      manage_toasts: Менеджер тестів
+      manage_toasts: Тести
       list: Список
       new: Новий
-      manage_groups: Менеджер груп
-      manage_users: Менеджер користувачів
-      manage_subjects: Менеджер предметів
+      manage_groups: Групи
+      manage_users: Користувачі
+      manage_subjects: Предмети
       mark_systems: Системи оцінювання
       results: Результати
-      invite_codes: Коди запрошення
+      invite_codes: Коди
       regenerate: Регенерувати
       my_profile: Мій профіль
       my_results: Мої результати

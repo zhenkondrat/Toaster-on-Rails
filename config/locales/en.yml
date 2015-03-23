@@ -230,12 +230,12 @@ en:
     check: Check
     date: Date
     menu:
-      manage_toasts: Manage Toasts
+      manage_toasts: Toasts
       list: List
       new: New
-      manage_groups: Manage Groups
-      manage_users: Manage Users
-      manage_subjects: Manage Subjects
+      manage_groups: Groups
+      manage_users: Users
+      manage_subjects: Subjects
       mark_systems: Mark Systems
       results: Results
       invite_codes: Invite codes

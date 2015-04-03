@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
   has_many :results, dependent: :delete_all
   validates :login, uniqueness: true
   validate :have_user_surname?
+  serialize :config, Hash
 
   def self.search(search_filter)
     return User.all unless search_filter.present?

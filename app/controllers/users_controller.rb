@@ -85,6 +85,7 @@ class UsersController < ApplicationController
 
   def change_locale
     I18n.locale = (I18n.locale == :en ? :uk : :en)
+    current_user.update(config: {locale: I18n.locale})
     redirect_to root_path, notice: 'Locale successfully changed'
   end
 

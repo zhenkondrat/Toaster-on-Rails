@@ -1,4 +1,4 @@
-class RegistrationsController < Devise::RegistrationsController
+class DeviseOverride::RegistrationsController < Devise::RegistrationsController
 
   # POST /resource
   def create

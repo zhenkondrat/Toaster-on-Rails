@@ -13,6 +13,7 @@
           #{I18n.t('interface.toast.question_number')+(session[:last_question]+1).to_s}
           #{I18n.t('interface.toast.of')}
           #{session[:questions].size}
+          .pull-right.timer-ticker.red
       .panel-body
         .question-text= @question.text.html_safe
         %hr

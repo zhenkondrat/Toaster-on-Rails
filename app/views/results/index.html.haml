@@ -22,8 +22,8 @@
             %th #{I18n.t 'interface.date'}
           - @results.each do |result|
             %tr
-              %td=result['user_login']
-              %td=result['toast_name']
-              %td=result['mark']
-              %td= l Time.parse(result['created_at']), format: :short
+              %td=result.user.login
+              %td=result.toast.name
+              %td=Mark.where("percent <= #{result.mark*100} AND mark_system_id = #{result.toast.mark_system_id}").order(percent: :desc).pluck(:presentation).first
+              %td= l Time.at(result['created_at']), format: :short
     .panel-footer

@@ -1,0 +1,25 @@
+<html>
+  <head>
+  </head>
+
+  <body>
+    <table border="1">
+      <tr>
+        <th><%=I18n.t 'interface.last_name' %></th>
+        <th><%=I18n.t 'interface.mark.marks' %></th>
+        <th><%=I18n.t 'interface.date' %></th>
+      </tr>
+      <% @users.each do |user| %>
+        <tr>
+          <td><%= user.first_name %> <%= user.last_name %> <%= user.father_name %></td>
+          <% results = user.results.where(toast_id: params[:toast_id]).order(created_at: :desc) %>
+          <td style='background-color: #00ffdc; color: #000000'><%= results.map{|m| m.show_mark}.join(', ') %></td>
+          <td><%= results.first.nil? ? '' : (l results.first.created_at, format: :short) %></td>
+        </tr>
+      <% end %>
+    </table>
+  </body>
+</html>
+
+
+

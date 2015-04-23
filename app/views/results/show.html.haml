@@ -14,4 +14,14 @@
           - results = user.results.where(toast_id: params[:toast][:id]).order(created_at: :desc)
           %td= results.map{|m| m.show_mark}.join(', ')
           %td= results.first.nil? ? '' : (l results.first.created_at, format: :short)
-  .panel-footer= link_to I18n.t('interface.results.build_another'), results_path, class: 'btn btn-warning'
+  .panel-footer
+    = link_to I18n.t('interface.results.build_another'), results_path, class: 'btn btn-warning'
+    .pull-right
+      = I18n.t('interface.results.export')
+      = link_to( results_export_path(format: "xls", group_id: params[:group][:id], toast_id: params[:toast][:id]), class: 'btn btn-success', method: :post ) do
+        %i.fa.fa-file-excel-o
+        = I18n.t('interface.results.exel')
+
+      = link_to( results_export_path(format: "doc", group_id: params[:group][:id], toast_id: params[:toast][:id]), class: 'btn btn-success', method: :post ) do
+        %i.fa.fa-file-word-o
+        = I18n.t('interface.results.word')

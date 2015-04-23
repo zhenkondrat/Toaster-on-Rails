@@ -29,6 +29,8 @@ Rails.application.routes.draw do
   post '/subjects/search', to: 'subjects#index', as: 'subjects_search'
   post '/results/search', to: 'results#show', as: 'results_show'
 
+  post '/results/export', to: 'results#export', as: 'results_export'
+
   get 'invite_code', to: 'users#generate_invite_code'
   post 'join_group', to: 'users#join_group'
   get 'leave_group/:id', to: 'users#leave_group', as: :leave_group

@@ -17,8 +17,42 @@ class ResultsController < ApplicationController
     end
   end
 
+  def report
+    @users = User.all
+    respond_to do |format|
+      format.html
+      format.csv { send_data User.all.to_csv }
+      format.xls #{ send_data User.all.to_csv(col_sep: "\t") }
+    end
+  end
+
   def show
     group_id = params[:group][:id]
     @users = User.joins(:groups).where(groups: {id: group_id}).order(last_name: :asc)
   end
+
+  def export
+    @users = User.joins(:groups).where(groups: {id: params[:group_id]}).order(last_name: :asc)
+
+    respond_to do |format|
+      format.xls { set_header('xls', "#{Group.find(params[:group_id]).name}-result-#{Time.zone.now.strftime("%d/%m/%Y")}.xls") }
+      format.doc { set_header('dox', "#{Group.find(params[:group_id]).name}-result-#{Time.zone.now.strftime("%d/%m/%Y")}.doc") }
+    end
+  end
+
+  def set_header(p_type, filename)
+    case p_type
+      when 'xls'
+        headers['Content-Type'] = "application/vnd.ms-excel; charset=UTF-8'"
+        headers['Content-Disposition'] = "attachment; filename=\"#{filename}\""
+        headers['Cache-Control'] = ''
+
+      when 'dox'
+        headers['Content-Type'] = "application/vnd.ms-word; charset=UTF-8"
+        headers['Content-Disposition'] = "attachment; filename=\"#{filename}\""
+        headers['Cache-Control'] = ''
+
+    end
+  end
+
 end

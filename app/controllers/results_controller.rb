@@ -21,16 +21,16 @@ class ResultsController < ApplicationController
   end
 
   def show
-    group_id = params[:group][:id]
-    @users = User.joins(:groups).where(groups: {id: group_id}).order(last_name: :asc)
+    @users = User.joins(:groups, :results).where(groups: {id: params[:group][:id]}, results: {toast_id: params[:toast][:id]}).group('users.id').order(last_name: :asc)
   end
 
   def export
-    @users = User.joins(:groups).where(groups: {id: params[:group_id]}).order(last_name: :asc)
+    @users = User.joins(:groups, :results).where(groups: {id: params[:group_id]}, results: {toast_id: params[:toast_id]}).group('users.id').order(last_name: :asc)
+
     file_name = "#{Group.find(params[:group_id]).name}-result-#{Time.zone.now.strftime("%d/%m/%Y")}"
     respond_to do |format|
       format.xls { set_header('xls', "#{file_name}.xls") }
-      format.doc { set_header('dox', "#{file_name}.doc") }
+      format.doc { set_header('doc', "#{file_name}.doc") }
     end
   end
 

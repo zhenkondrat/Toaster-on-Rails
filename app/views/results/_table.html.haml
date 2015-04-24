@@ -11,6 +11,5 @@
         = user.last_name
         = user.father_name
 
-      - results = user.results.where(toast_id: params[:toast_id]).order(created_at: :desc)
-      %td= results.map{|m| m.show_mark}.join(', ')
-      %td= (l results.first.created_at, format: :short) unless results.first.nil?
+      %td= user.results.map{|m| m.show_mark}.join(', ')
+      %td= (l user.results.first.created_at, format: :short) unless user.results.first.nil?

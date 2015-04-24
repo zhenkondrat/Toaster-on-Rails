@@ -1,0 +1,16 @@
+%table{ border: 1}
+  %tr
+    %th= I18n.t 'interface.last_name'
+    %th= I18n.t 'interface.mark.marks'
+    %th= I18n.t 'interface.date'
+
+  - @users.each do |user|
+    %tr
+      %td
+        = user.first_name
+        = user.last_name
+        = user.father_name
+
+      - results = user.results.where(toast_id: params[:toast_id]).order(created_at: :desc)
+      %td= results.map{|m| m.show_mark}.join(', ')
+      %td= (l results.first.created_at, format: :short) unless results.first.nil?

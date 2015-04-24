@@ -13,7 +13,7 @@
           %td= link_to user.last_name, edit_user_path(user)
           - results = user.results.where(toast_id: params[:toast][:id]).order(created_at: :desc)
           %td= results.map{|m| m.show_mark}.join(', ')
-          %td= results.first.nil? ? '' : (l results.first.created_at, format: :short)
+          %td= l results.first.created_at, format: :short unless results.first.nil?
   .panel-footer
     = link_to I18n.t('interface.results.build_another'), results_path, class: 'btn btn-warning'
     .pull-right

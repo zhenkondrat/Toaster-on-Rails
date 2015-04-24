@@ -1,0 +1,14 @@
+%html{xmlns: "http://www.w3.org/TR/REC-html40",
+      "xmlns:o": "urn:schemas-microsoft-com:office:office",
+      "xmlns:x": "urn:schemas-microsoft-com:office:excel"}
+  %head
+    /[if gte mso 9]
+    %xml
+      %excelworkbook
+        %excelworksheets
+          %excelworksheet
+            %name List 1
+            %worksheetoptions
+              %displaygridlines
+  %body
+    = render partial: "results/table.html.haml"

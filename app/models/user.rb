@@ -42,17 +42,33 @@ class User < ActiveRecord::Base
     full_name
   end
 
+  ROLE_ADMIN = 'admin'
+  ROLE_TEACHER = 'teacher'
+  ROLE_STUDENT = 'student'
+
   def admin?
-    admin
+    role == ROLE_ADMIN
+  end
+
+  def teacher?
+    role == ROLE_TEACHER
   end
 
   class << self
     def admins
-      User.where(admin: true)
+      User.where(role: ROLE_ADMIN)
     end
 
     def users
-      User.where(admin: false)
+      User.where(role: (ROLE_STUDENT || ROLE_TEACHER))
+    end
+
+    def students
+      User.where(role: ROLE_STUDENT)
+    end
+
+    def teachers
+      User.where(role: ROLE_TEACHER)
     end
   end
 
@@ -60,7 +76,7 @@ class User < ActiveRecord::Base
 
   def have_user_surname?
     if last_name.blank? && !admin?
-      errors.add(:last_name, %q|Can't be empty for student(user)|)
+      errors.add(:last_name, %q|Can't be empty for user|)
     end
   end
 end

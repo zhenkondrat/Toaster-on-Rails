@@ -33,7 +33,7 @@
           %b.caret
         %ul.dropdown-menu
           - local = InviteCode.local
-          %li= link_to "Admin: #{local[:admin]}", '#', id: 'admin_token'
+          %li= link_to "Teacher: #{local[:admin]}", '#', id: 'admin_token'
           %li= link_to "User: #{local[:user]}", '#', id: 'user_token'
           %li
             %button.btn.btn-warning.key-gen #{I18n.t 'interface.menu.regenerate'}

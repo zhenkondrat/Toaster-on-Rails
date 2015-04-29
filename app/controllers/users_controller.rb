@@ -9,8 +9,8 @@ class UsersController < ApplicationController
       format.html do
         if user_signed_in?
           save_result if session[:toast_started]
-          prepare_results unless current_user.admin
-          render current_user.admin ? 'users/admin/home' : 'users/user/home'
+          prepare_results unless (current_user.teacher? || current_user.admin?)
+          render (current_user.teacher? || current_user.admin?)  ? 'users/teacher/home' : 'users/user/home'
         else
           redirect_to new_user_session_path
         end

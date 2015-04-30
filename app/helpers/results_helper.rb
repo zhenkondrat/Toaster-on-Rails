@@ -3,13 +3,11 @@ module ResultsHelper
     case p_type
       when 'xls'
         headers['Content-Type'] = "application/vnd.ms-excel; charset=UTF-8'"
-        headers['Content-Disposition'] = "attachment; filename=\"#{filename}\""
-        headers['Cache-Control'] = ''
 
-      when 'dox'
+      when 'doc'
         headers['Content-Type'] = "application/vnd.ms-word; charset=UTF-8"
-        headers['Content-Disposition'] = "attachment; filename=\"#{filename}\""
-        headers['Cache-Control'] = ''
     end
+    headers['Content-Disposition'] = "attachment; filename=\"#{filename}\""
+    headers['Cache-Control'] = ''
   end
 end

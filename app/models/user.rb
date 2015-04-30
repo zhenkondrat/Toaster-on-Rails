@@ -4,7 +4,9 @@ class User < ActiveRecord::Base
   has_many :groups, through: :user_groups
   has_many :results, dependent: :delete_all
   validates :login, uniqueness: true
-  validate :have_user_surname?
+
+  validates_presence_of :last_name, unless: Proc.new { |user| user.admin? }
+
   serialize :config, Hash
 
   def self.search(search_filter)
@@ -54,30 +56,14 @@ class User < ActiveRecord::Base
     role == ROLE_TEACHER
   end
 
-  class << self
-    def admins
-      User.where(role: ROLE_ADMIN)
-    end
-
-    def users
-      User.where(role: (ROLE_STUDENT || ROLE_TEACHER))
-    end
-
-    def students
-      User.where(role: ROLE_STUDENT)
-    end
-
-    def teachers
-      User.where(role: ROLE_TEACHER)
-    end
+  def student?
+    role == ROLE_STUDENT
   end
 
-  private
+  scope :admins, ->{ where role: ROLE_ADMIN }
+  scope :teachers, ->{ where role: ROLE_TEACHER }
+  scope :students, ->{ where role: ROLE_STUDENT }
+  scope :users, ->{ where role: (ROLE_STUDENT || ROLE_TEACHER) }
 
-  def have_user_surname?
-    if last_name.blank? && !admin?
-      errors.add(:last_name, %q|Can't be empty for user|)
-    end
-  end
 end
 

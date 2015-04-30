@@ -7,9 +7,9 @@
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
   - if current_user
-    - background = (current_user.admin? || current_user.teacher?) ? 'admin-bkg' : 'user-bkg'
+    - background = !current_user.student? ? 'admin-bkg' : 'user-bkg'
   %body{ class: current_user ? background : ''}
-    - if current_user && (current_user.teacher? || current_user.admin?)
+    - if current_user && !current_user.student?
       = render partial: 'layouts/admin_bar'
     - elsif current_user
       = render partial: 'layouts/user_bar'

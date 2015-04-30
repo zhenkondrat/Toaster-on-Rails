@@ -63,7 +63,7 @@ class User < ActiveRecord::Base
   scope :admins, ->{ where role: ROLE_ADMIN }
   scope :teachers, ->{ where role: ROLE_TEACHER }
   scope :students, ->{ where role: ROLE_STUDENT }
-  scope :users, ->{ where role: (ROLE_STUDENT || ROLE_TEACHER) }
+  scope :users, ->{ where role: [ROLE_STUDENT, ROLE_TEACHER] }
 
 end
 

@@ -328,5 +328,8 @@ en:
       results: Results
       build_results_table: Build table
       build_another: Build another
+      export: Export to
+      exel: Exel
+      word: Word
       last_results: Last results
       create_result_table: Create result table

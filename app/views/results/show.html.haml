@@ -11,7 +11,17 @@
       - @users.each do |user|
         %tr
           %td= link_to user.last_name, edit_user_path(user)
-          - results = user.results.where(toast_id: params[:toast][:id]).order(created_at: :desc)
-          %td= results.map{|m| m.show_mark}.join(', ')
-          %td= results.first.nil? ? '' : (l results.first.created_at, format: :short)
-  .panel-footer= link_to I18n.t('interface.results.build_another'), results_path, class: 'btn btn-warning'
+          %td= user.results.map{|m| m.show_mark}.join(', ')
+          %td= l user.results.first.created_at, format: :short unless user.results.first.nil?
+  .panel-footer
+    = link_to I18n.t('interface.results.build_another'), results_path, class: 'btn btn-warning'
+    .pull-right
+      = I18n.t('interface.results.export')
+      -# # group_id: params[:group][:id], toast_id: params[:toast][:id]
+      = link_to( results_export_path(format: "xls", params: params), class: 'btn btn-success', method: :post ) do
+        %i.fa.fa-file-excel-o
+        = I18n.t('interface.results.exel')
+
+      = link_to( results_export_path(format: "doc", params: params), class: 'btn btn-success', method: :post ) do
+        %i.fa.fa-file-word-o
+        = I18n.t('interface.results.word')

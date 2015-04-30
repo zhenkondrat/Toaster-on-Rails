@@ -374,5 +374,8 @@ uk:
       results: Результати
       build_results_table: Вивести таблицю
       build_another: Вивести інші
+      export: Експортувтаи в
+      exel: Exel
+      word: Word
       last_results: Останні результати
       create_result_table: Створити таблицю результатів

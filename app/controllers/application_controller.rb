@@ -11,6 +11,6 @@ class ApplicationController < ActionController::Base
   end
 
   def admin_lock
-    redirect_to root_path, error: 'You are not have permission!' unless current_user.admin
+    redirect_to root_path, error: 'You are not have permission!' if current_user.student?
   end
 end

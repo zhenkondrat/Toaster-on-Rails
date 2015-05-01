@@ -2,18 +2,10 @@ class DeviseOverride::RegistrationsController < Devise::RegistrationsController
 
   # POST /resource
   def create
-    tokens = InviteCode.local
-    case params[:token]
-    when tokens[:user]
-      params[:user][:admin] = false
-      super
-    when tokens[:admin]
-      params[:user][:admin] = true
-      super
-    else
-      flash[:error] = 'Invite code is invalid'
-      redirect_to new_user_registration_path
-    end
+    tokens = InviteCode.get(:all)
+    return redirect_to(new_user_registration_path, error: 'Invite code is invalid') unless tokens.values.include? params[:token]
+    tokens.select{|role, code| code == params[:token]}.keys.first
+    super
   end
 
   protected

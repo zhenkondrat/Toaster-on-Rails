@@ -46,6 +46,7 @@ GEM
       columnize (~> 0.8)
       debugger-linecache (~> 1.2)
       slop (~> 3.6)
+    cancancan (1.10.1)
     capistrano (3.3.5)
       capistrano-stats (~> 1.1.0)
       i18n
@@ -261,6 +262,7 @@ PLATFORMS
 DEPENDENCIES
   bootstrap-sass (~> 3.3.1)
   byebug
+  cancancan (~> 1.10)
   capistrano
   capistrano-bundler
   capistrano-rails
@@ -269,7 +271,7 @@ DEPENDENCIES
   ckeditor
   coffee-rails (~> 4.0.0)
   database_cleaner
-  devise
+  devise (= 3.4.1)
   factory_girl_rails
   faker
   font-awesome-rails

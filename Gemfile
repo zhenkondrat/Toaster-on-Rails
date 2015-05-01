@@ -69,4 +69,6 @@ group :test do
 end
 
 # Authenticate
-gem 'devise'
+gem 'devise', '3.4.1'
+# User rights
+gem 'cancancan', '~> 1.10'

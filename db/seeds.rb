@@ -9,3 +9,4 @@
 # User.create(login: 'admin', password: 'admin', role: 'admin')
 
 User.where(login: 'admin', role: 'admin').first_or_create(password: 'admin', password_confirmation: 'admin')
+InviteCode.generate!

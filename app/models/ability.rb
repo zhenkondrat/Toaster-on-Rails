@@ -28,11 +28,10 @@ class Ability
       can [:results, :change_locale], User
     end
 
-    can :main, User unless user.id.nil?
+    can :main, User
 
-    can :menu, [:toasts, :groups, :users, :mark_systems, :results, :invite] if user.teacher? || user.admin?
+    can :menu, :invite if user.teacher? || user.admin?
     can :menu, :my_results if user.student?
-    can :menu, :subjects if user.admin?
 
     can :invite, Symbol do |role|
       case role

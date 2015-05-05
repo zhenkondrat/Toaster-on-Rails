@@ -13,7 +13,8 @@ class UsersController < ApplicationController
 
   def index
     @users = User.search(params[:search_filter])
-    @users = @users.where.not(role: [:teacher, :admin]).page(params[:page]).per(30) if current_user.teacher?
+    @users = @users.where.not(role: [:teacher, :admin]) if current_user.teacher?
+    @users = @users.page(params[:page]).per(30)
   end
 
   def edit

@@ -1,6 +1,6 @@
 class ToastsController < ApplicationController
-  before_filter :admin_lock, except: :show
   before_action :set_toast, except: [:new, :create, :index]
+  load_and_authorize_resource
 
   def index
     @toasts = Toast.search({name: params[:search_filter]}).page(params[:page]).per(10)

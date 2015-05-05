@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   respond_to :html, :json
   before_action :authenticate_user!, except: [:index, :main]
   before_action :set_user, only: [:edit, :update, :destroy]
-  before_filter :admin_lock, except: [:main, :results]
+  load_and_authorize_resource
 
   def main
     return redirect_to new_user_session_path unless user_signed_in?
@@ -12,7 +12,8 @@ class UsersController < ApplicationController
   end
 
   def index
-    @users = User.search(params[:search_filter]).page(params[:page]).per(30)
+    @users = User.search(params[:search_filter])
+    @users = @users.where.not(role: [:teacher, :admin]).page(params[:page]).per(30) if current_user.teacher?
   end
 
   def edit

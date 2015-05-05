@@ -1,7 +1,7 @@
 class QuestionsController < ApplicationController
   before_action :set_question, except: [:new, :create]
   before_action :authenticate_user!
-  before_filter :admin_lock
+  load_and_authorize_resource
 
   def new
     @question = Question.new(toast_id: params[:toast])

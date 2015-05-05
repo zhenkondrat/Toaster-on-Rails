@@ -1,7 +1,7 @@
 class SubjectsController < ApplicationController
   before_action :authenticate_user!
-  before_filter :admin_lock
   before_action :set_subject, except: [:create, :index]
+  load_and_authorize_resource
 
   def index
     @subjects = Subject.all

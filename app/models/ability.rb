@@ -8,17 +8,27 @@ class Ability
 
     can :manage, Subject if user.admin?
 
-    can :manage, User do |another_user|
-      user.admin? || (user.teacher? && another_user.student?) || user == another_user
+    can :edit, User do |another_user|
+      user.admin? || user == another_user
     end
 
-    if user.teacher?
+    if user.teacher? || user.admin?
       can :manage, MarkSystem
       can :manage, Question
       can :manage, Group
       can :manage, Toast
       can :manage, Result
+      can :manage, User do |another_user|
+        another_user.student?
+      end
     end
+
+    if user.student?
+      can :show, Toast
+      can [:results, :change_locale], User
+    end
+
+    can :main, User unless user.id.nil?
 
     can :menu, [:toasts, :groups, :users, :mark_systems, :results, :invite] if user.teacher? || user.admin?
     can :menu, :my_results if user.student?

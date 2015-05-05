@@ -1,6 +1,6 @@
 class MarkSystemsController < ApplicationController
-  before_filter :admin_lock
   before_action :set_mark_system, except: [:index, :new, :create]
+  load_and_authorize_resource
 
   def index
     @mark_systems = MarkSystem.page(params[:page]).per(10)

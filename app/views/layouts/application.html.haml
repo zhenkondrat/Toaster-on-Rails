@@ -6,13 +6,8 @@
     = yield :styles
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
-  - if current_user
-    - background = !current_user.student? ? 'admin-bkg' : 'user-bkg'
-  %body{ class: current_user ? background : ''}
-    - if current_user && !current_user.student?
-      = render partial: 'layouts/admin_bar'
-    - elsif current_user
-      = render partial: 'layouts/user_bar'
+  %body{ class: user_signed_in? ? (current_user.student? ? 'blue-bkg' : 'orange-bkg') : ''}
+    = render 'layouts/bar' if user_signed_in?
     .container
       = render 'layouts/flash'
       = yield

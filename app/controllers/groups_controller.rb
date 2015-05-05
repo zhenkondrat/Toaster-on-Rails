@@ -1,7 +1,7 @@
 class GroupsController < ApplicationController
   before_action :authenticate_user!
-  before_filter :admin_lock
   before_action :set_group, except: [:create, :index]
+  load_and_authorize_resource
 
   def index
     @groups = Group.all

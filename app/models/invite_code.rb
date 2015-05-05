@@ -1,40 +1,43 @@
 class InviteCode < ActiveRecord::Base
-  validates :token, :date, presence: true
-  validates :token, uniqueness: true
+  validates :token, :role, presence: true
+  validates :token, :role, uniqueness: true
 
-  def self.generate!
-    old_admin_token = InviteCode.find_by_admin(:true) || InviteCode.new
-    old_user_token = InviteCode.find_by_admin(:false) || InviteCode.new
-    InviteCode.delete_all
+  class << self
+    include Roles
 
-    code_admin = InviteCode.new
-    code_admin.token = (0...6).map { (65 + rand(26)).chr }.join
-    code_admin.token = (0...6).map { (65 + rand(26)).chr }.join while old_admin_token.token == code_admin.token
-    code_admin.date = Date.today
-    code_admin.admin = true
-    code_admin.save
-
-    code_user = InviteCode.new
-    code_user.token = (0...6).map { (65 + rand(26)).chr }.join
-    while (code_user.token == code_admin.token) || (old_user_token.token == code_user.token)
-      code_user.token = (0...6).map { (65 + rand(26)).chr }.join
+    def generate!(option = :all)
+      case option
+      when :all then {admin: generate(:admin), teacher: generate(:teacher), student: generate(:student)}
+      when :admin, :teacher, :student then generate(option)
+      else
+        return if option.class != Array
+        option.map{ |role| {role => generate!(role)} }.reduce(:merge)
+      end
     end
-    code_user.date = Date.today
-    code_user.admin = false
-    code_user.save
 
-    { admin: code_admin.token, user: code_user.token }
-  end
+    def get(option = :all)
+      case option
+      when :all then {admin: take(:admin), teacher: take(:teacher), student: take(:student)}
+      when :admin, :teacher, :student then take(option)
+      else
+        return if option.class != Array
+        option.map{ |role| {role => take(role)} }.reduce(:merge)
+      end
+    end
 
-  def self.local
-    tokens = InviteCode.all
-    if tokens.size != 2
-      InviteCode.generate!
-    else
-      {
-          admin: tokens[0].admin ? tokens[0].token : tokens[1].token,
-          user: !tokens[1].admin ? tokens[1].token : tokens[0].token
-      }
+    private
+
+    def generate(role)
+      invite = nil
+      InviteCode.find_by_role(role_name(role)).try(:delete)
+      3.times do
+        break if invite = InviteCode.create(token: (0...6).map{ (65 + rand(26)).chr }.join, role: role_name(role))
+      end
+      invite.errors.empty? ? invite.token : nil
+    end
+
+    def take(role)
+      InviteCode.find_by_role(role_name(role)).try(:token) || generate(role)
     end
   end
 end

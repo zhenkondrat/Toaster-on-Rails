@@ -1,13 +1,20 @@
 class User < ActiveRecord::Base
+  include Roles
   devise :database_authenticatable, :registerable, :rememberable, :validatable
   has_many :user_groups, dependent: :delete_all
   has_many :groups, through: :user_groups
   has_many :results, dependent: :delete_all
+
+  serialize :config, Hash
+
   validates :login, uniqueness: true
 
   validates_presence_of :last_name, unless: Proc.new { |user| user.admin? }
 
-  serialize :config, Hash
+  scope :admins, ->{ where role: ROLE_ADMIN }
+  scope :teachers, ->{ where role: ROLE_TEACHER }
+  scope :students, ->{ where role: ROLE_STUDENT }
+  scope :users, ->{ where role: [ROLE_STUDENT, ROLE_TEACHER] }
 
   def self.search(search_filter)
     return User.all unless search_filter.present?
@@ -44,10 +51,6 @@ class User < ActiveRecord::Base
     full_name
   end
 
-  ROLE_ADMIN = 'admin'
-  ROLE_TEACHER = 'teacher'
-  ROLE_STUDENT = 'student'
-
   def admin?
     role == ROLE_ADMIN
   end
@@ -59,11 +62,5 @@ class User < ActiveRecord::Base
   def student?
     role == ROLE_STUDENT
   end
-
-  scope :admins, ->{ where role: ROLE_ADMIN }
-  scope :teachers, ->{ where role: ROLE_TEACHER }
-  scope :students, ->{ where role: ROLE_STUDENT }
-  scope :users, ->{ where role: [ROLE_STUDENT, ROLE_TEACHER] }
-
 end
 

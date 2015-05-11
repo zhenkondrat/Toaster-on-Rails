@@ -336,6 +336,8 @@ uk:
       update_subject: Зберегти
       available_subjects_list: Список предметів
       toasts: Тести
+      teachers: Викладачі
+      add_teacher: + Викладач
       new_subject: Новий предмет
     toast:
       toast: Тест

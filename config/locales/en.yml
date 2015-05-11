@@ -290,6 +290,8 @@ en:
       update_subject: Update subject
       available_subjects_list: Available subjects list
       toasts: Toasts
+      teachers: Teachers
+      add_teacher: Add Teacher
       new_subject: New Subject
     toast:
       toast: Toast

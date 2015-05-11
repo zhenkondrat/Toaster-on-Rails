@@ -6,9 +6,10 @@ ready = function(){
   /* code invite button */
 
   $(".btn.btn-warning.key-gen").click(function() {
-    $.getJSON('/invite_code', function (result) {
+    $.getJSON('/users/invite_code', function (result) {
       $('#admin_token').text('Admin: '+result.admin);
-      $('#user_token').text('User: '+result.user);
+      $('#teacher_token').text('Teacher: '+result.teacher);
+      $('#user_token').text('User: '+result.student);
     });
   });
 

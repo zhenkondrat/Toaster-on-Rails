@@ -57,8 +57,7 @@ class UsersController < ApplicationController
 
   def generate_invite_code
     codes = InviteCode.generate!
-    msg = {status: 'ok', admin: codes[:admin], user: codes[:user]}
-    render json: msg
+    render json: {status: 'ok'}.merge(codes)
   end
 
   def join_group
@@ -81,7 +80,7 @@ class UsersController < ApplicationController
   def change_locale
     I18n.locale = (I18n.locale == :en ? :uk : :en)
     current_user.update(config: {locale: I18n.locale})
-    redirect_to root_path, notice: 'Locale successfully changed'
+    redirect_to :back, notice: 'Locale successfully changed'
   end
 
   private

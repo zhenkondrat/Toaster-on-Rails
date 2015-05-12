@@ -7,11 +7,11 @@ class Toast < ActiveRecord::Base
   has_many :results, dependent: :delete_all
   validates :subject, :name, :mark_system, presence: true
 
-  def self.search(params)
-    toasts = Toast.all
-    toasts = toasts.where(subject_id: params[:subject]) unless params[:subject].blank?
-    toasts = toasts.where("name LIKE '%#{params[:name]}%'") unless params[:name].blank?
-    toasts = toasts.joins(:toast_groups).where("toast_groups.group_id = #{params[:group]}") unless params[:group].blank?
+  def self.search(user, options: {})
+    toasts = user.admin? ? Toast.all : Toast.where(subject_id: user.subject_ids)
+    toasts = toasts.where(subject_id: options[:subject]) unless options[:subject].blank?
+    toasts = toasts.where("name LIKE '%#{options[:name]}%'") unless options[:name].blank?
+    toasts = toasts.joins(:toast_groups).where("toast_groups.group_id = #{options[:group]}") unless options[:group].blank?
     toasts
   end
 

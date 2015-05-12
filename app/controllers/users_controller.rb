@@ -60,23 +60,6 @@ class UsersController < ApplicationController
     render json: {status: 'ok'}.merge(codes)
   end
 
-  def join_group
-    @group = Group.find(params[:group])
-    params[:users].each{ |user_id| @group.user_groups.create(user_id: user_id) }
-    flash[:notice] = 'Users are successfully joined to group'
-    render js: "window.location = '#{users_path}'"
-  end
-
-  def leave_group
-    @group = Group.find(params[:group])
-    if @group.out(params[:id])
-      flash[:notice] = 'User is successfully expelled from group'
-    else
-      flash[:error] = 'Something went wrong'
-    end
-    redirect_to edit_group_path(@group)
-  end
-
   def change_locale
     I18n.locale = (I18n.locale == :en ? :uk : :en)
     current_user.update(config: {locale: I18n.locale})

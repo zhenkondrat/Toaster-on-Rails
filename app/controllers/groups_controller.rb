@@ -42,6 +42,21 @@ class GroupsController < ApplicationController
     redirect_to groups_path
   end
 
+  def join_group
+    params[:users].each{ |user_id| @group.users << User.find(user_id) }
+    flash[:notice] = 'Users are successfully joined to group'
+    render js: "window.location = '#{edit_group_path(@group)}'"
+  end
+
+  def leave_group
+    if @group.users.delete(params[:user])
+      flash[:notice] = 'User is successfully expelled from group'
+    else
+      flash[:error] = 'Something went wrong'
+    end
+    redirect_to edit_group_path(@group)
+  end
+
   private
 
   def set_group

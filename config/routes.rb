@@ -27,6 +27,11 @@ Rails.application.routes.draw do
   resources :questions
 
   resources :groups do
+    member do
+      get  '/leave', to: 'groups#leave_group'
+      post '/join', to: 'groups#join_group'
+    end
+
     collection do
       post '/search', to: 'groups#index'
     end
@@ -35,11 +40,6 @@ Rails.application.routes.draw do
   devise_for :users, controllers: {registrations: 'devise_override/registrations'}
 
   resources :users do
-    member do
-      get  '/leave_group', to: 'users#leave_group'
-      post '/join_group', to: 'users#join_group'
-    end
-
     collection do
       get  '/', to: 'users#index'
       get  '/results', to: 'users#results'

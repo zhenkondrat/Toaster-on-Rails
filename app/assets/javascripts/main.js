@@ -115,7 +115,7 @@ ready = function(){
   $('#registrate').click(function() {
     var ids = new Array();
     $.each($("input[name='reg_users[]']:checked"), function(){ ids.push($(this).val()); });
-    $.post( "/join_group", {users: ids, group: $('#group_id')[0].value})
+    $.post( "/groups/"+$('#group_id').val()+"/join", {users: ids})
   });
 
   $('.mark-list').click(function(){

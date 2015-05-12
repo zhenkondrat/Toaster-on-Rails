@@ -26,7 +26,7 @@
               %td= user.father_name
               %td= user.groups.map{|group| group.name}.join(', ')
               %td
-                = link_to leave_group_path(user, params: {group: @group}), data: {confirm: I18n.t('interface.del_attention')} do
+                = link_to leave_group_path(@group, params: {user: user}), data: {confirm: I18n.t('interface.del_attention')} do
                   %i.fa.fa-user-times
-    .panel-footer
-      = link_to I18n.t('interface.group.all_groups'), groups_path, class: 'btn btn-default'
+  .panel-footer
+    = link_to I18n.t('interface.group.all_groups'), groups_path, class: 'btn btn-default'

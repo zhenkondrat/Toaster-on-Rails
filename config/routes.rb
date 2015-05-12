@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   resources :toasts do
     member do
       post '/share_to_group', to: 'toasts#share_to_group'
-      post '/deny_group', to: 'toasts#deny_group'
+      post '/deny_to_group', to: 'toasts#deny_group'
     end
 
     collection do
@@ -14,6 +14,11 @@ Rails.application.routes.draw do
   end
 
   resources :subjects do
+    member do
+      post '/share_to_teacher', to: 'subjects#share_to_teacher'
+      post '/deny_to_teacher', to: 'subjects#deny_to_teacher'
+    end
+
     collection do
       post '/search', to: 'subjects#index'
     end
@@ -27,7 +32,7 @@ Rails.application.routes.draw do
     end
   end
 
-  devise_for :users, controllers: {registrations: 'devise_override/registrations', sessions: 'devise_override/sessions'}
+  devise_for :users, controllers: {registrations: 'devise_override/registrations'}
 
   resources :users do
     member do

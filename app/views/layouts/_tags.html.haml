@@ -1,0 +1,7 @@
+- colors = ['primary', 'danger', 'success', 'warning']
+.tag-container
+  - objects.each_with_index do |object, index|
+    %span.tag.label{class: "label-#{colors[index%4]}"}
+      = object.try(:name) || object.try(:login)
+      = link_to "#{url}?deny_id=#{object.id}", class: 'tag-link' do
+        %i.fa.fa-times.close-tag

@@ -40,6 +40,24 @@ class SubjectsController < ApplicationController
     redirect_to subjects_path
   end
 
+  def share_to_teacher
+    if @subject.teachers << User.find(params[:teacher][:id])
+      flash[:notice] = 'Teachers subject access is granted'
+    else
+      flash[:error] = 'Something went wrong'
+    end
+    redirect_to edit_subject_path(@subject)
+  end
+
+  def deny_to_teacher
+    if @subject.teachers.delete(params[:deny_id])
+      flash[:notice] = 'Teachers subject access was successfully deleted'
+    else
+      flash[:error] = 'Something went wrong'
+    end
+    redirect_to edit_subject_path(@subject)
+  end
+
   private
 
     def set_subject

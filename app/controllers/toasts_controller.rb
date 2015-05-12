@@ -69,13 +69,13 @@ class ToastsController < ApplicationController
     redirect_to edit_toast_path(@toast)
   end
 
-  def deny_group
-    if @toast.toast_groups.find_by_group_id(params[:group]).delete
+  def deny_to_group
+    if @toast.toast_groups.find_by_group_id(params[:deny_id]).delete
       flash[:notice] = 'Group successfully deleted from shared list'
     else
       flash[:error] = 'Something went wrong'
     end
-    render js: "window.location = '#{edit_toast_path(@toast)}'"
+    redirect_to edit_toast_path(@toast)
   end
 
   private

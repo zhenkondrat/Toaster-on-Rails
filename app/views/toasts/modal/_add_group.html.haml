@@ -4,7 +4,7 @@
       .modal-header
         %button.close{'aria-hidden' => 'true', 'data-dismiss' => 'modal', :type => 'button'} &times;
         %h4.modal-title #{I18n.t 'interface.toast.share_to_group'}
-      = form_tag share_to_group_path(@toast) do
+      = form_tag share_to_group_toast_path(@toast) do
         .modal-body
           %p #{I18n.t 'interface.toast.share_to_group_text'}:
           = collection_select :group, :id, @toast.foreign_groups, :id, :name, {prompt: false}, {class: 'form-control'}

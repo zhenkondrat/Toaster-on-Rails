@@ -9,7 +9,7 @@
         = f.text_field :name, class: 'form-control'
       .form-group
         %strong Teachers
-        .tag-container= hidden_field_tag :teachers, @subject.teachers.select(:id, :login).to_json
+        = render partial: 'layouts/tags', locals: {objects: @subject.teachers.select(:id, :login), url: deny_to_teacher_subject_path(@subject)}
     .panel-footer
       = f.submit I18n.t('interface.subject.update_subject'), class: 'btn btn-info'
       = link_to I18n.t('interface.subject.add_teacher'), '#ModalAddTeacher', data: {toggle: 'modal'}, class: 'btn btn-default'

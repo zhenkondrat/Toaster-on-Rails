@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   resources :toasts do
     member do
       post '/share_to_group', to: 'toasts#share_to_group'
-      post '/deny_to_group', to: 'toasts#deny_group'
+      get '/deny_to_group', to: 'toasts#deny_to_group'
     end
 
     collection do
@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   resources :subjects do
     member do
       post '/share_to_teacher', to: 'subjects#share_to_teacher'
-      post '/deny_to_teacher', to: 'subjects#deny_to_teacher'
+      get '/deny_to_teacher', to: 'subjects#deny_to_teacher'
     end
 
     collection do

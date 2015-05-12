@@ -38,7 +38,7 @@
           = link_to I18n.t('interface.cancel'), toasts_path, class: 'btn btn-default'
       %h2.center #{I18n.t 'interface.toast.group_list'}
       = link_to I18n.t('interface.toast.share_to_group'), '#ModalAddGroup', data: {toggle: 'modal'}, class: 'btn btn-default'
-      .tag-container= hidden_field_tag :groups, @toast.groups.select(:id, :name).to_json
+      = render partial: 'layouts/tags', locals: {objects: @toast.groups.select(:id, :name), url: deny_to_group_toast_path(@toast)}
       %h2.center #{I18n.t 'interface.toast.question_list'}
       %table.table.table-striped
         %tr
@@ -63,3 +63,5 @@
       .right= paginate @questions
       .right
         %h3= link_to I18n.t('interface.toast.add_new'), new_question_path(toast: @toast)
+- content_for :plugins do
+  = javascript_include_tag :tags

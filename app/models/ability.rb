@@ -16,7 +16,9 @@ class Ability
       can :manage, MarkSystem
       can :manage, Question
       can :manage, Group
-      can :manage, Toast
+      can :manage, Toast do |toast|
+        user.admin? || user.subject_ids.include?(toast.subject_id)
+      end
       can :manage, Result
       can :manage, User do |another_user|
         another_user.student?
@@ -24,7 +26,9 @@ class Ability
     end
 
     if user.student?
-      can :show, Toast
+      can :show, Toast do |toast|
+        !(toast.group_ids & user.group_ids).empty?
+      end
       can [:results, :change_locale], User
     end
 

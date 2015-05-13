@@ -6,9 +6,10 @@ ready = function(){
   /* code invite button */
 
   $(".btn.btn-warning.key-gen").click(function() {
-    $.getJSON('/invite_code', function (result) {
+    $.getJSON('/users/invite_code', function (result) {
       $('#admin_token').text('Admin: '+result.admin);
-      $('#user_token').text('User: '+result.user);
+      $('#teacher_token').text('Teacher: '+result.teacher);
+      $('#user_token').text('User: '+result.student);
     });
   });
 
@@ -114,7 +115,7 @@ ready = function(){
   $('#registrate').click(function() {
     var ids = new Array();
     $.each($("input[name='reg_users[]']:checked"), function(){ ids.push($(this).val()); });
-    $.post( "/join_group", {users: ids, group: $('#group_id')[0].value})
+    $.post( "/groups/"+$('#group_id').val()+"/join", {users: ids})
   });
 
   $('.mark-list').click(function(){

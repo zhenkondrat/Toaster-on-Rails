@@ -2,42 +2,62 @@ Rails.application.routes.draw do
   mount Ckeditor::Engine => '/ckeditor'
   resources :mark_systems
 
-  resources :toasts
-  post '/toasts/:id/share_to_group', to: 'toasts#share_to_group', as: 'share_to_group'
-  post '/toasts/:id/deny_group', to: 'toasts#deny_group'
-  post '/passing', to: 'toasts#show'
+  resources :toasts do
+    member do
+      post '/share_to_group', to: 'toasts#share_to_group'
+      get '/deny_to_group', to: 'toasts#deny_to_group'
+    end
 
-  resources :subjects
+    collection do
+      post '/search', to: 'toasts#index'
+    end
+  end
+
+  resources :subjects do
+    member do
+      post '/share_to_teacher', to: 'subjects#share_to_teacher'
+      get '/deny_to_teacher', to: 'subjects#deny_to_teacher'
+    end
+
+    collection do
+      post '/search', to: 'subjects#index'
+    end
+  end
 
   resources :questions
 
-  resources :groups
+  resources :groups do
+    member do
+      get  '/leave', to: 'groups#leave_group'
+      post '/join', to: 'groups#join_group'
+    end
 
-  devise_for :users, controllers: {registrations: 'devise_override/registrations', sessions: 'devise_override/sessions'}
-  # The priority is based upon order of creation: first created -> highest priority.
-  # See how all your routes lay out with "rake routes".
-
-  # user
-  resources :users do
-    get '/', to: 'users#index'
-    get '/results', to: 'users#results'
+    collection do
+      post '/search', to: 'groups#index'
+    end
   end
 
-  post '/users/search', to: 'users#index', as: 'users_search'
-  post '/toasts/search', to: 'toasts#index', as: 'toasts_search'
-  post '/groups/search', to: 'groups#index', as: 'groups_search'
-  post '/subjects/search', to: 'subjects#index', as: 'subjects_search'
-  post '/results/search', to: 'results#show', as: 'results_show'
+  devise_for :users, controllers: {registrations: 'devise_override/registrations'}
 
-  post '/results/export', to: 'results#export', as: 'results_export'
+  resources :users do
+    collection do
+      get  '/', to: 'users#index'
+      get  '/results', to: 'users#results'
+      post '/search', to: 'users#index'
+      get  '/invite_code', to: 'users#generate_invite_code'
+      get  '/change_locale', to: 'users#change_locale'
+    end
+  end
 
-  get 'invite_code', to: 'users#generate_invite_code'
-  post 'join_group', to: 'users#join_group'
-  get 'leave_group/:id', to: 'users#leave_group', as: :leave_group
-  get 'change_locale', to: 'users#change_locale'
+  post '/passing', to: 'toasts#show'
 
-  # results
-  get 'results', to: 'results#index'
+  resources :results do
+    collection do
+      post '/search', to: 'results#show', as: 'show'
+      post '/export', to: 'results#export'
+      get  '/', to: 'results#index'
+    end
+  end
 
   # You can have the root of your site routed with "root"
   root 'users#main'

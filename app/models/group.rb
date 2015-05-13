@@ -1,8 +1,7 @@
 class Group < ActiveRecord::Base
-  has_many :toast_groups
-  has_many :user_groups
-  has_many :users, through: :user_groups
-  has_many :toasts, through: :toast_groups
+  has_and_belongs_to_many :users
+  has_and_belongs_to_many :subjects
+  has_and_belongs_to_many :toasts
 
   validates :name, presence: true
 

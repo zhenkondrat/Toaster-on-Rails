@@ -41,7 +41,7 @@
             - if can? :invite, :admin
               %li= link_to "Admin: #{InviteCode.get(:admin)}", '#', id: 'admin_token'
             - if can? :invite, :teacher
-              %li= link_to "Teacher: #{InviteCode.get(:teacher)}", '#', id: 'admin_token'
+              %li= link_to "Teacher: #{InviteCode.get(:teacher)}", '#', id: 'teacher_token'
             - if can? :invite, :student
               %li= link_to "User: #{InviteCode.get(:student)}", '#', id: 'user_token'
             %li
@@ -54,5 +54,5 @@
           %li= link_to I18n.t('interface.menu.my_profile'), edit_user_path(current_user)
           - if can? :menu, :my_results
             %li= link_to I18n.t('interface.menu.my_results'), user_results_path(current_user)
-          %li= link_to I18n.t('interface.menu.change_locale'), change_locale_path
+          %li= link_to I18n.t('interface.menu.change_locale'), change_locale_users_path
           %li= link_to I18n.t('interface.menu.logout'), destroy_user_session_path, method: :delete

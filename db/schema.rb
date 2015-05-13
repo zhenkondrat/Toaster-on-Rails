@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150501131718) do
+ActiveRecord::Schema.define(version: 20150512210650) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,6 +48,16 @@ ActiveRecord::Schema.define(version: 20150501131718) do
     t.string "name"
   end
 
+  create_table "groups_toasts", force: :cascade do |t|
+    t.integer "group_id"
+    t.integer "toast_id"
+  end
+
+  create_table "groups_users", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "group_id"
+  end
+
   create_table "invite_codes", force: :cascade do |t|
     t.string "token"
     t.string "role"
@@ -81,9 +91,9 @@ ActiveRecord::Schema.define(version: 20150501131718) do
     t.string "name"
   end
 
-  create_table "toast_groups", force: :cascade do |t|
-    t.integer "group_id"
-    t.integer "toast_id"
+  create_table "subjects_users", id: false, force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "subject_id"
   end
 
   create_table "toasts", force: :cascade do |t|
@@ -95,11 +105,6 @@ ActiveRecord::Schema.define(version: 20150501131718) do
     t.integer "questions_count"
     t.integer "question_time"
     t.integer "mark_system_id"
-  end
-
-  create_table "user_groups", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "group_id"
   end
 
   create_table "users", force: :cascade do |t|

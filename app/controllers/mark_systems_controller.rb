@@ -11,9 +11,8 @@ class MarkSystemsController < ApplicationController
   end
 
   def create
-    mark_system = MarkSystem.create(name: mark_system_params[:name])
-    if mark_system
-      mark_system_params[:marks][:new].each_value{ |mark_params| mark_system.marks.create(mark_params) }
+    mark_system = MarkSystem.new(name: mark_system_params[:name])
+    if mark_system.save && marks_params[:new].map{ |_, mark_params| mark_system.marks.create(mark_params).valid? }.reduce(:'&&')
       flash[:notice] = 'Mark system successfully created!'
     else
       flash[:error] = %q|Mark system can't be created|
@@ -27,8 +26,8 @@ class MarkSystemsController < ApplicationController
   def update
     @mark_system.update(name: mark_system_params[:name])
     if @mark_system.errors.empty?
-      mark_system_params[:marks][:old].each_key{ |id| Mark.find(id).update(mark_system_params[:marks][:old][id]) }
-      mark_system_params[:marks][:new].each_value{ |mark_params| @mark_system.marks.create(mark_params) }
+      marks_params[:old].each_key{ |id| Mark.find(id).update(marks_params[:old][id]) }
+      marks_params[:new].each_value{ |mark_params| @mark_system.marks.create(mark_params) }
       flash[:notice] = 'Mark system successfully updated!'
     else
       flash[:error] = %q|Mark system can't be updated|
@@ -52,14 +51,14 @@ class MarkSystemsController < ApplicationController
   end
 
   def mark_system_params
-    mark_system = { name: params.require(:mark_system)[:name], marks: {new: {}, old: {}} }
-    params.require(:mark_system)[:marks].each_key do |key|
-      mark_system[:marks][key.index('new') ? :new : :old][key] =
-        {
-          presentation: params[:mark_system][:marks][key.to_sym]['presentation'],
-          percent: params[:mark_system][:marks][key.to_sym]['percent']
-        }
+    {name: params.require(:mark_system)[:name]}
+  end
+
+  def marks_params
+    marks = {new: {}, old: {}}
+    params.require(:mark_system)[:marks].each_pair do |key, value|
+      marks[key.index('new') ? :new : :old][key] = { presentation: value['presentation'], percent: value['percent'] }
     end
-    mark_system
+    marks
   end
 end

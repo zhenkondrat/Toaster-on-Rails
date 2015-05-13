@@ -4,7 +4,7 @@
     %h3 #{I18n.t 'interface.group.groups'}
   .panel-body
     %h4 #{I18n.t 'interface.group.available_groups_list'}:
-    = form_tag groups_search_path do
+    = form_tag search_groups_path do
       .form-group
         .col-lg-7= text_field_tag :search_filter, '', class: 'form-control'
         .col-lg-2= submit_tag 'Search', class: 'btn btn-warning form-control'

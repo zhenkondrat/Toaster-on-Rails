@@ -1,13 +1,13 @@
-#ModalAddGroup.modal.fade{'aria-hidden' => 'true', 'aria-labelledby' => 'myModalLabel', role: 'dialog', tabindex: '-1'}
+#ModalAddTeacher.modal.fade{'aria-hidden' => 'true', 'aria-labelledby' => 'myModalLabel', role: 'dialog', tabindex: '-1'}
   .modal-dialog
     .modal-content
       .modal-header
         %button.close{'aria-hidden' => 'true', 'data-dismiss' => 'modal', :type => 'button'} &times;
         %h4.modal-title #{I18n.t 'interface.toast.share_to_group'}
-      = form_tag share_to_group_toast_path(@toast) do
+      = form_tag share_to_teacher_subject_path(@subject) do
         .modal-body
           %p #{I18n.t 'interface.toast.share_to_group_text'}:
-          = collection_select :group, :id, @toast.foreign_groups, :id, :name, {prompt: false}, {class: 'form-control'}
+          = collection_select :teacher, :id, @subject.foreign_teachers, :id, :login, {prompt: false}, {class: 'form-control'}
         .modal-footer
           .pull-left
             = submit_tag I18n.t('interface.toast.share'), class: 'btn btn-default'

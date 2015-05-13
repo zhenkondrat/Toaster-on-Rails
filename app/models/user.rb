@@ -1,9 +1,10 @@
 class User < ActiveRecord::Base
   include Roles
   devise :database_authenticatable, :registerable, :rememberable, :validatable
-  has_many :user_groups, dependent: :delete_all
-  has_many :groups, through: :user_groups
   has_many :results, dependent: :delete_all
+  has_and_belongs_to_many :groups
+  has_and_belongs_to_many :subjects
+  has_and_belongs_to_many :toasts
 
   serialize :config, Hash
 
@@ -49,6 +50,10 @@ class User < ActiveRecord::Base
     end
 
     full_name
+  end
+
+  def available_toasts
+    Toast.joins(groups: :users).where(users: {id: current_user})
   end
 
   def admin?

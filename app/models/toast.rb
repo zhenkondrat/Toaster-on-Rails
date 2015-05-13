@@ -1,8 +1,7 @@
 class Toast < ActiveRecord::Base
   belongs_to :subject
   belongs_to :mark_system
-  has_many :toast_groups, dependent: :delete_all
-  has_many :groups, through: :toast_groups
+  has_and_belongs_to_many :groups
   has_many :questions, dependent: :delete_all
   has_many :results, dependent: :delete_all
   validates :subject, :name, :mark_system, presence: true

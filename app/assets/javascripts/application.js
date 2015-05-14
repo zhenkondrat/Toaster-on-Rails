@@ -12,11 +12,13 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery-ui
 //#= require turbolinks
 //= require bootstrap
 //= require main
+//= require move_tags
 //= require question
 //= require ckeditor/init
 //= require ckeditor/config
 //= require ckeditor/own_config
-//= require_tree .
+//=# require_tree .

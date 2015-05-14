@@ -4,7 +4,7 @@ class DeviseOverride::RegistrationsController < Devise::RegistrationsController
   def create
     tokens = InviteCode.get(:all)
     return redirect_to(new_user_registration_path, error: 'Invite code is invalid') unless tokens.values.include? params[:token]
-    tokens.select{|role, code| code == params[:token]}.keys.first
+    params[:user][:role] = tokens.select{|role, code| code == params[:token]}.keys.first
     super
   end
 
@@ -18,7 +18,7 @@ class DeviseOverride::RegistrationsController < Devise::RegistrationsController
             :first_name,
             :last_name,
             :father_name,
-            :admin,
+            :role,
             :token
       )
   end

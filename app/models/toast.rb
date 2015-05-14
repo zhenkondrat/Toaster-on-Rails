@@ -23,6 +23,6 @@ class Toast < ActiveRecord::Base
   end
 
   def foreign_groups
-    Group.joins('LEFT JOIN toast_groups ON toast_groups.group_id = groups.id').where("toast_groups.toast_id != #{id} OR toast_groups.group_id IS null")
+    Group.where.not(id: self.groups)
   end
 end

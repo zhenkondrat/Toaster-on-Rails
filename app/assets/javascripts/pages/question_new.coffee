@@ -2,14 +2,18 @@ $ ->
   left_count = 1
   right_count = 1
 
-  $('.add-many-left').on 'click', ->
-    left_count++
+  add_associative = (side) ->
+    count = if side == 'left' then left_count++ else right_count++
+    count++
     input = document.createElement('input')
     input.setAttribute('type', 'text')
-    $(input).addClass('form-control')
-    input.setAttribute('name', "plural_answers[left[#{left_count}[text]]]")
-    input.setAttribute('id', "plural_answers[left[#{left_count}[text]]]")
-    $('.answers-left')[0].appendChild(input)
+    input.className = 'form-control'
+    input.setAttribute('name', "plural_answers[#{side}[#{count}[text]]]")
+    input.setAttribute('id', "plural_answers[#{side}[#{count}[text]]]")
+    $('.answers-'+side+' .form-group')[0].appendChild(input)
+
+  $('.add-many-left').on 'click', ->
+    add_associative('left')
     false
 
   $('.del-many-left').on 'click', ->
@@ -19,13 +23,7 @@ $ ->
     false
 
   $('.add-many-right').on 'click', ->
-    right_count++
-    input = document.createElement('input')
-    input.setAttribute('type', 'text')
-    $(input).addClass('form-control')
-    input.setAttribute('name', "plural_answers[right[#{right_count}[text]]]")
-    input.setAttribute('id', "plural_answers[right[#{right_count}[text]]]")
-    $('.answers-right')[0].appendChild(input)
+    add_associative('right')
     false
 
   $('.del-many-right').on 'click', ->

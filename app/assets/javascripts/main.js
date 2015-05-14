@@ -1,5 +1,6 @@
 /**
  * Created by kris on 24.11.14.
+ * TODO REFACTOR
  */
 
 ready = function(){

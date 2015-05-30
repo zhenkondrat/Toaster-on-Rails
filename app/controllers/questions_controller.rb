@@ -5,18 +5,11 @@ class QuestionsController < ApplicationController
 
   def new
     @question = Question.new(toast_id: params[:toast])
-    @plural_answer, @associative_answer = Answer2.new, Answer3.new
   end
 
   def create
     @question = Question.new(question_params)
     if @question.save
-      case @question.question_type
-        when 2
-          plural_answers_params.each_value{ |answer| @question.answer2s.create(text: answer['text'], is_right: answer['is_right'] || false) }
-        when 3
-          nil
-      end
       flash[:notice] = 'Question successfully created'
     else
       flash[:error] = %q|Question can't be created|
@@ -24,27 +17,10 @@ class QuestionsController < ApplicationController
     redirect_to edit_toast_path(@question.toast)
   end
 
-  def edit
-    @answers = case @question.question_type
-               when 2 then @question.answer2s
-               when 3 then @question.answer3s
-               end
-  end
+  def edit; end
 
   def update
     if @question.update(question_params)
-      case @question.question_type
-        when 2
-          plural_answers_params.each_pair do |key, answer|
-            if key.index('new')
-              @question.answer2s.create(text: answer['text'], is_right: answer['is_right'] || false)
-            else
-              Answer2.find(key.to_s.to_i).update(text: answer['text'], is_right: answer['is_right'] || false)
-            end
-          end
-        when 3
-          nil
-      end
       flash[:notice] = 'Question successfully updated'
     else
       flash[:error] = %q|Question can't be updated|
@@ -69,10 +45,17 @@ class QuestionsController < ApplicationController
   end
 
   def question_params
-    params.require(:question).permit(:toast_id, :text, :question_type, :is_right)
+    params.require(:question).permit(
+      :toast_id, :text, :question_type, :is_right,
+      answer2s_attributes: [:id, :is_right, :text, :_destroy]
+    )
   end
 
-  def plural_answers_params
+  def plural_params
     params.require(:plural_answers)
+  end
+
+  def associative_params
+    params.require(:associative_answers)
   end
 end

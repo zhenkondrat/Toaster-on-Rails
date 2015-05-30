@@ -16,7 +16,7 @@
 //#= require turbolinks
 //= require bootstrap
 //= require main
-//= require move_tags
+//= require pages/test_show
 //= require question
 //= require ckeditor/init
 //= require ckeditor/config

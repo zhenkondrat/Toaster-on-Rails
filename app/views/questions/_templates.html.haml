@@ -1,0 +1,19 @@
+#plural-prototype.form-group.input-group.hidden
+  %span.input-group-addon
+    %input{name: 'question[answer2s_attributes][n][is_right]', type: 'hidden', value: 0}
+    = check_box_tag 'question[answer2s_attributes][n][is_right]', 1
+  = text_field_tag 'question[answer2s_attributes][n][text]', '', class: 'form-control default'
+
+#rm-flag-prototype
+  = hidden_field_tag :_destroy, 1
+
+#associative-prototype.hidden.row
+  .col-lg-5
+    .form-group.answer-left
+      = text_field_tag 'question[answer3s_attributes][0][left_text]', '', data: {side: :left}, class: 'form-control'
+  .col-lg-2.center
+    %button.btn.btn-lg.btn-circle.btn-default.chain-locker{onclick: 'return false', data: {locked: 'yes'}}
+      %i.fa.fa-chain
+  .col-lg-5
+    .form-group.answer-right
+      = text_field_tag 'question[answer3s_attributes][0][right_text]', '', data: {side: :right}, class: 'form-control'

@@ -10,10 +10,10 @@
 #associative-prototype.hidden.row
   .col-lg-5
     .form-group.answer-left
-      = text_field_tag 'question[answer3s_attributes][0][left_text]', '', data: {side: :left}, class: 'form-control'
+      = text_field_tag 'question[answer3s_attributes][n][left_text]', '', data: {side: :left}, class: 'form-control'
   .col-lg-2.center
     %button.btn.btn-lg.btn-circle.btn-default.chain-locker{onclick: 'return false', data: {locked: 'yes'}}
       %i.fa.fa-chain
   .col-lg-5
     .form-group.answer-right
-      = text_field_tag 'question[answer3s_attributes][0][right_text]', '', data: {side: :right}, class: 'form-control'
+      = text_field_tag 'question[answer3s_attributes][n][right_text]', '', data: {side: :right}, class: 'form-control'

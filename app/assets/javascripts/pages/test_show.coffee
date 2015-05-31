@@ -1,0 +1,3 @@
+$ ->
+  $( '.sortable' ).sortable()
+  $( '.sortable' ).disableSelection()

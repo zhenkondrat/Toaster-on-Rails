@@ -13,9 +13,9 @@ class Result < ActiveRecord::Base
         when 1
         sum += @tariff1 if answers[question.id.to_s] == question.is_right.to_s
         when 2
-        sum += @tariff2 if answer2_right? question, answers[question.id.to_s]
+        sum += @tariff2 if plural_right? question, answers[question.id.to_s]
       when 3
-        sum += @tariff3 if answer3_right? question, answers[question.id]
+        sum += @tariff3 if association_right? question, answers[question.id]
       end
     end
     self.mark, self.created_at, self.toast = sum.to_f/(max_mark questions), DateTime.now, @toast
@@ -60,9 +60,9 @@ class Result < ActiveRecord::Base
     sum
   end
 
-  def answer2_right?(question, answer)
+  def plural_right?(question, answer)
     solution = true
-    question.answer2s.each do |supposition|
+    question.plurals.each do |supposition|
       unless answer
         solution = false
         next
@@ -74,9 +74,9 @@ class Result < ActiveRecord::Base
     solution
   end
 
-  def answer3_right?(question, answer)
+  def association_right?(question, answer)
     solution = true
-    question.answer3s.each do |supposition|
+    question.associations.each do |supposition|
       if supposition.correct_pair?
         unless (supposition.left_text == answer[supposition.id][0]) && (supposition.right_text == answer[supposition.id][1])
           solution = false

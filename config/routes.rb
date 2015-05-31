@@ -40,9 +40,12 @@ Rails.application.routes.draw do
   devise_for :users, controllers: {registrations: 'devise_override/registrations'}
 
   resources :users do
+    member do
+      get  '/results', to: 'users#results'
+    end
+
     collection do
       get  '/', to: 'users#index'
-      get  '/results', to: 'users#results'
       post '/search', to: 'users#index'
       get  '/invite_code', to: 'users#generate_invite_code'
       get  '/change_locale', to: 'users#change_locale'

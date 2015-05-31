@@ -1,16 +1,18 @@
 class Question < ActiveRecord::Base
   belongs_to :toast
-  has_many :answer2s, dependent: :delete_all
-  has_many :answer3s, dependent: :delete_all
+  has_many :plurals, dependent: :delete_all
+  has_many :associations, dependent: :delete_all
+  accepts_nested_attributes_for :plurals, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :associations, reject_if: :all_blank, allow_destroy: true
   validates :question_type, inclusion: { in: [1, 2, 3] }
   validates :question_type, :text, :toast, presence: true
 
   def answers
     case question_type
     when 2
-      return answer2s.shuffle
+      return plurals.shuffle
     when 3
-      answers = answer3s
+      answers = associations
       left = []; right = []
       answers.each do |answer|
         left.push answer.left_text unless answer.left_text.blank?

@@ -53,7 +53,7 @@ class User < ActiveRecord::Base
   end
 
   def available_toasts
-    Toast.joins(groups: :users).where(users: {id: current_user})
+    Toast.joins(groups: :users).where(users: {id: id})
   end
 
   def admin?

@@ -1,0 +1,9 @@
+#PluralForm{class: @question.plural? ? '' : 'hidden'}
+  .form-group.center
+    %button.btn.btn-square.btn-xl.btn-info.add-plural{ onclick: 'return false' }
+      %i.fa.fa-plus
+    %button.btn.btn-square.btn-xl.btn-info.del-plural{ onclick: 'return false' }
+      %i.fa.fa-minus
+  .form-group.col-lg-4.answers{ data: {count: @question.plurals.count} }
+    = f.fields_for :plurals, @question.new_record? ? @question.plurals.new : nil do |builder|
+      = render 'plural/form', f: builder

@@ -1,0 +1,11 @@
+- right_text_present = !f.object.right_text.blank?
+.associative.row
+  .col-lg-5
+    .form-group.answer-left
+      .form-group= f.text_field :left_text, class: 'form-control'
+  .col-lg-2.center
+    %button.btn.btn-lg.btn-circle.btn-default.chain-locker{onclick: 'return false', data: {locked: right_text_present ? 'yes' : 'no'}}
+      %i.fa{class: right_text_present ? 'fa-chain' : 'fa-chain-broken'}
+  .col-lg-5
+    .form-group.answer-right
+      .form-group= f.text_field :right_text, class: "form-control #{right_text_present ? '' : 'hidden'}"

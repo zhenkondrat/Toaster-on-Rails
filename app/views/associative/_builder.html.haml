@@ -1,0 +1,10 @@
+#AssociativeForm{class: @question.associative? ? '' : 'hidden', data: {count: @question.answer3s.count} }
+  .col-lg-12
+    .form-group.center
+      %button.btn.btn-square.btn-xl.btn-info.add-associative{ onclick: 'return false' }
+        %i.fa.fa-plus
+      %button.btn.btn-square.btn-xl.btn-info.del-associative{ onclick: 'return false' }
+        %i.fa.fa-minus
+  .answers{data: {count: @question.answer3s.count}}
+    = f.fields_for :answer3s, @question.new_record? ? @question.answer3s.new : nil do |builder|
+      = render 'associative/form', f: builder

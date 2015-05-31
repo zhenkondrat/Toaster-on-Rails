@@ -63,5 +63,5 @@
       .right= paginate @questions
       .right
         %h3= link_to I18n.t('interface.toast.add_new'), new_question_path(toast: @toast)
-- content_for :plugins do
-  = javascript_include_tag :tags
+-#- content_for :plugins do
+-#  = javascript_include_tag :tags

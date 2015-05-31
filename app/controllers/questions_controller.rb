@@ -47,15 +47,8 @@ class QuestionsController < ApplicationController
   def question_params
     params.require(:question).permit(
       :toast_id, :text, :question_type, :is_right,
-      answer2s_attributes: [:id, :is_right, :text, :_destroy]
+      answer2s_attributes: [:id, :is_right, :text, :_destroy],
+      answer3s_attributes: [:id, :left_text, :right_text, :_destroy]
     )
-  end
-
-  def plural_params
-    params.require(:plural_answers)
-  end
-
-  def associative_params
-    params.require(:associative_answers)
   end
 end

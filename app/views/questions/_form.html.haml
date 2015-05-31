@@ -20,21 +20,37 @@
       = f.cktext_area :text
     .form-group
       %h4 #{I18n.t 'interface.question.answers'}:
-      - if @question.question_type.nil?
+      - case @question.question_type
+      - when 1
+        = render partial: 'logical_form', locals: {f: f}
+      - when 2
+        = render partial: 'plural/builder', locals: {f: f}
+      - when 3
+        = render partial: 'associative/builder', locals: {f: f}
+      - else
         = render partial: 'logical_form', locals: {f: f}
         = render partial: 'plural/builder', locals: {f: f}
-        -#= f.fields_for :answer3s do |builder|
-        -#  = render partial: 'associative/form', f: builder
-      - else
-        = render partial: 'logical_form', locals: {f: f} if @question.question_type == 1
-        = render partial: 'plural/builder', locals: {f: f} if @question.question_type == 2
-        = render partial: 'associative/form' if @question.question_type == 3
+        = render partial: 'associative/builder', locals: {f: f}
   .panel-footer.right
     = f.submit current_page?(new_question_path) ? I18n.t('interface.create') : I18n.t('interface.save'), class: 'btn btn-info'
     = link_to I18n.t('interface.cancel'), edit_toast_path(@question.toast_id), class: 'btn btn-default'
 
 #plural-prototype.form-group.input-group.hidden
   %span.input-group-addon
-    %input{name: 'question[answer2s_attributes][0][is_right]', type: 'hidden', value: 0}
-    = check_box_tag 'question[answer2s_attributes][0][is_right]', 1
-  = text_field_tag 'question[answer2s_attributes][0][text]', '', class: 'form-control default'
+    %input{name: 'question[answer2s_attributes][n][is_right]', type: 'hidden', value: 0}
+    = check_box_tag 'question[answer2s_attributes][n][is_right]', 1
+  = text_field_tag 'question[answer2s_attributes][n][text]', '', class: 'form-control default'
+
+#rm-flag-prototype
+  = hidden_field_tag :_destroy, 1
+
+#associative-prototype.hidden.row
+  .col-lg-5
+    .form-group.answer-left
+      = text_field_tag 'question[answer3s_attributes][0][left_text]', '', data: {side: :left}, class: 'form-control'
+  .col-lg-2.center
+    %button.btn.btn-lg.btn-circle.btn-default.chain-locker{onclick: 'return false', data: {locked: 'yes'}}
+      %i.fa.fa-chain
+  .col-lg-5
+    .form-group.answer-right
+      = text_field_tag 'question[answer3s_attributes][0][right_text]', '', data: {side: :right}, class: 'form-control'

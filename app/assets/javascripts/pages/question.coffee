@@ -26,16 +26,16 @@ $ ->
     $('#QuestionType').html(text)
     false
 
-#  Plural
-  plural_count = 0
+# Plural
+
+  plural_count = $('#PluralForm .answers').data('count')-1 || 0
 
   $('.add-plural').on 'click', ->
-    answers = $('#plural-answers')
-    plural_count = answers.data('count')-1 if plural_count == 0
     plural_count++
     template = $('#plural-prototype').clone(true)
     template.removeAttr('id')
-    template.addClass("answer#{plural_count}")
+    template.addClass('answer')
+    template.attr('data-number', plural_count)
     template.removeClass('hidden')
     check = template.find('span input[type="checkbox"]')
     check_hidden = template.find('span input[type="hidden"]')
@@ -46,43 +46,61 @@ $ ->
     check_hidden.attr('name', "question[answer2s_attributes][#{plural_count}][is_right]")
     text.attr('name', "question[answer2s_attributes][#{plural_count}][text]")
     text.attr('id', "question_answer2s_attributes_#{plural_count}_text")
-    $('#plural-answers').append(template)
+    $('#PluralForm .answers').append(template)
 
   $('.del-plural').on 'click', ->
     if plural_count != 0
-      $(".answer#{plural_count}").remove()
+      if $("#PluralForm .answer[data-number = '#{plural_count}']").length != 0
+        $("#PluralForm .answer[data-number = '#{plural_count}']").remove()
+      else
+        flag = $('#rm-flag-prototype').children().clone(true)
+        flag.attr('name', "question[answer2s_attributes][#{plural_count}][_destroy]")
+        $("input[name='question[answer2s_attributes][#{plural_count}][text]'").parent().append(flag)
+        $("input[name='question[answer2s_attributes][#{plural_count}][text]'").parent().addClass('hidden')
       plural_count--
 
-#  Associative
-  left_count = 1
-  right_count = 1
+# Associative
+  associative_count = $('#AssociativeForm .answers').data('count')-1 || 0
 
-  add_associative = (side) ->
-    count = if side == 'left' then left_count++ else right_count++
-    count++
-    input = document.createElement('input')
-    input.setAttribute('type', 'text')
-    input.className = 'form-control'
-    input.setAttribute('name', "plural_answers[#{side}[#{count}[text]]]")
-    input.setAttribute('id', "plural_answers[#{side}[#{count}[text]]]")
-    $('.answers-'+side+' .form-group')[0].appendChild(input)
-
-  $('.add-many-left').on 'click', ->
-    add_associative('left')
+  $('.add-associative').on 'click', ->
+    associative_count++
+    template = $('#associative-prototype').clone(true)
+    template.removeAttr('id')
+    template.addClass('associative')
+    template.attr('data-number', associative_count)
+    template.removeClass('hidden')
+    left_text = template.find('input[data-side="left"]')
+    right_text = template.find('input[data-side="right"]')
+    left_text.attr('name', "question[answer3s_attributes][#{associative_count}][left_text]")
+    left_text.attr('id', "question_answer3s_attributes_#{associative_count}_left_text")
+    right_text.attr('name', "question[answer3s_attributes][#{associative_count}][right_text]")
+    right_text.attr('id', "question_answer3s_attributes_#{associative_count}_right_text")
+    $('#AssociativeForm .answers').prepend(template)
     false
 
-  $('.del-many-left').on 'click', ->
-    if left_count > 1
-      document.getElementById("plural_answers[left[#{left_count}[text]]]").remove()
-      left_count--
+  $('.del-associative').on 'click', ->
+    if associative_count != 0
+      if $("#AssociativeForm .associative[data-number='#{associative_count}']").length != 0
+        $("#AssociativeForm .associative[data-number='#{associative_count}']").remove()
+      else
+        flag = $('#rm-flag-prototype').children().clone(true)
+        flag.attr('name', "question[answer3s_attributes][#{associative_count}][_destroy]")
+        $("input[name='question[answer3s_attributes][#{associative_count}][left_text]'").parents('.associative').append(flag)
+        $("input[name='question[answer3s_attributes][#{associative_count}][left_text]'").parents('.associative').addClass('hidden')
+      associative_count--
     false
 
-  $('.add-many-right').on 'click', ->
-    add_associative('right')
-    false
-
-  $('.del-many-right').on 'click', ->
-    if right_count > 1
-      document.getElementById("plural_answers[right[#{right_count}[text]]]").remove()
-      right_count--
+  $('.chain-locker').on 'click', ->
+    if $(this).data('locked') == 'yes'
+      $(this).children('.fa-chain').addClass('fa-chain-broken')
+      $(this).children('.fa-chain').removeClass('fa-chain')
+      left_item = $(this).parents('.associative').find('.answer-right input')
+      left_item.val('')
+      left_item.addClass('hidden')
+      $(this).data('locked', 'no')
+    else
+      $(this).children('.fa-chain-broken').addClass('fa-chain')
+      $(this).children('.fa-chain-broken').removeClass('fa-chain-broken')
+      $(this).parents('.associative').find('.answer-right input').removeClass('hidden')
+      $(this).data('locked', 'yes')
     false

@@ -2,6 +2,8 @@ class Question < ActiveRecord::Base
   belongs_to :toast
   has_many :answer2s, dependent: :delete_all
   has_many :answer3s, dependent: :delete_all
+  accepts_nested_attributes_for :answer2s, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :answer3s, reject_if: :all_blank, allow_destroy: true
   validates :question_type, inclusion: { in: [1, 2, 3] }
   validates :question_type, :text, :toast, presence: true
 

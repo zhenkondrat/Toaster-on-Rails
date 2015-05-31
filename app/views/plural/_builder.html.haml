@@ -4,6 +4,6 @@
       %i.fa.fa-plus
     %button.btn.btn-square.btn-xl.btn-info.del-plural{ onclick: 'return false' }
       %i.fa.fa-minus
-  .form-group.col-lg-4.answers{ data: {count: @question.answer2s.count} }
-    = f.fields_for :answer2s, @question.new_record? ? @question.answer2s.new : nil do |builder|
+  .form-group.col-lg-4.answers{ data: {count: @question.plurals.count} }
+    = f.fields_for :plurals, @question.new_record? ? @question.plurals.new : nil do |builder|
       = render 'plural/form', f: builder

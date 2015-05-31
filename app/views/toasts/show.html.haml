@@ -28,7 +28,7 @@
               = radio_button_tag :is_right, false
               #{I18n.t 'interface.question.answer_no'}
           - when 2
-            - @question.answer2s.each do |answer|
+            - @question.plurals.each do |answer|
               .form-group
                 %span= check_box_tag "plural_answers[#{answer.id}]"
                 %span= answer.text

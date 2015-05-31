@@ -1,4 +1,4 @@
-class Answer3 < ActiveRecord::Base
+class Association < ActiveRecord::Base
   belongs_to :question
   validates :question, presence: true
   validate :some_side_present?

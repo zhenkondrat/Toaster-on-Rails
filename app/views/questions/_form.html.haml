@@ -35,4 +35,4 @@
     = f.submit current_page?(new_question_path) ? I18n.t('interface.create') : I18n.t('interface.save'), class: 'btn btn-info'
     = link_to I18n.t('interface.cancel'), edit_toast_path(@question.toast_id), class: 'btn btn-default'
 
-  = render 'templates'
+= render 'templates'

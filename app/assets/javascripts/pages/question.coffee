@@ -40,12 +40,12 @@ $ ->
     check = template.find('span input[type="checkbox"]')
     check_hidden = template.find('span input[type="hidden"]')
     text = template.children('input')
-    check.attr('name', "question[answer2s_attributes][#{plural_count}][is_right]")
-    check.attr('id', "question_answer2s_attributes_#{plural_count}_is_right")
-    check_hidden.attr('name', "question[answer2s_attributes][#{plural_count}][is_right]")
-    check_hidden.attr('name', "question[answer2s_attributes][#{plural_count}][is_right]")
-    text.attr('name', "question[answer2s_attributes][#{plural_count}][text]")
-    text.attr('id', "question_answer2s_attributes_#{plural_count}_text")
+    check.attr('name', "question[plurals_attributes][#{plural_count}][is_right]")
+    check.attr('id', "question_plurals_attributes_#{plural_count}_is_right")
+    check_hidden.attr('name', "question[plurals_attributes][#{plural_count}][is_right]")
+    check_hidden.attr('name', "question[plurals_attributes][#{plural_count}][is_right]")
+    text.attr('name', "question[plurals_attributes][#{plural_count}][text]")
+    text.attr('id', "question_plurals_attributes_#{plural_count}_text")
     $('#PluralForm .answers').append(template)
 
   $('.del-plural').on 'click', ->
@@ -54,9 +54,9 @@ $ ->
         $("#PluralForm .answer[data-number = '#{plural_count}']").remove()
       else
         flag = $('#rm-flag-prototype').children().clone(true)
-        flag.attr('name', "question[answer2s_attributes][#{plural_count}][_destroy]")
-        $("input[name='question[answer2s_attributes][#{plural_count}][text]'").parent().append(flag)
-        $("input[name='question[answer2s_attributes][#{plural_count}][text]'").parent().addClass('hidden')
+        flag.attr('name', "question[plurals_attributes][#{plural_count}][_destroy]")
+        $("input[name='question[plurals_attributes][#{plural_count}][text]'").parent().append(flag)
+        $("input[name='question[plurals_attributes][#{plural_count}][text]'").parent().addClass('hidden')
       plural_count--
 
 # Associative
@@ -71,10 +71,10 @@ $ ->
     template.removeClass('hidden')
     left_text = template.find('input[data-side="left"]')
     right_text = template.find('input[data-side="right"]')
-    left_text.attr('name', "question[answer3s_attributes][#{associative_count}][left_text]")
-    left_text.attr('id', "question_answer3s_attributes_#{associative_count}_left_text")
-    right_text.attr('name', "question[answer3s_attributes][#{associative_count}][right_text]")
-    right_text.attr('id', "question_answer3s_attributes_#{associative_count}_right_text")
+    left_text.attr('name', "question[associations_attributes][#{associative_count}][left_text]")
+    left_text.attr('id', "question_associations_attributes_#{associative_count}_left_text")
+    right_text.attr('name', "question[associations_attributes][#{associative_count}][right_text]")
+    right_text.attr('id', "question_associations_attributes_#{associative_count}_right_text")
     $('#AssociativeForm .answers').prepend(template)
     false
 
@@ -84,9 +84,9 @@ $ ->
         $("#AssociativeForm .associative[data-number='#{associative_count}']").remove()
       else
         flag = $('#rm-flag-prototype').children().clone(true)
-        flag.attr('name', "question[answer3s_attributes][#{associative_count}][_destroy]")
-        $("input[name='question[answer3s_attributes][#{associative_count}][left_text]'").parents('.associative').append(flag)
-        $("input[name='question[answer3s_attributes][#{associative_count}][left_text]'").parents('.associative').addClass('hidden')
+        flag.attr('name', "question[associations_attributes][#{associative_count}][_destroy]")
+        $("input[name='question[associations_attributes][#{associative_count}][left_text]'").parents('.associative').append(flag)
+        $("input[name='question[associations_attributes][#{associative_count}][left_text]'").parents('.associative').addClass('hidden')
       associative_count--
     false
 

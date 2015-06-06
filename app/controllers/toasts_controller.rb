@@ -76,12 +76,10 @@ class ToastsController < ApplicationController
   private
 
   def init_passing
-    session.merge!({
-      toast_started: true,
-      questions: @toast.get_questions_list,
-      last_question: 0,
-      answers: {}
-    })
+    session[:toast_started] = true
+    session[:questions] = @toast.get_questions_list
+    session[:last_question] = 0
+    session[:answers] = {}
     @question = Question.find(session[:questions].first)
   end
 

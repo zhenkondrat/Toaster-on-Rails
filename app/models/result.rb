@@ -10,12 +10,12 @@ class Result < ActiveRecord::Base
     sum = 0
     questions.each do |question|
       case question.question_type
-        when 1
-        sum += @tariff1 if answers[question.id.to_s] == question.is_right.to_s
-        when 2
-        sum += @tariff2 if plural_right? question, answers[question.id.to_s]
+      when 1
+      sum += @tariff1 if answers[question.id.to_s] == question.is_right.to_s
+      when 2
+      sum += @tariff2 if plural_right? question, answers[question.id.to_s]
       when 3
-        sum += @tariff3 if association_right? question, answers[question.id]
+        sum += @tariff3 if associative_right? answers[question.id.to_s]
       end
     end
     self.mark, self.created_at, self.toast = sum.to_f/(max_mark questions), DateTime.now, @toast
@@ -48,14 +48,15 @@ class Result < ActiveRecord::Base
     sum = 0
     questions = Question.where("id IN (#{questions.map{ |question| question.id.to_s }.join(', ')})")
     questions.each do |question|
-      case question.question_type
+      sum +=
+        case question.question_type
         when 1
-          sum += @tariff1
+          @tariff1
         when 2
-          sum += @tariff2
-        else
-          sum += @tariff3
-      end
+          @tariff2
+        when 3
+          @tariff3
+        end
     end
     sum
   end
@@ -63,26 +64,18 @@ class Result < ActiveRecord::Base
   def plural_right?(question, answer)
     solution = true
     question.plurals.each do |supposition|
-      unless answer
-        solution = false
-        next
-      end
-      unless supposition.is_right == (answer[supposition.id.to_s] || false)
+      if answer
+        solution = false unless supposition.is_right == (answer[supposition.id.to_s] || false)
+      else
         solution = false
       end
     end
     solution
   end
 
-  def association_right?(question, answer)
+  def associative_right?(answer)
     solution = true
-    question.associations.each do |supposition|
-      if supposition.correct_pair?
-        unless (supposition.left_text == answer[supposition.id][0]) && (supposition.right_text == answer[supposition.id][1])
-          solution = false
-        end
-      end
-    end
+    answer['right'].each_with_index{ |id, index| sulution = false unless answer['left'][index] == id }
     solution
   end
 end

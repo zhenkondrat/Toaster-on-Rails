@@ -15,11 +15,7 @@ class Toast < ActiveRecord::Base
   end
 
   def get_questions_list
-    if questions_count
-      questions.limit(questions_count).ids.shuffle
-    else
-      questions.ids.shuffle
-    end
+    (questions_count.nil? ? questions.ids : questions.limit(questions_count).ids).try(:shuffle)
   end
 
   def foreign_groups

@@ -1,7 +1,8 @@
 = content_for :styles do
   = stylesheet_link_tag 'student'
 = content_for :plugins do
-  = javascript_include_tag 'question_time'
+  = javascript_include_tag 'pages/passing/question_time'
+  = javascript_include_tag 'pages/passing/associative'
 .student_content
   - unless @toast.question_time.nil?
     .timer{data: {time: @toast.question_time}}
@@ -32,6 +33,19 @@
               .form-group
                 %span= check_box_tag "plural_answers[#{answer.id}]"
                 %span= answer.text
+          - when 3
+            - left = @question.associations.map{|item| item.left_text.blank? ? nil : {id: item.id, text: item.left_text}}.compact.shuffle
+            - right = @question.associations.map{|item| item.right_text.blank? ? nil :{id: item.id, text: item.right_text}}.compact.shuffle
+            .row
+              .col-lg-6.sortable.associations_left
+                - left.each do |item|
+                  .association-item{data: {id: item[:id]}} #{item[:text]}
+              .col-lg-6.sortable.associations_right
+                - right.each do |item|
+                  - unless item[:text].blank?
+                    .association-item{data: {id: item[:id]}} #{item[:text]}
+            = hidden_field_tag :associations_left, left.map{ |e| e[:id] }.join(',')
+            = hidden_field_tag :associations_right, right.map{ |e| e[:id] }.join(',')
       .panel-footer
         = link_to I18n.t('interface.toast.exit_toast'), root_path, class: 'btn btn-danger'
         = submit_tag I18n.t('interface.toast.next'), class: 'btn btn-default pull-right next_question'

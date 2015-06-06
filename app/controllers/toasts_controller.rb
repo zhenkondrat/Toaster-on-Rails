@@ -32,13 +32,8 @@ class ToastsController < ApplicationController
   end
 
   def show
-    redirect_to root_path, error: 'You are not able to pass toast' if current_user.admin?
     if !session[:toast_started]
-      session[:toast_started] = true
-      session[:questions] = @toast.get_questions_list
-      session[:last_question] = 0
-      session[:answers] = {}
-      @question = Question.find(session[:questions].first)
+      init_passing
     else
       current_question = session[:last_question] + 1
       save_answer
@@ -61,7 +56,7 @@ class ToastsController < ApplicationController
   end
 
   def share_to_group
-    if @toast.toast_groups.create(group_id: params[:group][:id])
+    if @toast.groups << Group.find(params[:group][:id])
       flash[:notice] = 'Toast successfully shared'
     else
       flash[:error] = 'Something went wrong'
@@ -70,7 +65,7 @@ class ToastsController < ApplicationController
   end
 
   def deny_to_group
-    if @toast.toast_groups.find_by_group_id(params[:deny_id]).delete
+    if @toast.groups.delete(params[:deny_id])
       flash[:notice] = 'Group successfully deleted from shared list'
     else
       flash[:error] = 'Something went wrong'
@@ -80,15 +75,26 @@ class ToastsController < ApplicationController
 
   private
 
+  def init_passing
+    session[:toast_started] = true
+    session[:questions] = @toast.get_questions_list
+    session[:last_question] = 0
+    session[:answers] = {}
+    @question = Question.find(session[:questions].first)
+  end
+
   def save_answer
-    question_id = session[:questions][session[:last_question]]
-    case Question.find(session[:questions][session[:last_question]]).question_type
+    question_id = session[:questions][session[:last_question]].to_i
+    question_type = Question.find(question_id).question_type
+    session[:answers][question_id] =
+      case question_type
       when 1
-        session[:answers][question_id.to_i] = params[:is_right]
+        params[:is_right]
       when 2
-        session[:answers][question_id.to_i] = {}
-        params[:plural_answers].each_key{ |key| session[:answers][question_id][key] = true } if params[:plural_answers]
-    end
+        params[:plural_answers].present? ? params[:plural_answers].keys.map{ |key| [key, true] }.to_h : nil
+      when 3
+        params[:associations_right].present? ? [:right, :left].map{|s| [s, params["associations_#{s}"].split(',')]}.to_h : nil
+      end
   end
 
   def set_toast
@@ -96,16 +102,8 @@ class ToastsController < ApplicationController
   end
 
   def toast_params
-    params.require(:toast)
-          .permit(:name,
-                  :weight1,
-                  :weight2,
-                  :weight3,
-                  :subject_id,
-                  :questions_count,
-                  :question_time,
-                  :mark_system_id
-          )
+    params.require(:toast).permit(:name, :weight1, :weight2, :weight3, :subject_id, :questions_count, :question_time,
+                                  :mark_system_id)
   end
 
 end

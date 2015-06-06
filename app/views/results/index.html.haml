@@ -1,7 +1,7 @@
 .panel.panel-warning.different
   .panel-heading
     %h3 #{I18n.t 'interface.results.results'}
-  = form_tag show_results_path do
+  = form_tag show_results_path, method: :get do
     .panel-body
       .col-lg-6
         %h3.center #{I18n.t 'interface.results.create_result_table'}

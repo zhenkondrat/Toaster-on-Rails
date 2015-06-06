@@ -6,6 +6,6 @@ class Group < ActiveRecord::Base
   validates :name, presence: true
 
   def foreign_users
-    User.where.not(id: self.users)
+    User.where.not(id: users)
   end
 end

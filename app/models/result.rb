@@ -11,29 +11,23 @@ class Result < ActiveRecord::Base
     questions.each do |question|
       case question.question_type
       when 1
-      sum += @tariff1 if answers[question.id.to_s] == question.is_right.to_s
+        sum += @tariff1 if answers[question.id.to_s] == question.is_right.to_s
       when 2
-      sum += @tariff2 if plural_right? question, answers[question.id.to_s]
+        sum += @tariff2 if plural_right? question, answers[question.id.to_s]
       when 3
         sum += @tariff3 if associative_right? answers[question.id.to_s]
       end
     end
-    self.mark, self.created_at, self.toast = sum.to_f/(max_mark questions), DateTime.now, @toast
-    self.save!
+    update(mark: sum.to_f / (max_mark questions), created_at: DateTime.now, toast: @toast)
     show_mark
   end
 
   def show_mark
     if toast.mark_system
-      toast.mark_system.marks.where("percent <= #{self.mark_procent}").order(percent: :desc).first.presentation
+      toast.mark_system.marks.where("percent <= #{mark * 100}").order(percent: :desc).first.presentation
     else
       mark.to_s
     end
-  end
-
-
-  def mark_procent
-    mark*100
   end
 
   private
@@ -75,7 +69,7 @@ class Result < ActiveRecord::Base
 
   def associative_right?(answer)
     solution = true
-    answer['right'].each_with_index{ |id, index| sulution = false unless answer['left'][index] == id }
+    answer['right'].each_with_index{ |id, index| solution = false unless answer['left'][index] == id }
     solution
   end
 end

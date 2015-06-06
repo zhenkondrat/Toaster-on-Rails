@@ -10,13 +10,14 @@ class User < ActiveRecord::Base
 
   validates :login, uniqueness: true
 
-  validates_presence_of :last_name, unless: Proc.new { |user| user.admin? }
+  validates_presence_of :last_name, unless: proc { |user| user.admin? }
 
   scope :admins, ->{ where role: ROLE_ADMIN }
   scope :teachers, ->{ where role: ROLE_TEACHER }
   scope :students, ->{ where role: ROLE_STUDENT }
   scope :users, ->{ where role: [ROLE_STUDENT, ROLE_TEACHER] }
 
+  # TODO Refactoring with Arel
   def self.search(search_filter)
     return User.all unless search_filter.present?
     search_filter = search_filter.gsub(/\s+/, ' ').strip.split
@@ -43,13 +44,13 @@ class User < ActiveRecord::Base
 
   def full_name
     if last_name.blank?
-      full_name = ''
+      ''
     else
       full_name = last_name
-      full_name += " #{first_name[0]}. #{father_name[0]}." unless first_name.blank? || father_name.blank?
+      full_name += " #{first_name[0]}." unless first_name.blank?
+      full_name += " #{father_name[0]}." unless father_name.blank?
+      full_name
     end
-
-    full_name
   end
 
   def available_toasts

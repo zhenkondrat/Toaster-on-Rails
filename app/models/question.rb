@@ -9,18 +9,18 @@ class Question < ActiveRecord::Base
 
   def answers
     case question_type
+    when 1
+      is_right
     when 2
-      return plurals.shuffle
+      plurals.shuffle
     when 3
       answers = associations
-      left = []; right = []
+      left, right  = [], []
       answers.each do |answer|
         left.push answer.left_text unless answer.left_text.blank?
         right.push answer.right_text unless answer.right_text.blank?
       end
-      return [left.shuffle, right.shuffle]
-    else
-      return is_right
+      [left.shuffle, right.shuffle]
     end
   end
 

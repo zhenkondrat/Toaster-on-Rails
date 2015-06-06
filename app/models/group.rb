@@ -8,8 +8,4 @@ class Group < ActiveRecord::Base
   def foreign_users
     User.where.not(id: self.users)
   end
-
-  def out(user_id)
-    UserGroup.find_by_user_id(user_id).delete
-  end
 end

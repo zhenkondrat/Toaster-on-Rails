@@ -282,6 +282,8 @@ en:
       answer_no: No
       edit_question: Edit question
       create_new_question: Create new question
+      parse: Parse
+      parse_question: Parse question
     subject:
       subject: Subject
       subjects: Subjects

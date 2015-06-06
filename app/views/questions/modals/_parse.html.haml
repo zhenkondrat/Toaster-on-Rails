@@ -1,0 +1,13 @@
+#ModalParse.modal.fade{'aria-hidden' => 'true', 'aria-labelledby' => 'myModalLabel', role: 'dialog', tabindex: '-1'}
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button.close{'aria-hidden' => 'true', 'data-dismiss' => 'modal', :type => 'button'} &times;
+        %h4.modal-title #{I18n.t 'interface.question.parse_question'}
+      .modal-body
+        = label_tag :text_to_parse, I18n.t('interface.text')
+        = text_area_tag :text_to_parse, '', class: 'form-control'
+      .modal-footer
+        .actions
+          %button.btn.btn-info.parse-text{'data-dismiss' => 'modal', :type => 'button'} #{I18n.t('interface.question.parse')}
+          %button.btn.btn-default{'data-dismiss' => 'modal', :type => 'button'} #{I18n.t 'interface.cancel'}

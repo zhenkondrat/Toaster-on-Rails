@@ -14,9 +14,8 @@ class Question < ActiveRecord::Base
     when 2
       plurals.shuffle
     when 3
-      answers = associations
       left, right  = [], []
-      answers.each do |answer|
+      associations.each do |answer|
         left.push answer.left_text unless answer.left_text.blank?
         right.push answer.right_text unless answer.right_text.blank?
       end

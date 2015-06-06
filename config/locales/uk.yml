@@ -328,6 +328,8 @@ uk:
       answer_no: Ні
       edit_question: Редагувати питання
       create_new_question: Створити нове питання
+      parse: Розпізнати
+      parse_question: Розпізнати питання
     subject:
       subject: Предмет
       subjects: Предмети

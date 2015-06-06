@@ -32,13 +32,8 @@ class ToastsController < ApplicationController
   end
 
   def show
-    redirect_to root_path, error: 'You are not able to pass toast' if current_user.admin?
     if !session[:toast_started]
-      session[:toast_started] = true
-      session[:questions] = @toast.get_questions_list
-      session[:last_question] = 0
-      session[:answers] = {}
-      @question = Question.find(session[:questions].first)
+      init_passing
     else
       current_question = session[:last_question] + 1
       save_answer
@@ -80,17 +75,28 @@ class ToastsController < ApplicationController
 
   private
 
+  def init_passing
+    session.merge!({
+      toast_started: true,
+      questions: @toast.get_questions_list,
+      last_question: 0,
+      answers: {}
+    })
+    @question = Question.find(session[:questions].first)
+  end
+
   def save_answer
     question_id = session[:questions][session[:last_question]].to_i
-    case Question.find(session[:questions][session[:last_question]]).question_type
-    when 1
-      session[:answers][question_id] = params[:is_right]
-    when 2
-      session[:answers][question_id] = {}
-      params[:plural_answers].each_key{ |key| session[:answers][question_id][key] = true } if params[:plural_answers]
-    when 3
-      session[:answers][question_id] = [:right, :left].map{|s| [s, params["associations_#{s}"].split(',')]}.to_h if params[:associations_right].present?
-    end
+    question_type = Question.find(question_id).question_type
+    session[:answers][question_id] =
+      case question_type
+      when 1
+        params[:is_right]
+      when 2
+        params[:plural_answers].present? ? params[:plural_answers].keys.map{ |key| [key, true] }.to_h : nil
+      when 3
+        params[:associations_right].present? ? [:right, :left].map{|s| [s, params["associations_#{s}"].split(',')]}.to_h : nil
+      end
   end
 
   def set_toast
@@ -98,16 +104,8 @@ class ToastsController < ApplicationController
   end
 
   def toast_params
-    params.require(:toast)
-          .permit(:name,
-                  :weight1,
-                  :weight2,
-                  :weight3,
-                  :subject_id,
-                  :questions_count,
-                  :question_time,
-                  :mark_system_id
-          )
+    params.require(:toast).permit(:name, :weight1, :weight2, :weight3, :subject_id, :questions_count, :question_time,
+                                  :mark_system_id)
   end
 
 end

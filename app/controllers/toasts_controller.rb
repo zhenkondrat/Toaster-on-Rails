@@ -61,7 +61,7 @@ class ToastsController < ApplicationController
   end
 
   def share_to_group
-    if @toast.toast_groups.create(group_id: params[:group][:id])
+    if @toast.groups << Group.find(params[:group][:id])
       flash[:notice] = 'Toast successfully shared'
     else
       flash[:error] = 'Something went wrong'
@@ -70,7 +70,7 @@ class ToastsController < ApplicationController
   end
 
   def deny_to_group
-    if @toast.toast_groups.find_by_group_id(params[:deny_id]).delete
+    if @toast.groups.delete(params[:deny_id])
       flash[:notice] = 'Group successfully deleted from shared list'
     else
       flash[:error] = 'Something went wrong'
@@ -81,13 +81,15 @@ class ToastsController < ApplicationController
   private
 
   def save_answer
-    question_id = session[:questions][session[:last_question]]
+    question_id = session[:questions][session[:last_question]].to_i
     case Question.find(session[:questions][session[:last_question]]).question_type
-      when 1
-        session[:answers][question_id.to_i] = params[:is_right]
-      when 2
-        session[:answers][question_id.to_i] = {}
-        params[:plural_answers].each_key{ |key| session[:answers][question_id][key] = true } if params[:plural_answers]
+    when 1
+      session[:answers][question_id] = params[:is_right]
+    when 2
+      session[:answers][question_id] = {}
+      params[:plural_answers].each_key{ |key| session[:answers][question_id][key] = true } if params[:plural_answers]
+    when 3
+      session[:answers][question_id] = [:right, :left].map{|s| [s, params["associations_#{s}"].split(',')]}.to_h if params[:associations_right].present?
     end
   end
 

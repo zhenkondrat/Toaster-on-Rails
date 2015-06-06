@@ -15,7 +15,7 @@ class Result < ActiveRecord::Base
         when 2
         sum += @tariff2 if plural_right? question, answers[question.id.to_s]
       when 3
-        sum += @tariff3 if association_right? question, answers[question.id]
+        sum += @tariff3 if true#association_right? question, answers[question.id]
       end
     end
     self.mark, self.created_at, self.toast = sum.to_f/(max_mark questions), DateTime.now, @toast

@@ -16,8 +16,6 @@
 //#= require turbolinks
 //= require bootstrap
 //= require main
-//= require pages/test_show
-//= require question
 //= require ckeditor/init
 //= require ckeditor/config
 //= require ckeditor/own_config

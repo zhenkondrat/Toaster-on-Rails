@@ -11,6 +11,9 @@
         .form-group
           = label_tag :toast_id, I18n.t('interface.toast.toast')
           = collection_select :toast, :id, Toast.all, :id, :name, {prompt: false}, {class: 'form-control'}
+        .form-group
+          = check_box_tag :best, true, true
+          = label_tag :best, I18n.t('interface.results.best')
         .form-group= submit_tag I18n.t('interface.results.build_results_table'), class: 'btn btn-info'
       .col-lg-6
         %h3.center #{I18n.t 'interface.results.last_results'}

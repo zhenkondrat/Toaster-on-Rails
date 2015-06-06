@@ -7,7 +7,11 @@ class ResultsController < ApplicationController
   end
 
   def show
-    @users = User.joins(:groups, :results).where(groups: {id: params[:group][:id]}, results: {toast_id: params[:toast][:id]}).group('users.id').order(last_name: :asc)
+    results = Result.arel_table
+    @users = User.joins(:groups).joins('LEFT JOIN results ON results.user_id = users.id')
+                 .where(groups: {id: params[:group][:id]})
+                 .where(results[:toast_id].eq(params[:toast][:id]).or(results[:toast_id].eq(nil)))
+                 .group('users.id').order(last_name: :asc)
   end
 
   def export

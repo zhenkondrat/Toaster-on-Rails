@@ -1,1 +1,1 @@
-Rails.application.config.assets.precompile += %w( pages/* ckeditor/* )
+Rails.application.config.assets.precompile += %w( pages/* ckeditor/own_config )

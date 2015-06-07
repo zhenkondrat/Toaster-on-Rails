@@ -4,6 +4,12 @@ class Toast < ActiveRecord::Base
   has_and_belongs_to_many :groups
   has_many :questions, dependent: :delete_all
   has_many :results, dependent: :delete_all
+
+  has_many :parent_relations, class_name: 'ToastRelation', foreign_key: 'parent_id', dependent: :destroy
+  has_many :child_relations, class_name: 'ToastRelation', foreign_key: 'child_id', dependent: :destroy
+  has_many :children, class_name: 'Toast', through: :parent_relations
+  has_many :parents, class_name: 'Toast', through: :child_relations
+
   validates :subject, :name, :mark_system, presence: true
 
   def self.search(user, options: {})

@@ -4,12 +4,13 @@
 # is considered to be the first unless any hosts have the primary
 # property set.  Don't declare `role :all`, it's a meta role.
 set :stage, :production
+# role :all, 'deployman@192.168.1.104'
 # role :app, %w{deploy@example.com}
 # role :web, %w{deploy@example.com}
 # role :db,  %w{deploy@example.com}
 
 set :full_app_name, "#{fetch(:application)}_#{fetch(:stage)}"
-set :unicorn_worker_count, 5
+set :unicorn_worker_count, 1
 set :enable_ssl, false
 # Extended Server Syntax
 # ======================
@@ -17,7 +18,7 @@ set :enable_ssl, false
 # server list. The second argument is a, or duck-types, Hash and is
 # used to set extended properties on the server.
 
-server '192.168.56.102', user: 'deploy', roles: %w{web app}
+server '192.168.1.104', user: 'deployman', roles: %w{web app}
 
 
 # Custom SSH Options

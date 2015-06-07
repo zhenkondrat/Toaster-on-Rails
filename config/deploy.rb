@@ -27,6 +27,7 @@ role :db, 'deployman@192.168.1.104', :primary => true
 #   run "rm -f #{current_release}/config/database.yml"
 #   run "ln -s #{deploy_to}/shared/config/database.yml #{current_release}/config/database.yml"
 # end
+set :linked_files, %w{config/database.yml}
 
 namespace :deploy do
   task :restart do

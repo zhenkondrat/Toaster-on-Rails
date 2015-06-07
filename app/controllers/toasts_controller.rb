@@ -73,6 +73,24 @@ class ToastsController < ApplicationController
     redirect_to edit_toast_path(@toast)
   end
 
+  def add_child
+    if @toast.children << Toast.find(params[:child][:id])
+      flash[:notice] = 'Child toast successfully added'
+    else
+      flash[:error] = 'Something went wrong'
+    end
+    redirect_to edit_toast_path(@toast)
+  end
+
+  def remove_child
+    if @toast.children.delete(params[:deny_id])
+      flash[:notice] = 'Toast has been removed from children list'
+    else
+      flash[:error] = 'Something went wrong'
+    end
+    redirect_to edit_toast_path(@toast)
+  end
+
   private
 
   def init_passing

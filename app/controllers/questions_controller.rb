@@ -8,7 +8,10 @@ class QuestionsController < ApplicationController
   end
 
   def create
-    @question = Question.new(question_params)
+    attr = question_params
+    attr.delete('plurals_attributes') unless question_params[:question_type] == 2
+    attr.delete('associations_attributes') unless question_params[:question_type] == 3
+    @question = Question.new(attr)
     if @question.save
       flash[:notice] = 'Question successfully created'
     else

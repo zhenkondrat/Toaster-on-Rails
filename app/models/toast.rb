@@ -4,6 +4,12 @@ class Toast < ActiveRecord::Base
   has_and_belongs_to_many :groups
   has_many :questions, dependent: :delete_all
   has_many :results, dependent: :delete_all
+
+  has_many :parent_relations, class_name: 'ToastRelation', foreign_key: 'parent_id', dependent: :destroy
+  has_many :child_relations, class_name: 'ToastRelation', foreign_key: 'child_id', dependent: :destroy
+  has_many :children, class_name: 'Toast', through: :parent_relations
+  has_many :parents, class_name: 'Toast', through: :child_relations
+
   validates :subject, :name, :mark_system, presence: true
 
   def self.search(user, options: {})
@@ -15,10 +21,31 @@ class Toast < ActiveRecord::Base
   end
 
   def get_questions_list
-    (questions_count.nil? ? questions.ids : questions.limit(questions_count).ids).try(:shuffle)
+    if questions_count.nil?
+      all_questions_list.shuffle
+    else
+      all_questions_list.shuffle[0..questions_count-1]
+    end
   end
 
   def foreign_groups
     Group.where.not(id: groups)
+  end
+
+  def foreign_toasts
+    ids = [*parents.ids, *all_children, id]
+    Toast.where.not(id: ids).where(subject_id: subject_id)
+  end
+
+  def all_children
+    ids = children.ids
+    children.each{ |child| ids.push child.all_children }
+    ids
+  end
+
+  def all_questions_list
+    list = questions.ids
+    children.each{ |child| list = [*list, *child.all_questions_list] }
+    list
   end
 end

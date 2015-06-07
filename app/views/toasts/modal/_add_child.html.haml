@@ -1,0 +1,13 @@
+#ModalAddChild.modal.fade{'aria-hidden' => 'true', 'aria-labelledby' => 'myModalLabel', role: 'dialog', tabindex: '-1'}
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button.close{'aria-hidden' => 'true', 'data-dismiss' => 'modal', :type => 'button'} &times;
+        %h4.modal-title #{I18n.t 'interface.toast.add_child_full'}
+      = form_tag add_child_toast_path(@toast) do
+        .modal-body
+          %p #{I18n.t 'interface.toast.chose_toast'}:
+          = collection_select :child, :id, @toast.foreign_toasts, :id, :name, {prompt: false}, {class: 'form-control'}
+        .modal-footer
+          .pull-left
+            = submit_tag I18n.t('interface.add'), class: 'btn btn-default'

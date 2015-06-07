@@ -6,6 +6,8 @@ Rails.application.routes.draw do
     member do
       post '/share_to_group', to: 'toasts#share_to_group'
       get '/deny_to_group', to: 'toasts#deny_to_group'
+      post '/add_child', to: 'toasts#add_child'
+      get '/remove_child', to: 'toasts#remove_child'
     end
 
     collection do

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150531203334) do
+ActiveRecord::Schema.define(version: 20150607154854) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -94,6 +94,12 @@ ActiveRecord::Schema.define(version: 20150531203334) do
   create_table "subjects_users", id: false, force: :cascade do |t|
     t.integer "user_id"
     t.integer "subject_id"
+  end
+
+  create_table "toast_relations", force: :cascade do |t|
+    t.integer "parent_id"
+    t.integer "child_id"
+    t.integer "percent",   default: 100
   end
 
   create_table "toasts", force: :cascade do |t|

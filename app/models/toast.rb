@@ -21,7 +21,11 @@ class Toast < ActiveRecord::Base
   end
 
   def get_questions_list
-    (questions_count.nil? ? questions.ids : questions.limit(questions_count).ids).try(:shuffle)
+    if questions_count.nil?
+      all_questions_list.shuffle
+    else
+      all_questions_list.shuffle[0..questions_count-1]
+    end
   end
 
   def foreign_groups
@@ -34,8 +38,14 @@ class Toast < ActiveRecord::Base
   end
 
   def all_children
-    ids = children
-    children.each{ |child| ids << child.all_children }
+    ids = children.ids
+    children.each{ |child| ids.push child.all_children }
     ids
+  end
+
+  def all_questions_list
+    list = questions.ids
+    children.each{ |child| list = [*list, *child.all_questions_list] }
+    list
   end
 end

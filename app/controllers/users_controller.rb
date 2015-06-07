@@ -26,7 +26,7 @@ class UsersController < ApplicationController
     else
       flash[:error] = %q|User can't be updated|
     end
-    redirect_to users_path
+    redirect_to(current_user.student? ? root_path : users_path)
   end
 
   def destroy

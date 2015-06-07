@@ -8,7 +8,7 @@ class Ability
 
     can :manage, Subject if user.admin?
 
-    can :edit, User do |another_user|
+    can [:edit, :update], User do |another_user|
       user.admin? || user == another_user
     end
 

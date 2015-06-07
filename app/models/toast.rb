@@ -27,4 +27,15 @@ class Toast < ActiveRecord::Base
   def foreign_groups
     Group.where.not(id: self.groups)
   end
+
+  def foreign_toasts
+    ids = [*parents.ids, *all_children, id]
+    Toast.where.not(id: ids).where(subject_id: subject_id)
+  end
+
+  def all_children
+    ids = children
+    children.each{ |child| ids << child.all_children }
+    ids
+  end
 end

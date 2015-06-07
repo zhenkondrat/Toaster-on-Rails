@@ -229,6 +229,7 @@ en:
     change: change
     check: Check
     date: Date
+    Add: Add
     menu:
       manage_toasts: Toasts
       list: List
@@ -319,6 +320,10 @@ en:
       exit_toast: Exit toast
       next: Next »
       of: of
+      children_list: Children toasts
+      add_child: Add child
+      add_child_full: Add child toast
+      chose_toast: Chose toast
     user:
       users: Users
       available_users_list: Available users list

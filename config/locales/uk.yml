@@ -275,6 +275,7 @@ uk:
     change: редаг.
     check: Познач.
     date: Дата
+    add: Додати
     menu:
       manage_toasts: Тести
       list: Список
@@ -365,6 +366,10 @@ uk:
       exit_toast: На головну
       next: Наступне »
       of: з
+      children_list: Поглинуті тести
+      add_child: Додати підтест
+      add_child_full: Додати дочірній тест
+      chose_toast: Виберіть тест
     user:
       users: Користувачі
       available_users_list: Наявні користувачі

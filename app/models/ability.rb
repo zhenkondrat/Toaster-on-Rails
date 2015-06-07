@@ -17,7 +17,7 @@ class Ability
       can :manage, Question
       can :manage, Group
       can :manage, Toast do |toast|
-        user.admin? || user.subject_ids.include?(toast.subject_id)
+        user.admin? || user.subject_ids.include?(toast.subject_id) || toast.new_record?
       end
       can :manage, Result
       can :manage, User do |another_user|

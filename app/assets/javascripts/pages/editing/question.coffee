@@ -8,18 +8,21 @@ $ ->
         $('#LogicalForm').removeClass('hidden')
         $('#PluralForm').addClass('hidden')
         $('#AssociativeForm').addClass('hidden')
+        $('.parse-link').addClass('hidden')
         break;
       when 2
         text = header.data('plural')
         $('#LogicalForm').addClass('hidden')
         $('#PluralForm').removeClass('hidden')
         $('#AssociativeForm').addClass('hidden')
+        $('.parse-link').removeClass('hidden')
         break;
       when 3
         text = header.data('manytomany')
         $('#LogicalForm').addClass('hidden')
         $('#PluralForm').addClass('hidden')
         $('#AssociativeForm').removeClass('hidden')
+        $('.parse-link').addClass('hidden')
         break;
 
     $('#question_question_type').val($(this).data('question-type'))
@@ -28,9 +31,32 @@ $ ->
 
 # Plural
 
-  plural_count = $('#PluralForm .answers').data('count')-1 || 0
+  plural_count = ($('#PluralForm .answers').data('count') || 1) - 1
 
   $('.add-plural').on 'click', ->
+    add_plural()
+
+  $('.del-plural').on 'click', ->
+    del_plural()
+
+  $('.parse-text').on 'click', ->
+    text = $('#text_to_parse').val()
+    #body
+    CKEDITOR.instances['question_text'].setData(text.substring(0, text.search(/1./)))
+    #answers
+    text = text.slice(text.search(/1./), text.length)
+    i = 1
+    piece = new RegExp("#{i+1}.")
+    while text.search(piece) != -1
+      piece = new RegExp("#{i+1}.")
+      $("#question_plurals_attributes_#{plural_count}_text").val(text.slice(0, text.search(piece)))
+      text = text.slice(text.search(piece), text.length)
+      add_plural()
+      i++
+    del_plural()
+    false
+
+  add_plural = ->
     plural_count++
     template = $('#plural-prototype').clone(true)
     template.removeAttr('id')
@@ -48,7 +74,7 @@ $ ->
     text.attr('id', "question_plurals_attributes_#{plural_count}_text")
     $('#PluralForm .answers').append(template)
 
-  $('.del-plural').on 'click', ->
+  del_plural = ->
     if plural_count != 0
       if $("#PluralForm .answer[data-number = '#{plural_count}']").length != 0
         $("#PluralForm .answer[data-number = '#{plural_count}']").remove()

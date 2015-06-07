@@ -329,6 +329,8 @@ uk:
       answer_no: Ні
       edit_question: Редагувати питання
       create_new_question: Створити нове питання
+      parse: Розпізнати
+      parse_question: Розпізнати питання
     subject:
       subject: Предмет
       subjects: Предмети
@@ -386,3 +388,4 @@ uk:
       word: Word
       last_results: Останні результати
       create_result_table: Створити таблицю результатів
+      best: Тільки кращі результати

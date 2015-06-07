@@ -69,4 +69,3 @@ class User < ActiveRecord::Base
     role == ROLE_STUDENT
   end
 end
-

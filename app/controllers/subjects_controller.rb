@@ -11,7 +11,7 @@ class SubjectsController < ApplicationController
   end
 
   def create
-    if Subject.create subject_params
+    if Subject.create(subject_params)
       flash[:notice] = 'Subject is successfully created'
     else
       flash[:error] = 'Something went wrong'
@@ -23,7 +23,7 @@ class SubjectsController < ApplicationController
   end
 
   def update
-    if @subject.update subject_params
+    if @subject.update(subject_params)
       flash[:notice] = 'Subject is successfully updated'
     else
       flash[:error] = 'Something went wrong'

@@ -11,7 +11,7 @@ Rails.application.routes.draw do
     end
 
     collection do
-      post '/search', to: 'toasts#index'
+      get '/search', to: 'toasts#index'
     end
   end
 
@@ -22,7 +22,7 @@ Rails.application.routes.draw do
     end
 
     collection do
-      post '/search', to: 'subjects#index'
+      get '/search', to: 'subjects#index'
     end
   end
 
@@ -35,7 +35,7 @@ Rails.application.routes.draw do
     end
 
     collection do
-      post '/search', to: 'groups#index'
+      get '/search', to: 'groups#index'
     end
   end
 
@@ -48,7 +48,7 @@ Rails.application.routes.draw do
 
     collection do
       get  '/', to: 'users#index'
-      post '/search', to: 'users#index'
+      get '/search', to: 'users#index'
       get  '/invite_code', to: 'users#generate_invite_code'
       get  '/change_locale', to: 'users#change_locale'
     end
@@ -58,7 +58,7 @@ Rails.application.routes.draw do
 
   resources :results do
     collection do
-      post '/search', to: 'results#show', as: 'show'
+      get '/show', to: 'results#show', as: 'show'
       post '/export', to: 'results#export'
       get  '/', to: 'results#index'
     end

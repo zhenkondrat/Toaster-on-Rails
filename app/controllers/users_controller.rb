@@ -7,8 +7,8 @@ class UsersController < ApplicationController
   def main
     return redirect_to new_user_session_path unless user_signed_in?
     save_result if session[:toast_started]
-    prepare_results unless (current_user.teacher? || current_user.admin?)
-    render current_user.student?  ?  'users/user/home' : 'users/teacher/home'
+    prepare_results if current_user.student?
+    render(current_user.student? ? 'users/user/home' : 'users/teacher/home')
   end
 
   def index
@@ -94,7 +94,7 @@ class UsersController < ApplicationController
       LIMIT 5
     SQL
     @results = ActiveRecord::Base.connection.execute(sql).to_a
-    for i in 0..@results.size-1 do
+    (0..@results.size-1).each do |i|
       sql = <<-SQL
         SELECT marks.presentation FROM marks WHERE marks.percent <= #{@results[i]['mark'].to_i} AND marks.mark_system_id = #{@results[i]['mark_system']} ORDER BY marks.percent DESC LIMIT 1
       SQL

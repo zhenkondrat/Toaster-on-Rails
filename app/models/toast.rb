@@ -25,7 +25,7 @@ class Toast < ActiveRecord::Base
   end
 
   def foreign_groups
-    Group.where.not(id: self.groups)
+    Group.where.not(id: groups)
   end
 
   def foreign_toasts

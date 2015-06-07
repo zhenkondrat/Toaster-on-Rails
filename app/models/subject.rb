@@ -4,6 +4,6 @@ class Subject < ActiveRecord::Base
   validates :name, presence: true
 
   def foreign_teachers
-    User.where.not(id: self.teachers).where(role: User::ROLE_TEACHER)
+    User.where.not(id: teachers).where(role: User::ROLE_TEACHER)
   end
 end

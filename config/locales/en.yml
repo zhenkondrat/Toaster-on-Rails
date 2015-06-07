@@ -283,6 +283,8 @@ en:
       answer_no: No
       edit_question: Edit question
       create_new_question: Create new question
+      parse: Parse
+      parse_question: Parse question
     subject:
       subject: Subject
       subjects: Subjects
@@ -340,3 +342,4 @@ en:
       word: Word
       last_results: Last results
       create_result_table: Create result table
+      best: Best results only

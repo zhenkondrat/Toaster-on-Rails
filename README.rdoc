@@ -1,6 +1,6 @@
 ==README
 
-It's students testing system which will be created on Rails.
+It's students testing system which created on Ruby on Rails.
 
 This README would normally document whatever steps are necessary to get the application up and running.
 
@@ -37,10 +37,6 @@ MySQL:
   socket: /var/run/mysqld/mysqld.sock
   reconnect: true
 
-Database creation:
-
-rake db:create
-
 Database initialization:
-
+rake db:create
 rake db:migrate

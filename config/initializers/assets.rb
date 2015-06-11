@@ -1,1 +1,1 @@
-Rails.application.config.assets.precompile += %w( pages/* ckeditor/own_config.js student.css )
+Rails.application.config.assets.precompile += %w( pages/* ckeditor/own_config.js student.css user_footer.jpg )

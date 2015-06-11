@@ -14,7 +14,7 @@ Postgresql or MySQL(change gem in gemlist if you like it more)
 ### Configuration:
 
 1. Rename config/database_template.yml to config/database.yml and configurate:
-```lang
+```yaml
 Posgresql:
 
   postgresql_base: &postgresql_base

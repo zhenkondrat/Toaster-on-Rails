@@ -14,6 +14,7 @@ Postgresql or MySQL(change gem in gemlist if you like it more)
 ### Configuration:
 
 1. Rename config/database_template.yml to config/database.yml and configurate:
+
 ```yaml
 Posgresql:
 
@@ -37,15 +38,20 @@ MySQL:
   socket: /var/run/mysqld/mysqld.sock
   reconnect: true
 ```
+
 2. Database initialization:
+
 ```Bash
 rake db:create
 rake db:migrate
 ```
+
 3. Get invitecodes by:
 ```Ruby
-InviteCode.generate! # in 'rails c'
+InviteCode.generate!
 ```
+(run in rails console)
+
 You should get something like:
 ```Ruby
 {:admin=>"IDZWBC", :teacher=>"ATZBXQ", :student=>"QXVBNX"}

@@ -1,4 +1,5 @@
-==README
+README
+======
 
 It's students testing system created on Ruby on Rails.
 

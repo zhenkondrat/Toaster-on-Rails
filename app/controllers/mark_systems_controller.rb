@@ -12,7 +12,7 @@ class MarkSystemsController < ApplicationController
 
   def create
     mark_system = MarkSystem.new(name: mark_system_params[:name])
-    if mark_system.save && marks_params[:new].map{ |_, mark_params| mark_system.marks.create(mark_params).valid? }.reduce(:'&&')
+    if mark_system.save && marks_params[:new].map{ |_, mark_params| mark_system.marks.create(mark_params).valid? }.reduce(:&)
       flash[:notice] = 'Mark system successfully created!'
     else
       flash[:error] = %q|Mark system can't be created|

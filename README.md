@@ -11,7 +11,7 @@ System dependencies
 Rails 4.2
 Postgresql or MySQL(change gem in gemlist if you like it more)
 
-### Configuration:
+## Configuration:
 
 1. Rename config/database_template.yml to config/database.yml and configurate:
 

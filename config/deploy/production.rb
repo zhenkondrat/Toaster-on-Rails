@@ -18,7 +18,7 @@ set :enable_ssl, false
 # server list. The second argument is a, or duck-types, Hash and is
 # used to set extended properties on the server.
 
-server '192.168.56.101', user: 'deployman', roles: %w{web app}
+server '46.101.158.143', user: 'deployman', roles: %w{web app}
 
 
 # Custom SSH Options

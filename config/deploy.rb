@@ -4,7 +4,7 @@ set :rails_env, 'production'
 set :unicorn_env, 'production'
 set :application, 'toaster'
 set :rails_env, 'production'
-set :domain, 'deployman@192.168.56.101'
+set :domain, 'deployman@46.101.158.143'
 set :deploy_to, '/home/deployman/paradise'
 set :use_sudo, false
 set :unicorn_conf, "#{deploy_to}/current/config/unicorn.rb"
@@ -19,9 +19,9 @@ set :repo_url, 'git@github.com:elhowm/Toaster-on-Rails.git'
 set :branch, 'master'
 set :deploy_via, :remote_cache
 
-role :web, 'deployman@192.168.56.101'
-role :app, 'deployman@192.168.56.101'
-role :db, 'deployman@192.168.56.101', :primary => true
+role :web, 'deployman@46.101.158.143'
+role :app, 'deployman@46.101.158.143'
+role :db, 'deployman@46.101.158.143', :primary => true
 
 set :linked_files, %w{config/database.yml}
 

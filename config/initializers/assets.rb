@@ -4,7 +4,7 @@ Rails.application.config.assets.precompile += %w( ckeditor/own_config.js
                                                   ckeditor/lang/en.js
                                                   ckeditor/styles.js
                                                   ckeditor/init.js
-                                                  ckeditor/content.css
+                                                  ckeditor/contents.css
                                                   ckeditor/plugins/dragresize/plugin.js
                                                   ckeditor/filebrowser/javascripts/fileuploader.js
                                                   ckeditor/filebrowser/javascripts/rails.js

@@ -5,18 +5,18 @@
   %div
     %h3 #{I18n.t 'interface.mark.marks'}:
     .form-group
-      .col-lg-6.mark-operations
+      .col-lg-6.col-md-6.mark-operations
         %button.btn.btn-success.btn-circle.btn-xl.add-mark{onclick: 'return false'} +
-      .col-lg-6.mark-operations
+      .col-lg-6.col-md-6.mark-operations
         %button.btn.btn-danger.btn-circle.btn-xl.del-mark{onclick: 'return false'} -
     .form-group
-      %strong.col-lg-6 #{I18n.t 'interface.mark.presentation'}
-      %strong.col-lg-6 #{I18n.t 'interface.mark.percent'}
+      %strong.col-lg-6.col-md-6.col-sm-12 #{I18n.t 'interface.mark.presentation'}
+      %strong.col-lg-6.col-md-6.col-sm-12 #{I18n.t 'interface.mark.percent'}
   - if @mark_system.marks.count.zero?
     #marks{data: {count: 1}}
       .form-group.number0
-        .presentation.col-lg-6= text_field_tag 'mark_system[marks[new1[presentation]]]', '', class: 'form-control'
-        .percent.col-lg-6= text_field_tag 'mark_system[marks[new1[percent]]]', '', class: 'form-control'
+        .presentation.col-lg-6.col-md-6= text_field_tag 'mark_system[marks[new1[presentation]]]', '', class: 'form-control'
+        .percent.col-lg-6.col-md-6= text_field_tag 'mark_system[marks[new1[percent]]]', '', class: 'form-control'
   - else
     #marks{data: {count: @mark_system.marks.count}}
     - @mark_system.marks.order(percent: :desc).each do |mark|

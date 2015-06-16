@@ -6,8 +6,8 @@
     %h4 #{I18n.t 'interface.group.available_groups_list'}:
     = form_tag search_groups_path, method: :get do
       .form-group
-        .col-lg-7= text_field_tag :search_filter, '', class: 'form-control'
-        .col-lg-2= submit_tag 'Search', class: 'btn btn-warning form-control'
+        .col-lg-7.col-md-7= text_field_tag :search_filter, '', class: 'form-control'
+        .col-lg-2.col-md-2= submit_tag 'Search', class: 'btn btn-warning form-control'
     %table.table.table-striped
       %tr
         %th #{I18n.t 'interface.name'}

@@ -1,13 +1,13 @@
 = form_for @question do |f|
   .panel-body
     .row
-      .col-lg-4.center
+      .col-lg-4.col-md-4.center
         %button.btn.btn-xl.btn-circle.btn-success.change-type{onclick: 'return false', data: {question_type: 1}, disabled: @question.logical? || @question.no_type? ? nil : true}
           %i.fa.fa-leaf
-      .col-lg-4.center
+      .col-lg-4.col-md-4.center
         %button.btn.btn-xl.btn-circle.btn-warning.change-type{onclick: 'return false', data: {question_type: 2}, disabled: @question.plural? || @question.no_type? ? nil : true}
           %i.fa.fa-check-square
-      .col-lg-4.center
+      .col-lg-4.col-md-4.center
         %button.btn.btn-xl.btn-circle.btn-danger.change-type{onclick: 'return false', data: {question_type: 3}, disabled: @question.associative? || @question.no_type? ? nil : true}
           %i.fa.fa-random
     .row.center

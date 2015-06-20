@@ -12,6 +12,8 @@ class Toast < ActiveRecord::Base
 
   validates :subject, :name, :mark_system, presence: true
 
+  attr_accessor :parser_file
+
   def self.search(user, options: {})
     toasts = user.admin? ? Toast.all : Toast.where(subject_id: user.subject_ids)
     toasts = toasts.where(subject_id: options[:subject]) unless options[:subject].blank?

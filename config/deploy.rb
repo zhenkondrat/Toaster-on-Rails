@@ -45,4 +45,14 @@ namespace :unicorn do
   end
 end
 
+namespace :folders do
+  task :prepare do
+    on roles(:all) do
+      execute "chmod 775 #{release_path}/public/parser"
+      execute "chmod 775 #{release_path}/public/ckeditor_assets"
+    end
+  end
+end
+
+after 'deploy', 'folders:prepare'
 # after 'deploy', 'unicorn:start'

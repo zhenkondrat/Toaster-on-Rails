@@ -125,6 +125,6 @@ class ToastsController < ApplicationController
 
   def toast_params
     params.require(:toast).permit(:name, :weight1, :weight2, :weight3, :subject_id, :questions_count, :question_time,
-                                  :mark_system_id, :parser_file)
+                                  :learning_flag, :mark_system_id, :parser_file)
   end
 end

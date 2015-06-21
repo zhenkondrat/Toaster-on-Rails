@@ -3,6 +3,7 @@ class Result < ActiveRecord::Base
   belongs_to :toast
   validates :mark, :created_at, :user, :toast, presence: true
   validates :mark, numericality: { less_than_or_equal_to: 1 }
+  serialize :answers, Hash
 
   def create_by_answers(questions, answers, toast = nil)
     @toast = toast || self.toast || questions.first.toast
@@ -18,7 +19,7 @@ class Result < ActiveRecord::Base
         sum += @tariff3 if associative_right? answers[question.id.to_s]
       end
     end
-    update(mark: sum.to_f / (max_mark questions), created_at: DateTime.now, toast: @toast)
+    update(mark: sum.to_f / (max_mark questions), toast: @toast, answers: answers, created_at: DateTime.now)
     show_mark
   end
 

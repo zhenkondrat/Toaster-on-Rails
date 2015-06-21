@@ -69,7 +69,7 @@ class Result < ActiveRecord::Base
 
   def associative_right?(answer)
     solution = true
-    answer['right'].each_with_index{ |id, index| solution = false unless answer['left'][index] == id }
+    answer['right'].each_with_index{ |id, index| solution = false unless answer['left'][index] == id } if answer
     solution
   end
 end

@@ -78,8 +78,8 @@ class UsersController < ApplicationController
 
   def save_result
     result = current_user.results.new
-    mark = result.create_by_answers(Question.where(id: session[:questions]), session[:answers])
-    flash[:success] = "Your mark is: #{mark}"
+    out = result.create_by_answers(Question.where(id: session[:questions]), session[:answers])
+    flash[:success] = "Your mark is: #{out[:mark]}. Info: right-#{out[:right]}; wrong-#{out[:wrong]}; percent: #{out[:percent]}%"
     session[:toast_started] = false
   end
 

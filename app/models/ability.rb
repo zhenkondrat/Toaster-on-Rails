@@ -44,5 +44,9 @@ class Ability
       when :student then user.admin? || user.teacher?
       end
     end
+
+    can :change_pswd, User do |some_user|
+      user == some_user || user.admin?
+    end
   end
 end

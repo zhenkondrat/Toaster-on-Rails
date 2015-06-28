@@ -47,10 +47,10 @@ Rails.application.routes.draw do
     end
 
     collection do
-      get  '/', to: 'users#index'
+      get '/', to: 'users#index'
       get '/search', to: 'users#index'
-      get  '/invite_code', to: 'users#generate_invite_code'
-      get  '/change_locale', to: 'users#change_locale'
+      get '/invite_code', to: 'users#generate_invite_code'
+      get '/change_locale', to: 'users#change_locale'
     end
   end
 

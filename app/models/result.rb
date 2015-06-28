@@ -3,23 +3,34 @@ class Result < ActiveRecord::Base
   belongs_to :toast
   validates :mark, :created_at, :user, :toast, presence: true
   validates :mark, numericality: { less_than_or_equal_to: 1 }
+  serialize :answers, Hash
 
   def create_by_answers(questions, answers, toast = nil)
     @toast = toast || self.toast || questions.first.toast
     set_tariffs
-    sum = 0
+    sum = right = 0
     questions.each do |question|
       case question.question_type
       when 1
-        sum += @tariff1 if answers[question.id.to_s] == question.is_right.to_s
+        if answers[question.id.to_s] == question.is_right.to_s
+          sum += @tariff1
+          right += 1
+        end
       when 2
-        sum += @tariff2 if plural_right? question, answers[question.id.to_s]
+        if plural_right? question, answers[question.id.to_s]
+          sum += @tariff2
+          right += 1
+        end
       when 3
-        sum += @tariff3 if associative_right? answers[question.id.to_s]
+        if associative_right? answers[question.id.to_s]
+          sum += @tariff3
+          right += 1
+        end
       end
     end
-    update(mark: sum.to_f / (max_mark questions), created_at: DateTime.now, toast: @toast)
-    show_mark
+    max = max_mark questions
+    update(mark: sum.to_f / max, toast: @toast, answers: answers, created_at: DateTime.now)
+    {mark: show_mark, right: right, wrong: questions.count-right, percent: (mark*100).round(0)}
   end
 
   def show_mark
@@ -69,7 +80,7 @@ class Result < ActiveRecord::Base
 
   def associative_right?(answer)
     solution = true
-    answer['right'].each_with_index{ |id, index| solution = false unless answer['left'][index] == id }
+    answer['right'].each_with_index{ |id, index| solution = false unless answer['left'][index] == id } if answer
     solution
   end
 end

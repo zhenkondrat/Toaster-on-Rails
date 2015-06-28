@@ -14,6 +14,9 @@
       .form-group
         = f.label :name, I18n.t('interface.name')
         = f.text_field :name, class: 'form-control'
+      .form-group
+        = f.label :parser_file, 'Question file'
+        = f.file_field :parser_file
     .panel-footer
       = f.submit I18n.t('interface.toast.create_toast'), class: 'btn btn-info'
       .pull-right= link_to I18n.t('interface.toast.all_toasts'), toasts_path, class: 'btn btn-warning'

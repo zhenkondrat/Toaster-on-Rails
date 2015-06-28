@@ -11,8 +11,12 @@ class ToastsController < ApplicationController
   end
 
   def create
-    @toast = Toast.new(toast_params)
-    if @toast.save
+    @toast = if toast_params[:parser_file]
+               ToastParser.parse(toast_params)
+             else
+               Toast.create(toast_params)
+             end
+    if @toast
       redirect_to edit_toast_path(@toast), notice: 'Toast successfully created'
     else
       redirect_to new_toast_path(@toast), error: 'Something went wrong'
@@ -20,7 +24,7 @@ class ToastsController < ApplicationController
   end
 
   def edit
-    @questions = @toast.questions.page(params[:page]).per(10)
+    @questions = @toast.questions.order(:id).page(params[:page]).per(10)
   end
 
   def update
@@ -121,6 +125,6 @@ class ToastsController < ApplicationController
 
   def toast_params
     params.require(:toast).permit(:name, :weight1, :weight2, :weight3, :subject_id, :questions_count, :question_time,
-                                  :mark_system_id)
+                                  :learning_flag, :mark_system_id, :parser_file)
   end
 end

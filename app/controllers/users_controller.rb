@@ -26,7 +26,12 @@ class UsersController < ApplicationController
     else
       flash[:error] = %q|User can't be updated|
     end
-    redirect_to(current_user.student? ? root_path : users_path)
+    pswd = current_user == @user && user_params[:password].present? && user_params[:password] == user_params[:password_confirmation]
+    redirect_to case
+                when current_user.student? then root_path
+                when pswd then new_user_session_path
+                else users_path
+                end
   end
 
   def destroy
@@ -73,13 +78,13 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:login, :first_name, :last_name, :father_name)
+    params.require(:user).permit(:login, :first_name, :last_name, :father_name, :password, :password_confirmation)
   end
 
   def save_result
     result = current_user.results.new
-    mark = result.create_by_answers(Question.where(id: session[:questions]), session[:answers])
-    flash[:success] = "Your mark is: #{mark}"
+    out = result.create_by_answers(Question.where(id: session[:questions]), session[:answers])
+    flash[:success] = "Your mark is: #{out[:mark]}. Info: right-#{out[:right]}; wrong-#{out[:wrong]}; percent: #{out[:percent]}%"
     session[:toast_started] = false
   end
 

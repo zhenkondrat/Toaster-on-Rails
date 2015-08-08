@@ -16,8 +16,8 @@ describe Question do
 
   describe 'associations' do
     it { expect(question).to belong_to(:toast) }
-    it { expect(question).to have_many(:answer2s) }
-    it { expect(question).to have_many(:answer3s) }
+    it { expect(question).to have_many(:plurals) }
+    it { expect(question).to have_many(:plurals) }
   end
 
   describe 'methods' do

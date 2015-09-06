@@ -10,7 +10,7 @@ class InviteCode < ActiveRecord::Base
       when :all then {admin: generate(:admin), teacher: generate(:teacher), student: generate(:student)}
       when :admin, :teacher, :student then generate(option)
       else
-        return if option.class != Array
+        return unless option.class == Array
         option.map{ |role| {role => generate!(role)} }.reduce(:merge)
       end
     end
@@ -20,7 +20,7 @@ class InviteCode < ActiveRecord::Base
       when :all then {admin: take(:admin), teacher: take(:teacher), student: take(:student)}
       when :admin, :teacher, :student then take(option)
       else
-        return if option.class != Array
+        return unless option.class == Array
         option.map{ |role| {role => take(role)} }.reduce(:merge)
       end
     end
@@ -33,7 +33,7 @@ class InviteCode < ActiveRecord::Base
       3.times do
         break if invite = InviteCode.create(token: (0...6).map{ (65 + rand(26)).chr }.join, role: role_name(role))
       end
-      invite.errors.empty? ? invite.token : nil
+      invite.errors.empty? ? invite.token : fail(%q|Can't generate token|)
     end
 
     def take(role)

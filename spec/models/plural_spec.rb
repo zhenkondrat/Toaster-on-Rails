@@ -1,11 +1,11 @@
 require 'spec_helper'
 
 describe Plural do
-  let(:mark_system) {FactoryGirl.create(:mark_system)}
-  let(:subject) {FactoryGirl.create(:subject)}
-  let(:toast) {FactoryGirl.create(:toast, mark_system: mark_system, subject: subject)}
-  let(:question) {FactoryGirl.create(:question, toast: toast, question_type: 2)}
-  let(:plural) {FactoryGirl.create(:plural, question: question)}
+  let(:mark_system) { FactoryGirl.create(:mark_system) }
+  let(:subject) { FactoryGirl.create(:subject) }
+  let(:toast) { FactoryGirl.create(:toast, mark_system: mark_system, subject: subject) }
+  let(:question) { FactoryGirl.create(:question, toast: toast, question_type: 2) }
+  let(:plural) { FactoryGirl.create(:plural, question: question) }
 
   describe 'validates' do
     it { expect(plural).to validate_presence_of(:question) }

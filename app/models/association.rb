@@ -1,5 +1,7 @@
 class Association < ActiveRecord::Base
   belongs_to :question
+
+  validates :question, presence: true
   validate :some_side_present?
 
   def correct_pair?

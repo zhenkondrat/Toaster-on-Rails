@@ -5,7 +5,7 @@ describe Association do
   let(:subject) {FactoryGirl.create(:subject)}
   let(:toast) {FactoryGirl.create(:toast, mark_system: mark_system, subject: subject)}
   let(:question) {FactoryGirl.create(:question, toast: toast, question_type: 3)}
-  let(:association) {FactoryGirl.create(:answer3, question: question)}
+  let(:association) {FactoryGirl.create(:association, question: question)}
 
   describe 'associations' do
     it { expect(association).to belong_to(:question) }

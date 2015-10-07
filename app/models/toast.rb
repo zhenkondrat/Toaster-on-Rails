@@ -2,7 +2,8 @@ class Toast < ActiveRecord::Base
   belongs_to :subject
   belongs_to :mark_system
   has_and_belongs_to_many :groups
-  has_many :questions, dependent: :delete_all
+
+  has_many :questions, dependent: :delete_all # TODO not for all cases
   has_many :results, dependent: :delete_all
 
   has_many :parent_relations, class_name: 'ToastRelation', foreign_key: 'parent_id', dependent: :destroy
@@ -11,14 +12,15 @@ class Toast < ActiveRecord::Base
   has_many :parents, class_name: 'Toast', through: :child_relations
 
   validates :subject, :name, :mark_system, presence: true
+  validates :questions_count, numericality: { greater_than: 0 }, unless: proc { questions_count.nil? }
 
   attr_accessor :parser_file
 
-  def self.search(user, options: {})
+  def self.search(user, subject_id: nil, name: nil, group_id: nil)
     toasts = user.admin? ? Toast.all : Toast.where(subject_id: user.subject_ids)
-    toasts = toasts.where(subject_id: options[:subject]) unless options[:subject].blank?
-    toasts = toasts.where("name LIKE '%#{options[:name]}%'") unless options[:name].blank?
-    toasts = toasts.joins(:toast_groups).where("toast_groups.group_id = #{options[:group]}") unless options[:group].blank?
+    toasts = toasts.where(subject_id: subject_id) unless subject_id.nil?
+    toasts = toasts.where("toasts.name LIKE '%#{name}%'") unless name.nil?
+    toasts = toasts.joins(:groups).where(groups: {id: group_id}) unless group_id.nil?
     toasts
   end
 
@@ -38,6 +40,8 @@ class Toast < ActiveRecord::Base
     ids = [*parents.ids, *all_children, id]
     Toast.where.not(id: ids).where(subject_id: subject_id)
   end
+
+  private
 
   def all_children
     ids = children.ids

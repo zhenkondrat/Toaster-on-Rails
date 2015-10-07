@@ -6,7 +6,7 @@ class Result < ActiveRecord::Base
   serialize :answers, Hash
 
   def create_by_answers(questions, answers, toast = nil)
-    @toast = toast || self.toast || questions.first.toast
+    @toast = toast || self.toast || questions.first.toast # TODO not for all cases '..first.toast'
     set_tariffs
     sum = right = 0
     questions.each do |question|
@@ -44,6 +44,7 @@ class Result < ActiveRecord::Base
   private
 
   def set_tariffs
+    byebug
     @tariff1 = @toast.weight1 || 1
     @tariff2 = @toast.weight2 || 1
     @tariff3 = @toast.weight3 || 1

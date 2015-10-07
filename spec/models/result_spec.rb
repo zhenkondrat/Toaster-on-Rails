@@ -70,7 +70,7 @@ describe Result do
           end
           questions.push question
         end
-        expect(result.create_by_answers(user, questions, user_answers)).to eq '1.0'
+        expect(result.create_by_answers(questions, user_answers)).to eq '1.0'
       end
     end
   end

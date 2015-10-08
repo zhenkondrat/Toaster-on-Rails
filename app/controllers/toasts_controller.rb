@@ -99,6 +99,7 @@ class ToastsController < ApplicationController
 
   def init_passing
     session[:toast_started] = true
+    session[:toast_id] = @toast.id
     session[:questions] = @toast.get_questions_list
     session[:last_question] = 0
     session[:answers] = {}

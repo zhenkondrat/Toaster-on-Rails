@@ -5,7 +5,7 @@ class Association < ActiveRecord::Base
   validate :some_side_present?
 
   def correct_pair?
-    !(left_text.blank? || right_text.blank?)
+    left_text.present? || right_text.present?
   end
 
   private

@@ -4,8 +4,8 @@ set :rails_env, 'production'
 set :unicorn_env, 'production'
 set :application, 'toaster'
 set :rails_env, 'production'
-set :domain, 'deployman@46.101.158.143'
-set :deploy_to, '/home/deployman/paradise'
+set :domain, 'deployman@146.185.189.234'
+set :deploy_to, '/home/deployman/toaster'
 set :use_sudo, false
 set :unicorn_conf, "#{deploy_to}/current/config/unicorn.rb"
 set :unicorn_pid, "#{deploy_to}/shared/pids/unicorn.pid"
@@ -19,9 +19,9 @@ set :repo_url, 'git@github.com:elhowm/Toaster-on-Rails.git'
 set :branch, 'master'
 set :deploy_via, :remote_cache
 
-role :web, 'deployman@46.101.158.143'
-role :app, 'deployman@46.101.158.143'
-role :db, 'deployman@46.101.158.143', :primary => true
+role :web, 'deployman@146.185.189.234'
+role :app, 'deployman@146.185.189.234'
+role :db, 'deployman@146.185.189.234', :primary => true
 
 set :linked_files, %w{config/database.yml}
 set :linked_dirs, fetch(:linked_dirs, []) + %w(public/ckeditor_assets public/parser)

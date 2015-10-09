@@ -1,9 +1,11 @@
 class Association < ActiveRecord::Base
   belongs_to :question
+
+  validates :question, presence: true
   validate :some_side_present?
 
   def correct_pair?
-    !(left_text.blank? || right_text.blank?)
+    left_text.present? || right_text.present?
   end
 
   private

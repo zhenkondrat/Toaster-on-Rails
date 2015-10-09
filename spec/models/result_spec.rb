@@ -35,7 +35,7 @@ describe Result do
         puts 'Marks list:'
         puts "#{mark.presentation} - #{mark.percent}"
         4.times do
-          mark = Mark.create(presentation: Faker::Lorem.word, percent: Random.rand(100), mark_system: mark_system)
+          mark = Mark.create(presentation: Faker::Lorem.word, percent: rand(100), mark_system: mark_system)
           marks.push mark.presentation
           puts "#{mark.presentation} - #{mark.percent}%"
         end
@@ -49,28 +49,21 @@ describe Result do
       it 'should get the greatest mark if I know all right answers' do
         user_answers, questions = {}, []
         toast.update(mark_system: nil)
-        Random.rand(1..20).times do
-          question = Question.create(toast: toast,
-                                     text: Faker::Lorem.paragraph,
-                                     question_type: Random.rand(1..3),
-                                     is_right: (Random.rand(1).zero? ? false : true)
-                     )
+        rand(1..5).times do
+          question = Question.create(toast: toast, text: Faker::Lorem.paragraph, question_type: rand(1..3), is_right: (rand(1).zero? ? false : true))
           question_answers = create_answers(question) unless question.question_type == 1
-          case question.question_type
-          when 1
-            user_answers[question.id] = question.is_right
-          when 2
-            local_answer = {}
-            question_answers[:right_answers].each{ |answer| local_answer[answer.id] = answer.is_right }
-            user_answers[question.id] = local_answer
-          when 3
-            local_answer = {}
-            question_answers[:correct_pairs].each{ |answer| local_answer[answer.id] = [answer.left_text, answer.right_text] }
-            user_answers[question.id] = local_answer
-          end
+          user_answers[question.id] =
+            case question.question_type
+            when 1
+              question.is_right
+            when 2
+              question_answers[:right_answers].map{ |answer| [answer.id, answer.is_right] }.to_h
+            when 3
+              question_answers[:correct_pairs].map{ |answer| [answer.id, [answer.left_text, answer.right_text]] }.to_h
+            end
           questions.push question
         end
-        expect(result.create_by_answers(user, questions, user_answers)).to eq '1.0'
+        expect(result.create_by_answers(questions, user_answers)).to eq({mark: '1.0', right: 8, wrong: 0})
       end
     end
   end

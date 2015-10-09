@@ -16,3 +16,4 @@ public/system/*
 gem_graph.png
 coverage/
 public/ckeditor_assets/pictures
+.capistrano/

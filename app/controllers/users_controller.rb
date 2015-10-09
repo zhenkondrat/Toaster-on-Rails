@@ -44,20 +44,8 @@ class UsersController < ApplicationController
   end
 
   def results
-    # sql = <<-SQL
-    #   SELECT subjects.name AS subject_name, toasts.name AS toast_name, marks.presentation AS f_mark, results.created_at FROM results
-    #   INNER JOIN users ON results.user_id = users.id
-    #   INNER JOIN toasts ON results.toast_id = toasts.id
-    #   INNER JOIN subjects ON toasts.subject_id = subjects.id
-    #   INNER JOIN mark_systems ON toasts.mark_system_id = mark_systems.id
-    #   INNER JOIN marks ON marks.mark_system_id = mark_systems.id
-    #   WHERE marks.percent <= results.mark*100
-    #   AND results.user_id = #{current_user.id}
-    #   ORDER BY results.created_at DESC
-    # SQL
-    # @results = ActiveRecord::Base.connection.execute(sql)
     @results = current_user.results.order(created_at: :desc).page(params[:page]).per(5)
-    render 'users/user/results'
+    render 'user/results'
   end
 
   def generate_invite_code
@@ -82,7 +70,7 @@ class UsersController < ApplicationController
   end
 
   def save_result
-    result = current_user.results.new
+    result = current_user.results.new(toast_id: session[:toast_id])
     out = result.create_by_answers(Question.where(id: session[:questions]), session[:answers])
     flash[:success] = "Your mark is: #{out[:mark]}. Info: right-#{out[:right]}; wrong-#{out[:wrong]}; percent: #{out[:percent]}%"
     session[:toast_started] = false
@@ -107,32 +95,3 @@ class UsersController < ApplicationController
     end
   end
 end
-
-# SELECT results.id, results.mark AS rm, (SELECT marks.presentation WHERE marks.percent <= rm*100 ORDER BY marks.percent DESC LIMIT 1) AS f_mark FROM results
-# SELECT marks.presentation WHERE marks.percent <= results.mark ORDER BY marks.percent ASC LIMIT 1
-
-# SELECT subjects.name AS subject_name, toasts.name AS toast_name, results.mark*100 AS f_mark, results.created_at FROM results
-# INNER JOIN toasts ON results.toast_id = toasts.id
-# INNER JOIN subjects ON toasts.subject_id = subjects.id
-# WHERE results.user_id = #{current_user.id}
-# ORDER BY results.created_at DESC
-
-# SELECT subjects.name AS subject_name, toasts.name AS toast_name, marks.presentation AS f_mark, results.created_at FROM results
-# INNER JOIN users ON results.user_id = users.id
-# INNER JOIN toasts ON results.toast_id = toasts.id
-# INNER JOIN subjects ON toasts.subject_id = subjects.id
-# INNER JOIN mark_systems ON toasts.mark_system_id = mark_systems.id
-# INNER JOIN marks ON marks.mark_system_id = mark_systems.id
-# WHERE marks.percent <= results.mark*100
-# AND results.user_id = #{current_user.id} ORDER BY results.created_at DESC
-# LIMIT 5
-
-# SELECT subjects.name AS subject_name, toasts.name AS toast_name,
-# (SELECT marks.presentation WHERE marks.percent <= results.mark ORDER BY marks.percent ASC LIMIT 1) AS f_mark,
-# results.created_at FROM results
-# INNER JOIN users ON results.user_id = users.id
-# INNER JOIN toasts ON results.toast_id = toasts.id
-# INNER JOIN subjects ON toasts.subject_id = subjects.id
-# INNER JOIN mark_systems ON toasts.mark_system_id = mark_systems.id
-# INNER JOIN marks ON marks.mark_system_id = mark_systems.id
-# ORDER BY results.created_at DESC

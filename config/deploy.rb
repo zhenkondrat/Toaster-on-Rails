@@ -24,11 +24,12 @@ role :app, 'deployman@46.101.158.143'
 role :db, 'deployman@46.101.158.143', :primary => true
 
 set :linked_files, %w{config/database.yml}
+set :linked_dirs, fetch(:linked_dirs, []) + %w(public/ckeditor_assets public/parser)
 
 namespace :unicorn do
   task :restart do
     on roles(:all) do
-      execute "if [ -f #{fetch(:unicorn_pid)} ] && [ -e /proc/$(cat #{fetch(:unicorn_pid)}) ]; then kill -USR2 `cat #{fetch(:unicorn_pid)}`; else cd #{release_path} && /home/deployman/.rvm/bin/rvm #{fetch(:rvm_ruby_version)} do bundle exec unicorn_rails -c #{unicorn_conf} -E #{rails_env} -D; fi"
+      execute "if [ -f #{fetch(:unicorn_pid)} ] && [ -e /proc/$(cat #{fetch(:unicorn_pid)}) ]; then kill -USR2 `cat #{fetch(:unicorn_pid)}`; else cd #{release_path} && /home/deployman/.rvm/bin/rvm #{fetch(:rvm_ruby_version)} do bundle exec unicorn_rails -c #{fetch(:unicorn_conf)} -E #{fetch(:rails_env)} -D; fi"
     end
   end
 
@@ -54,5 +55,4 @@ namespace :folders do
   end
 end
 
-after 'deploy', 'folders:prepare'
-# after 'deploy', 'unicorn:start'
+after 'deploy', 'unicorn:restart'

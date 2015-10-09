@@ -19,21 +19,23 @@ class User < ActiveRecord::Base
 
   # TODO Refactoring with Arel
   def self.search(search_filter)
-    return User.all unless search_filter.present?
+    return User.all if search_filter.blank?
     search_filter = search_filter.gsub(/\s+/, ' ').strip.split
-    query = case search_filter.size
-            when 1
-              "last_name LIKE '%#{search_filter.first}%' OR login LIKE '%#{search_filter.first}%'"
-            when 2
-              "last_name LIKE '%#{search_filter.first}%' AND first_name LIKE '%#{search_filter.last}%'"
-            when 3
-              "last_name LIKE '%#{search_filter.first}%' AND first_name LIKE '%#{search_filter[1]}%' AND father_name LIKE '%#{search_filter.last}%'"
-            else
-              'true'
-            end
+    query =
+      case search_filter.size
+      when 1
+        "last_name LIKE '%#{search_filter.first}%' OR login LIKE '%#{search_filter.first}%'"
+      when 2
+        "last_name LIKE '%#{search_filter.first}%' AND first_name LIKE '%#{search_filter.last}%'"
+      when 3
+        "last_name LIKE '%#{search_filter.first}%' AND first_name LIKE '%#{search_filter[1]}%' AND father_name LIKE '%#{search_filter.last}%'"
+      else
+        'true'
+      end
     User.where(query)
   end
 
+  # TODO WTF is it still doing here?
   def email_required?
     false
   end
@@ -43,14 +45,12 @@ class User < ActiveRecord::Base
   end
 
   def full_name
-    if last_name.blank?
-      ''
-    else
+    full_name = ''
+    if last_name.present?
       full_name = last_name
-      full_name += " #{first_name[0]}." unless first_name.blank?
-      full_name += " #{father_name[0]}." unless father_name.blank?
-      full_name
+      full_name += " #{first_name[0]}. #{father_name[0]}." if first_name.present? && father_name.present?
     end
+    full_name
   end
 
   def available_toasts

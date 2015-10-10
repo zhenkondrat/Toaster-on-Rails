@@ -2,7 +2,7 @@ class Result < ActiveRecord::Base
   belongs_to :user
   belongs_to :toast
 
-  validates :mark, :created_at, :user, :toast, presence: true
+  validates :mark, :user, :toast, presence: true
   validates :mark, numericality: { less_than_or_equal_to: 1 }
 
   serialize :answers, Hash
@@ -26,8 +26,8 @@ class Result < ActiveRecord::Base
       end
     end
 
-    max = max_mark questions
-    self.save!(mark: sum.to_f / max, answers: answers)
+    calc = sum.to_f / max_mark(questions)
+    self.update!(mark: calc, answers: answers)
     {mark: show_mark, right: right, wrong: questions.count-right, percent: (mark*100).round}
   end
 

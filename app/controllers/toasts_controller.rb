@@ -3,7 +3,7 @@ class ToastsController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @toasts = Toast.search(current_user, options: {name: params[:search_filter]}).page(params[:page]).per(10)
+    @toasts = Toast.search(current_user, name: params[:search_filter]).page(params[:page]).per(10)
   end
 
   def new

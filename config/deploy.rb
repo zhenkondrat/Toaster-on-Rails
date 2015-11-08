@@ -23,7 +23,7 @@ role :web, 'deployman@146.185.189.234'
 role :app, 'deployman@146.185.189.234'
 role :db, 'deployman@146.185.189.234', :primary => true
 
-set :linked_files, %w{config/database.yml}
+set :linked_files, %w{config/database.yml config/secrets.yml}
 set :linked_dirs, fetch(:linked_dirs, []) + %w(public/ckeditor_assets public/parser)
 
 namespace :unicorn do
@@ -43,6 +43,12 @@ namespace :unicorn do
     on roles(:all) do
       execute "if [ -f #{fetch(:unicorn_pid)} ] && [ -e /proc/$(cat #{fetch(:unicorn_pid)}) ]; then kill -QUIT `cat #{fetch(:unicorn_pid)}`; fi"
     end
+  end
+end
+
+namespace :secrets do
+  task :upload do
+    upload("#{Rails.root}/config/secrets.yml", "#{deploy_to}/shared/config/secrets.yml")
   end
 end
 

@@ -46,9 +46,17 @@ namespace :unicorn do
   end
 end
 
-namespace :secrets do
-  task :upload do
-    upload("#{Rails.root}/config/secrets.yml", "#{deploy_to}/shared/config/secrets.yml")
+namespace :upload_config do
+  task :secrets do
+    on roles(:all) do
+      upload! 'config/secrets.yml', "#{deploy_to}/shared/config/secrets.yml"
+    end
+  end
+
+  task :database do
+    on roles(:all) do
+      upload! 'config/database.yml', "#{deploy_to}/shared/config/database.yml"
+    end
   end
 end
 
@@ -61,4 +69,6 @@ namespace :folders do
   end
 end
 
+# before 'deploy', 'upload_config:database'
+# before 'deploy', 'upload_config:secrets'
 after 'deploy', 'unicorn:restart'

@@ -23,7 +23,7 @@ role :web, 'deployman@146.185.189.234'
 role :app, 'deployman@146.185.189.234'
 role :db, 'deployman@146.185.189.234', :primary => true
 
-set :linked_files, %w{config/database.yml}
+set :linked_files, %w{config/database.yml config/secrets.yml}
 set :linked_dirs, fetch(:linked_dirs, []) + %w(public/ckeditor_assets public/parser)
 
 namespace :unicorn do
@@ -46,6 +46,20 @@ namespace :unicorn do
   end
 end
 
+namespace :upload_config do
+  task :secrets do
+    on roles(:all) do
+      upload! 'config/secrets.yml', "#{deploy_to}/shared/config/secrets.yml"
+    end
+  end
+
+  task :database do
+    on roles(:all) do
+      upload! 'config/database.yml', "#{deploy_to}/shared/config/database.yml"
+    end
+  end
+end
+
 namespace :folders do
   task :prepare do
     on roles(:all) do
@@ -55,4 +69,6 @@ namespace :folders do
   end
 end
 
+# before 'deploy', 'upload_config:database'
+# before 'deploy', 'upload_config:secrets'
 after 'deploy', 'unicorn:restart'

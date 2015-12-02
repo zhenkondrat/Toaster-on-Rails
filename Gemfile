@@ -1,9 +1,9 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.0'
+gem 'rails', '4.2.4'
 # Use pg as the database for Active Record
-gem 'pg', '0.17.1'
+gem 'pg', '0.18.4'
 # Use HAML markup language
 gem 'haml', '4.0.6'
 # Use SCSS for stylesheets

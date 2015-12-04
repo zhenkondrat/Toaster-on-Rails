@@ -1,8 +1,12 @@
 class User < ActiveRecord::Base
   include Roles
-  devise :database_authenticatable, :registerable, :rememberable, :validatable
+  devise :database_authenticatable, :registerable, :rememberable, :validatable, :confirmable
   has_many :results, dependent: :delete_all
-  has_and_belongs_to_many :groups
+  has_many :memberships, as: :member
+  has_many :owned_groups, -> { where(memberships: { member_type: :owner }) },
+           source: :group, through: :memberships
+  has_many :joined_groups, -> { where(memberships: { member_type: :student }) },
+           source: :group, through: :memberships
   has_and_belongs_to_many :subjects
   has_and_belongs_to_many :toasts
 
@@ -10,7 +14,7 @@ class User < ActiveRecord::Base
 
   validates :login, uniqueness: true
 
-  validates_presence_of :last_name, unless: proc { |user| user.admin? }
+  validates_presence_of :last_name, unless: ->(user) { user.admin? }
 
   scope :admins, ->{ where role: ROLE_ADMIN }
   scope :teachers, ->{ where role: ROLE_TEACHER }
@@ -45,12 +49,15 @@ class User < ActiveRecord::Base
   end
 
   def full_name
-    full_name = ''
     if last_name.present?
       full_name = last_name
-      full_name += " #{first_name[0]}. #{father_name[0]}." if first_name.present? && father_name.present?
+      if first_name.present? && father_name.present?
+        full_name += " #{first_name[0]}. #{father_name[0]}."
+      end
+      full_name
+    else
+      login
     end
-    full_name
   end
 
   def available_toasts

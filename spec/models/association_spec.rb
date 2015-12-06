@@ -12,7 +12,7 @@ describe Association do
 
     context '#some_side_present?' do
       let(:invalid_association) { build(:association, left_text: nil, right_text: '') }
-      let(:partial_association) { create(:association, left_text: nil) }
+      let(:partial_association) { create(:partial_association) }
 
       it { expect(association).to be_valid }
       it { expect(partial_association).to be_valid }
@@ -21,7 +21,7 @@ describe Association do
   end
 
   context '#full_pair?' do
-    let(:partial_association) { create(:association, left_text: nil) }
+    let(:partial_association) { create(:partial_association) }
 
     it { expect(association.full_pair?).to eq true }
     it { expect(partial_association.full_pair?).to eq false }

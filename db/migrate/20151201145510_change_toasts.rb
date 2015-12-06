@@ -1,8 +1,6 @@
 class ChangeToasts < ActiveRecord::Migration
   def up
-    change_table :toasts do |t|
-      t.jsonb :options, default: {weights: {logical: 1, plural: 1, association: 1}}
-    end
+    add_column :toasts, :options, :jsonb, default: {}
 
     Toast.all.each do |toast|
       toast.options = {

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151206005006) do
+ActiveRecord::Schema.define(version: 20151206122032) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -89,6 +89,7 @@ ActiveRecord::Schema.define(version: 20151206005006) do
     t.decimal  "hit",        precision: 3, scale: 2
     t.datetime "created_at"
     t.jsonb    "answers"
+    t.jsonb    "additional"
   end
 
   create_table "subjects", force: :cascade do |t|
@@ -104,7 +105,7 @@ ActiveRecord::Schema.define(version: 20151206005006) do
     t.integer "subject_id"
     t.string  "name"
     t.integer "mark_system_id"
-    t.jsonb   "options",        default: {"weights"=>{"plural"=>1, "logical"=>1, "association"=>1}}
+    t.jsonb   "options",        default: {}
   end
 
   create_table "users", force: :cascade do |t|

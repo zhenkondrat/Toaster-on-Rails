@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151204181649) do
+ActiveRecord::Schema.define(version: 20151206005006) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -68,7 +68,7 @@ ActiveRecord::Schema.define(version: 20151204181649) do
   create_table "plurals", force: :cascade do |t|
     t.integer "question_id"
     t.string  "text"
-    t.boolean "is_right"
+    t.boolean "is_right",    default: false
   end
 
   create_table "questions", force: :cascade do |t|

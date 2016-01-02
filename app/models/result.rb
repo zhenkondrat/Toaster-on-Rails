@@ -2,82 +2,80 @@ class Result < ActiveRecord::Base
   belongs_to :user
   belongs_to :toast
 
-  validates :mark, :user, :toast, presence: true
-  validates :mark, numericality: { less_than_or_equal_to: 1 }
+  validates :hit, :user, :toast, presence: true
+  validates :hit, numericality: { less_than_or_equal_to: 1 }
 
-  serialize :answers, Hash
-  attr_accessor :tariff1, :tariff2, :tariff3
+  store_accessor :additional, :right, :wrong, :percent
 
-  def create_by_answers(questions, answers, custom_toast = nil)
-    self.toast ||= custom_toast
-    fail %q|Toast hasn't been set to result| unless toast
-    set_tariffs
+  def calc_and_save_by_answers(questions)
     inc = ->(sum, tariff, right_count) { [sum + tariff, right_count + 1] }
-    sum = right = 0
+    sum = 0
+    right = 0
 
     questions.each do |question|
-      case question.question_type
-      when 1
-        sum, right = inc.call(sum, tariff1, right) if bool_right? question, answers
-      when 2
-        sum, right = inc.call(sum, tariff2, right) if plural_right? question, answers[question.id.to_s]
-      when 3
-        sum, right = inc.call(sum, tariff3, right) if associative_right? answers[question.id.to_s]
+      case
+      when question.logical? && logical_right?(question, answers)
+        sum, right = inc.call(sum, weights['logical'], right)
+      when question.plural? && plural_right?(question, answers[question.id.to_s])
+        sum, right = inc.call(sum, weights['plural'], right)
+      when question.associative? && associative_right?(question, answers[question.id.to_s])
+        sum, right = inc.call(sum, weights['associative'], right)
       end
     end
 
-    calc = sum.to_f / max_mark(questions)
-    self.update!(mark: calc, answers: answers)
-    {mark: show_mark, right: right, wrong: questions.count-right, percent: (mark*100).round}
+    new_hit = sum.to_f / max_mark(questions)
+
+    update!(
+      hit: new_hit,
+      answers: answers,
+      right: right,
+      wrong: questions.size - right,
+      percent: (new_hit * 100).round
+    )
+    self
   end
 
-  def show_mark
-    if toast.mark_system
-      toast.mark_system.marks.where("percent <= #{mark * 100}").order(percent: :desc).first.presentation
-    else
-      mark.to_s
-    end
+  def presentation
+    toast.mark_system
+         .marks.where("percent <= #{hit * 100}")
+         .order(percent: :desc)
+         .first
+         .presentation
   end
 
   private
 
-  def set_tariffs
-    self.tariff1 = toast.weight1 || 1
-    self.tariff2 = toast.weight2 || 1
-    self.tariff3 = toast.weight3 || 1
+  def weights
+    toast.options['weights']
   end
 
   def max_mark(questions)
-    sum = 0
-    questions = Question.where(id: questions.map(&:id))
-    questions.each do |question|
-      sum +=
-        case question.question_type
-        when 1 then tariff1
-        when 2 then tariff2
-        when 3 then tariff3
-        end
-    end
-    sum
+    questions.map{ |question| weights[question.question_type] }.sum
   end
 
-  def bool_right?(question, answers)
+  def logical_right?(question, answers)
     answers[question.id.to_s] == question.is_right.to_s
   end
 
-  def plural_right?(question, answer)
-    solution = true
+  def plural_right?(question, answers = {})
     question.plurals.each do |supposition|
-      unless answer && supposition.is_right == (answer[supposition.id.to_s] || false)
-        solution = false
+      if supposition.is_right
+        return false unless answers[supposition.id.to_s].present?
+      else
+        return false unless answers[supposition.id.to_s].nil?
       end
     end
-    solution
+    true
   end
 
-  def associative_right?(answer)
-    solution = true
-    answer['right'].each_with_index{ |id, index| solution = false unless answer['left'][index] == id } if answer
-    solution
+  def associative_right?(question, answers = {})
+    question.associations.each do |supposition|
+      next unless supposition.full_pair?
+      answer = answers[supposition.id.to_s]
+      unless answer == [supposition.left_text, supposition.right_text]
+        return false
+      end
+    end
+    true
   end
 end

@@ -1,6 +1,16 @@
 class ChangeToasts < ActiveRecord::Migration
   def up
-    add_column :toasts, :options, :jsonb, default: {}
+    default_attributes = {
+      weights: {
+        logical: 1,
+        plural: 1,
+        associative: 1
+      },
+      questions_count: nil,
+      answer_time_limit: nil,
+      learning_flag: nil
+    }
+    add_column :toasts, :options, :jsonb, default: default_attributes
 
     Toast.all.each do |toast|
       toast.options = {

@@ -20,7 +20,7 @@ describe Association do
     end
   end
 
-  context '#full_pair?' do
+  describe '#full_pair?' do
     let(:partial_association) { create(:partial_association) }
 
     it { expect(association.full_pair?).to eq true }

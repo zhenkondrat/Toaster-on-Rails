@@ -4,7 +4,7 @@ class MarkSystem < ActiveRecord::Base
   accepts_nested_attributes_for :marks, reject_if: :all_blank, allow_destroy: true
 
   validates :name, presence: true
-  validate  :min_mark_presence, :marks_uniq_percents, :min_count
+  validate  :min_mark_presence, :marks_uniq_percents, :min_count, on: :update
 
   private
 

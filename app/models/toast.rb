@@ -2,22 +2,21 @@ class Toast < ActiveRecord::Base
   belongs_to :subject
   belongs_to :mark_system
   has_and_belongs_to_many :groups
-
-  has_many :questions, dependent: :delete_all # TODO not for all cases
+  has_and_belongs_to_many :questions
   has_many :results, dependent: :delete_all
 
-  has_many :parent_relations, class_name: 'ToastRelation', foreign_key: 'parent_id', dependent: :destroy
-  has_many :child_relations, class_name: 'ToastRelation', foreign_key: 'child_id', dependent: :destroy
-  has_many :children, class_name: 'Toast', through: :parent_relations
-  has_many :parents, class_name: 'Toast', through: :child_relations
+  store_accessor :options, :questions_count, :answer_time_limit,
+                 :weights, :learning_flag
 
   validates :subject, :name, :mark_system, presence: true
-  validates :questions_count, numericality: { greater_than: 0 }, unless: proc { questions_count.nil? }
+  validate  :answer_time_limits
+  validate  :questions_count_limits
+  before_validation :set_default_weights
 
   attr_accessor :parser_file
 
   def self.search(user, subject_id: nil, name: nil, group_id: nil)
-    toasts = user.admin? ? Toast.all : Toast.where(subject_id: user.subject_ids)
+    toasts = user.admin? ? Toast.all : Toast.where(subject_id: user.subjects.ids)
     toasts = toasts.where(subject_id: subject_id) unless subject_id.nil?
     toasts = toasts.where("toasts.name LIKE '%#{name}%'") unless name.nil?
     toasts = toasts.joins(:groups).where(groups: {id: group_id}) unless group_id.nil?
@@ -25,33 +24,43 @@ class Toast < ActiveRecord::Base
   end
 
   def get_questions_list
-    if questions_count.nil?
-      all_questions_list.shuffle
-    else
-      all_questions_list.shuffle[0..questions_count-1]
-    end
+    shuffeled = questions.shuffle
+    questions_count.nil? ? shuffeled : shuffeled[0..questions_count-1]
   end
 
   def foreign_groups
     Group.where.not(id: groups)
   end
 
-  def foreign_toasts
-    ids = [*parents.ids, *all_children, id]
-    Toast.where.not(id: ids).where(subject_id: subject_id)
-  end
-
   private
 
-  def all_children
-    ids = children.ids
-    children.each{ |child| ids.push child.all_children }
-    ids
+  def set_default_weights
+    %w(logical plural associative).each do |name|
+      self.weights[name] = 1 if weights[name].blank?
+    end
   end
 
-  def all_questions_list
-    list = questions.ids
-    children.each{ |child| list = [*list, *child.all_questions_list] }
-    list
+  def answer_time_limits
+    return if answer_time_limit.nil?
+    unless answer_time_limit.kind_of? Integer
+      errors.add(:answer_time_limit, 'wrong attribute type')
+      return
+    end
+
+    errors.add(:answer_time_limit, 'must be greater then 10') if answer_time_limit < 10
+  end
+
+  def questions_count_limits
+    return if questions_count.nil?
+    unless questions_count.kind_of? Integer
+      errors.add(:questions_count, 'wrong attribute type')
+      return
+    end
+
+    errors.add(:questions_count, 'must be greater then 0') if questions_count < 1
+    if questions_count > questions.count
+      error_message = %q|Count to answer can't be higher then actual questions count|
+      errors.add(:questions_count, error_message)
+    end
   end
 end

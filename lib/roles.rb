@@ -8,6 +8,7 @@ module Roles
     when :admin then ROLE_ADMIN
     when :teacher then ROLE_TEACHER
     when :student then ROLE_STUDENT
+    else fail "wrong role '#{role}' can be(:admin, :teacher, :student)"
     end
   end
 end

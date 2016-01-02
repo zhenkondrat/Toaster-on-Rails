@@ -2,6 +2,7 @@ FactoryGirl.define do
   factory :question, aliases: [:logical_question] do
     question_type :logical
     text Faker::Lorem.paragraph
+    is_right { rand(1).zero? }
   end
 
   factory :plural_question, parent: :question do

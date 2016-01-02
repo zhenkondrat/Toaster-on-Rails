@@ -72,7 +72,6 @@ ActiveRecord::Schema.define(version: 20151206122032) do
   end
 
   create_table "questions", force: :cascade do |t|
-    t.integer "toast_id"
     t.text    "text"
     t.string  "question_type"
     t.boolean "is_right"
@@ -105,7 +104,7 @@ ActiveRecord::Schema.define(version: 20151206122032) do
     t.integer "subject_id"
     t.string  "name"
     t.integer "mark_system_id"
-    t.jsonb   "options",        default: {}
+    t.jsonb   "options",        default: {"weights"=>{"plural"=>1, "logical"=>1, "associative"=>1}, "learning_flag"=>nil, "questions_count"=>nil, "answer_time_limit"=>nil}
   end
 
   create_table "users", force: :cascade do |t|

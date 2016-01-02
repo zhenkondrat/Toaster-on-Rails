@@ -11,6 +11,5 @@
         = user.first_name
         = user.last_name
         = user.father_name
-
-      %td= user.results.map{|m| m.show_mark}.join(', ')
+      %td= user.results.map{|m| m.presentation}.join(', ')
       %td= (l user.results.first.created_at, format: :short) unless user.results.first.nil?

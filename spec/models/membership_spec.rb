@@ -16,6 +16,7 @@ describe Membership do
 
   describe 'methods' do
     let(:owner_membership) { create(:membership, member_type: :owner) }
+
     describe '#type_student?' do
       it { expect(membership.type_student?).to eq true }
       it { expect(owner_membership.type_student?).to eq false }

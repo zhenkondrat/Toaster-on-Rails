@@ -18,7 +18,10 @@ class Toast < ActiveRecord::Base
   def self.search(user, subject_id: nil, name: nil, group_id: nil)
     toasts = user.admin? ? Toast.all : Toast.where(subject_id: user.subjects.ids)
     toasts = toasts.where(subject_id: subject_id) unless subject_id.nil?
-    toasts = toasts.where("toasts.name LIKE '%#{name}%'") unless name.nil?
+    unless name.nil?
+      name = Toast.sanitize(name)
+      toasts = toasts.where("toasts.name LIKE '%#{name[1..-2]}%'")
+    end
     toasts = toasts.joins(:groups).where(groups: {id: group_id}) unless group_id.nil?
     toasts
   end

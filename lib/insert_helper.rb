@@ -33,8 +33,7 @@ class InsertHelper
 
   def set_cols
     cols = klass.attribute_names
-    cols.delete('id')
-    cols
+    cols - %w(id created_at updated_at)
   end
 
   def format_value(value)

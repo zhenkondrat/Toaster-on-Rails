@@ -4,7 +4,8 @@ source 'https://rubygems.org'
 gem 'rails', '4.2.4'
 # Use pg as the database for Active Record
 gem 'pg', '0.18.4'
-
+# respond_to
+gem 'responders', '~> 2.0'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
 

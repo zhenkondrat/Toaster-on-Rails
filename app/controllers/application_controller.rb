@@ -8,6 +8,6 @@ class ApplicationController < ActionController::Base
   protected
 
   def set_locale
-    I18n.locale = current_user.config[:locale] if user_signed_in?
+    # I18n.locale = current_user.config[:locale] if user_signed_in?
   end
 end

@@ -1,6 +1,5 @@
 class User < ActiveRecord::Base
   include Roles
-  devise :database_authenticatable, :registerable, :rememberable, :validatable, :confirmable
   has_many :results, dependent: :delete_all
   has_many :memberships, foreign_key: :member_id
   has_many :owned_groups, -> { where(memberships: { member_type: 'owner' }) },
@@ -8,6 +7,7 @@ class User < ActiveRecord::Base
   has_many :joined_groups, -> { where(memberships: { member_type: 'student' }) },
            source: :group, through: :memberships
   has_and_belongs_to_many :subjects
+  attr_accessor :password
 
   serialize :config, Hash
 

@@ -1,8 +1,5 @@
 class UsersController < ApplicationController
-  respond_to :html, :json
-  before_action :authenticate_user!, except: [:index, :main]
   before_action :set_user, only: [:edit, :update, :destroy]
-  load_and_authorize_resource
 
   def main
     return redirect_to new_user_session_path unless user_signed_in?

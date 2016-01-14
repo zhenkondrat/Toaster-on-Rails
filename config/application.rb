@@ -18,6 +18,13 @@ module Toaster
         request_specs: false
       g.fixture_replacement :factory_girl, dir: 'spec/factories'
     end
+
+    config.middleware.delete 'Rack::MethodOverride'
+    config.middleware.delete 'ActionDispatch::Session::CookieStore'
+    config.middleware.delete 'ActionDispatch::Cookies'
+    config.middleware.delete 'ActionDispatch::Flash'
+    config.middleware.delete 'WebConsole::Middleware'
+
     config.autoload_paths << Rails.root.join('lib')
   end
 end

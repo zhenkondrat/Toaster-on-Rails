@@ -13,9 +13,9 @@
           %td= link_to user.last_name, edit_user_path(user)
           %td
             - if params[:best].present?
-              = user.results.where(mark: user.results.maximum(:mark)).last.try(:show_mark)
+              = user.results.where(mark: user.results.maximum(:mark)).last.try(:presentation)
             - else
-              = user.results.map{|m| m.show_mark}.join(', ')
+              = user.results.map{|m| m.presentation}.join(', ')
           %td
             - if params[:best].present?
               - date = user.results.where(mark: user.results.maximum(:mark)).last.try(:created_at)

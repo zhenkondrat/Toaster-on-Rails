@@ -2,18 +2,15 @@ require 'spec_helper'
 require 'question_helper'
 
 describe Result do
-  let(:mark_system) {FactoryGirl.create(:mark_system)}
-  let(:subject) {FactoryGirl.create(:subject)}
-  let(:toast) {FactoryGirl.create(:toast, mark_system: mark_system, subject: subject)}
-  let(:user) {FactoryGirl.create(:user)}
-  let(:result) {FactoryGirl.create(:result, user: user, toast: toast)}
+  include QuestionHelper
+
+  let(:result) { create(:result) }
 
   describe 'validates' do
     it { expect(result).to validate_presence_of(:user) }
     it { expect(result).to validate_presence_of(:toast) }
-    it { expect(result).to validate_presence_of(:mark) }
-    it { expect(result).to validate_presence_of(:created_at) }
-    it { expect(result).to validate_numericality_of(:mark).is_less_than_or_equal_to(1) }
+    it { expect(result).to validate_presence_of(:hit) }
+    it { expect(result).to validate_numericality_of(:hit).is_less_than_or_equal_to(1) }
   end
 
   describe 'associations' do
@@ -22,48 +19,53 @@ describe Result do
   end
 
   describe 'methods' do
-    describe '#show_mark' do
-      it %q|should give decimal number if toast haven't mark system| do
-        result.toast.mark_system = nil
-        expect(result.show_mark.to_f).to be <= 1
-      end
+    describe '#presentation' do
+      let(:marks){ result.toast.mark_system.marks.map(&:presentation) }
 
-      it %q|should give me presentation of mark if toast have mark system| do
-        marks = []
-        mark = Mark.create(presentation: Faker::Lorem.word, percent: 0, mark_system: mark_system)
-        marks.push mark.presentation
-        puts 'Marks list:'
-        puts "#{mark.presentation} - #{mark.percent}"
-        4.times do
-          mark = Mark.create(presentation: Faker::Lorem.word, percent: rand(100), mark_system: mark_system)
-          marks.push mark.presentation
-          puts "#{mark.presentation} - #{mark.percent}%"
-        end
-        result.toast.update(mark_system: mark_system)
-        puts "You have: #{result.mark*100.round}%. Your mark: #{result.show_mark}"
-        expect(marks).to include result.show_mark
+      it 'returns representation of mark' do
+        expect(marks).to include(result.presentation)
       end
     end
 
-    describe '#create_by_answers' do
-      it 'should get the greatest mark if I know all right answers' do
-        user_answers, questions = {}, []
-        toast.update(mark_system: nil)
-        rand(1..5).times do
-          question = Question.create(toast: toast, text: Faker::Lorem.paragraph, question_type: rand(1..3), is_right: (rand(1).zero? ? false : true))
-          question_answers = create_answers(question) unless question.question_type == 1
-          user_answers[question.id] =
-            case question.question_type
-            when 1
-              question.is_right
-            when 2
-              question_answers[:right_answers].map{ |answer| [answer.id, answer.is_right] }.to_h
-            when 3
-              question_answers[:correct_pairs].map{ |answer| [answer.id, [answer.left_text, answer.right_text]] }.to_h
-            end
-          questions.push question
+    describe '#calc_and_save_by_answers' do
+      let!(:questions) do
+        (0..rand(2)+2).map do
+          question = create("#{QuestionTypes::TYPE_LIST.sample}_question")
+          create_answers(question) unless question.logical?
+          question
         end
-        expect(result.create_by_answers(questions, user_answers)).to eq({mark: '1.0', right: 8, wrong: 0})
+      end
+
+      before { result.toast.update(mark_system: nil) }
+
+      context 'when all answers are right' do
+        before do
+          result.update!(answers: user_right_answers(questions))
+          result.calc_and_save_by_answers(questions)
+        end
+
+        it { expect(result.hit).to eq(1) }
+        it { expect(result.right).to eq(questions.size) }
+        it { expect(result.wrong).to eq(0) }
+        it { expect(result.percent).to eq(100) }
+      end
+
+      context 'when answers are partly correct' do
+        let(:right_count) { questions.size / 2 }
+        let(:wrong_count) { questions.size - right_count }
+
+        before do
+          answers = {}
+          answers.merge!(user_right_answers(questions[0..right_count-1]))
+          answers.merge!(user_wrong_answers(questions[right_count..-1]))
+          result.update!(answers: answers)
+          result.calc_and_save_by_answers(questions)
+        end
+
+        it { expect(result.hit).to eq((right_count.to_f / questions.size).round(3)) }
+        it { expect(result.right).to eq(right_count) }
+        it { expect(result.wrong).to eq(wrong_count) }
+        it { expect(result.percent).to eq((result.hit * 100).round) }
       end
     end
   end

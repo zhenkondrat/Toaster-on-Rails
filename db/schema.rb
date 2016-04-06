@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150621073223) do
+ActiveRecord::Schema.define(version: 20151206122032) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,16 +47,6 @@ ActiveRecord::Schema.define(version: 20150621073223) do
     t.integer "toast_id"
   end
 
-  create_table "groups_users", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "group_id"
-  end
-
-  create_table "invite_codes", force: :cascade do |t|
-    t.string "token"
-    t.string "role"
-  end
-
   create_table "mark_systems", force: :cascade do |t|
     t.string "name"
   end
@@ -67,25 +57,38 @@ ActiveRecord::Schema.define(version: 20150621073223) do
     t.integer "mark_system_id"
   end
 
+  create_table "memberships", force: :cascade do |t|
+    t.integer  "group_id"
+    t.integer  "member_id"
+    t.string   "member_type", default: "student"
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+  end
+
   create_table "plurals", force: :cascade do |t|
     t.integer "question_id"
     t.string  "text"
-    t.boolean "is_right"
+    t.boolean "is_right",    default: false
   end
 
   create_table "questions", force: :cascade do |t|
-    t.integer "toast_id"
     t.text    "text"
-    t.integer "question_type"
+    t.string  "question_type"
     t.boolean "is_right"
+  end
+
+  create_table "questions_toasts", id: false, force: :cascade do |t|
+    t.integer "toast_id",    null: false
+    t.integer "question_id", null: false
   end
 
   create_table "results", force: :cascade do |t|
     t.integer  "toast_id"
     t.integer  "user_id"
-    t.decimal  "mark",       precision: 3, scale: 2
+    t.decimal  "hit",        precision: 3, scale: 2
     t.datetime "created_at"
-    t.string   "answers"
+    t.jsonb    "answers"
+    t.jsonb    "additional"
   end
 
   create_table "subjects", force: :cascade do |t|
@@ -97,22 +100,11 @@ ActiveRecord::Schema.define(version: 20150621073223) do
     t.integer "subject_id"
   end
 
-  create_table "toast_relations", force: :cascade do |t|
-    t.integer "parent_id"
-    t.integer "child_id"
-    t.integer "percent",   default: 100
-  end
-
   create_table "toasts", force: :cascade do |t|
     t.integer "subject_id"
     t.string  "name"
-    t.integer "weight1"
-    t.integer "weight2"
-    t.integer "weight3"
-    t.integer "questions_count"
-    t.integer "question_time"
     t.integer "mark_system_id"
-    t.boolean "learning_flag"
+    t.jsonb   "options",        default: {"weights"=>{"plural"=>1, "logical"=>1, "associative"=>1}, "learning_flag"=>nil, "questions_count"=>nil, "answer_time_limit"=>nil}
   end
 
   create_table "users", force: :cascade do |t|
@@ -128,9 +120,15 @@ ActiveRecord::Schema.define(version: 20150621073223) do
     t.datetime "updated_at"
     t.string   "config"
     t.string   "role",                   limit: 7, default: "student"
+    t.string   "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string   "email"
   end
 
+  add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
   add_index "users", ["login"], name: "index_users_on_login", unique: true, using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   add_index "users", ["role"], name: "index_users_on_role", using: :btree
 
 end

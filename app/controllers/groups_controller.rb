@@ -4,28 +4,24 @@ class GroupsController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @groups = Group.all
-    @groups = @groups.where("name LIKE '%#{params[:search_filter]}%'") if params[:search_filter].present?
-    @groups = @groups.page(params[:page]).per(10)
+    @groups = Group.search(current_user, params[:search_filter]).page(params[:page]).per(10)
     @group = Group.new
   end
 
   def create
-    if Group.create group_params
+    @group = current_user.owned_groups.create(group_params)
+    if @group.persisted?
       flash[:notice] = 'Group is successfully created'
     else
-      flash[:error] = 'Something went wrong'
+      flash[:error] = @group.errors.join(', ')
     end
-    redirect_to groups_path
+    redirect_to groups_path('#ModalAddGroup')
   end
 
-  def edit
-    @group_users = @group.users
-    @users = @group.foreign_users.page(params[:page]).per(10)
-  end
+  def edit; end
 
   def update
-    if @group.update group_params
+    if @group.update(group_params)
       flash[:notice] = 'Group is successfully updated'
     else
       flash[:error] = 'Something went wrong'
@@ -43,7 +39,7 @@ class GroupsController < ApplicationController
   end
 
   def join_group
-    params[:users].each{ |user_id| @group.users << User.find(user_id) }
+    @group.change_students(student_ids)
     flash[:notice] = 'Users are successfully joined to group'
     render js: "window.location = '#{edit_group_path(@group)}'"
   end
@@ -60,7 +56,11 @@ class GroupsController < ApplicationController
   private
 
   def set_group
-    @group = Group.find(params[:id])
+    @group = current_user.owned_groups.find(params[:id])
+  end
+
+  def student_ids
+    params.require(:group).permit(users: [])
   end
 
   def group_params

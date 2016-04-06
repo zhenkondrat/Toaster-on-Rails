@@ -1,4 +1,4 @@
-= render partial: 'groups/modal/add_group'
+= render 'groups/modal/add_group'
 .panel.panel-warning.main
   .panel-heading
     %h3 #{I18n.t 'interface.group.groups'}
@@ -16,7 +16,7 @@
       - @groups.each do |group|
         %tr
           %td= group.name
-          %td= truncate(group.users.map{|user| user.last_name}.join(', '), length: 100)
+          %td= truncate(group.students.map{|user| user.last_name}.join(', '), length: 100)
           %td.actions
             = link_to edit_group_path(group) do
               .btn.btn-sm.btn-info

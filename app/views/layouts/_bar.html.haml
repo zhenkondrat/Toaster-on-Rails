@@ -32,18 +32,18 @@
       - if can? :manage, Result
         %li= link_to I18n.t('interface.menu.results'), results_path
     %ul.nav.navbar-nav.navbar-right
-      - if can? :menu, :invite
-        %li.dropdown
-          %a.dropdown-toggle{data: {toggle: 'dropdown'}}
-            #{I18n.t 'interface.menu.invite_codes'}
-            %b.caret
-          %ul.dropdown-menu
-            - if can? :invite, :admin
-              %li= link_to "Admin: #{InviteCode.get(:admin)}", '#', id: 'admin_token'
-            - if can? :invite, :teacher
-              %li= link_to "Teacher: #{InviteCode.get(:teacher)}", '#', id: 'teacher_token'
-            - if can? :invite, :student
-              %li= link_to "User: #{InviteCode.get(:student)}", '#', id: 'user_token'
+      -#- if can? :menu, :invite
+      -#  %li.dropdown
+      -#    %a.dropdown-toggle{data: {toggle: 'dropdown'}}
+      -#      #{I18n.t 'interface.menu.invite_codes'}
+      -#      %b.caret
+          -#%ul.dropdown-menu
+          -#  - if can? :invite, :admin
+          -#    %li= link_to "Admin: #{InviteCode.get(:admin)}", '#', id: 'admin_token'
+          -#  - if can? :invite, :teacher
+          -#    %li= link_to "Teacher: #{InviteCode.get(:teacher)}", '#', id: 'teacher_token'
+          -#  - if can? :invite, :student
+          -#    %li= link_to "User: #{InviteCode.get(:student)}", '#', id: 'user_token'
             %li
               %button.btn.btn-warning.key-gen #{I18n.t 'interface.menu.regenerate'}
       %li.dropdown

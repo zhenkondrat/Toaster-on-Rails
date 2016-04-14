@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160414215834) do
+ActiveRecord::Schema.define(version: 20160414221903) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -73,6 +73,7 @@ ActiveRecord::Schema.define(version: 20160414215834) do
   end
 
   create_table "questions", force: :cascade do |t|
+    t.integer "toast_id"
     t.text    "text"
     t.string  "question_type"
     t.boolean "is_right"
@@ -106,6 +107,7 @@ ActiveRecord::Schema.define(version: 20160414215834) do
     t.string  "name"
     t.integer "mark_system_id"
     t.jsonb   "options",        default: {"weights"=>{"plural"=>1, "logical"=>1, "associative"=>1}, "learning_flag"=>nil, "questions_count"=>nil, "answer_time_limit"=>nil}
+    t.integer "owner_id"
   end
 
   create_table "users", force: :cascade do |t|

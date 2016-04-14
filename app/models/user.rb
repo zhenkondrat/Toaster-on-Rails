@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   include Roles
   devise :database_authenticatable, :registerable, :rememberable, :validatable, :confirmable
+  has_many :owned_toasts, class_name: 'Toast', foreign_key: :owner_id
   has_many :results, dependent: :delete_all
   has_many :mark_systems, -> { merge(MarkSystem.where(user_id: nil)) }, dependent: :delete_all
   has_many :memberships, foreign_key: :member_id

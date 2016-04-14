@@ -8,10 +8,8 @@ class QuestionsController < ApplicationController
   end
 
   def create
-    params['question'] = params['question'].tap{ |hs| hs.delete('plurals_attributes') } unless question_params[:question_type] == '2'
-    params['question'] = params['question'].tap{ |hs| hs.delete('associations_attributes') } unless question_params[:question_type] == '3'
-    @question = Question.new(question_params)
-    if @question.save
+    sanitize_params
+    if current_user.questions.create(question_params)
       flash[:notice] = 'Question successfully created'
     else
       flash[:error] = %q|Question can't be created|
@@ -31,19 +29,20 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    toast = @question.toast
     if @question.destroy
       flash[:notice] = 'Question is successfully deleted'
     else
       flash[:error] = %q|Question can't be deleted|
     end
-    redirect_to edit_toast_path(toast)
+    redirect_to edit_toast_path(@question.toast)
   end
 
   private
 
   def set_question
-    @question = Question.find(params[:id])
+    @question = Question.joins(:toasts)
+                        .where(toasts: {owner_id: current_user.id})
+                        .find(params[:id])
   end
 
   def question_params
@@ -52,5 +51,14 @@ class QuestionsController < ApplicationController
       plurals_attributes: [:id, :is_right, :text, :_destroy],
       associations_attributes: [:id, :left_text, :right_text, :_destroy]
     )
+  end
+
+  def sanitize_params
+    case question_params[:question_type]
+    when '2'
+      params['question'].delete('plurals_attributes')
+    when '3'
+      params['question'].delete('associations_attributes')
+    end
   end
 end

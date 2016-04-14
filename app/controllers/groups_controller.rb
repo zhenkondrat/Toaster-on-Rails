@@ -41,7 +41,7 @@ class GroupsController < ApplicationController
   def join_group
     @group.change_students(student_ids)
     flash[:notice] = 'Users are successfully joined to group'
-    render js: "window.location = '#{edit_group_path(@group)}'"
+    redirect_to edit_group_path(@group)
   end
 
   def leave_group

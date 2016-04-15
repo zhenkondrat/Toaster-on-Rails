@@ -8,6 +8,11 @@ class Group < ActiveRecord::Base
 
   validates :name, presence: true
 
+  def self.search(user, search_filter)
+    return user.owned_groups if search_filter.blank?
+    user.owned_groups.where('name LIKE %?%', search_filter)
+  end
+
   def foreign_users
     User.where.not(id: students).where.not(id: owners)
   end

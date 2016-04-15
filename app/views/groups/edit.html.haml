@@ -7,7 +7,7 @@
       %strong #{I18n.t 'interface.name'}:
       = @group.name
       = link_to "(#{I18n.t('interface.change')})", '#ModalAddGroup', data: {toggle: 'modal'}
-    - unless @group_users.empty?
+    - if @group.students.present?
       .form-group
         %h2.center #{I18n.t 'interface.group.users_list'}
         %table.table.table-striped
@@ -18,13 +18,13 @@
             %th #{I18n.t 'interface.father_name'}
             %th #{I18n.t 'interface.group.groups'}
             %th #{I18n.t 'interface.check'}
-          - @group_users.each do |user|
+          - @group.students.each do |user|
             %tr
               %td= user.login
               %td= user.last_name
               %td= user.first_name
               %td= user.father_name
-              %td= user.groups.map{|group| group.name}.join(', ')
+              %td= user.groups.map(&:name).join(', ')
               %td
                 = link_to leave_group_path(@group, params: {user: user}), data: {confirm: I18n.t('interface.del_attention')} do
                   %i.fa.fa-user-times

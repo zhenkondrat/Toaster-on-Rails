@@ -8,7 +8,9 @@ class ApplicationController < ActionController::Base
   protected
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.for(:sign_in) { |u| u.permit({ roles: [] }, :login, :password, :remember_me) }
+    devise_parameter_sanitizer.for(:sign_in) do |user|
+      user.permit(:login, :password, :remember_me)
+    end
   end
 
   def set_locale

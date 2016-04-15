@@ -1,4 +1,5 @@
 class MarkSystem < ActiveRecord::Base
+  belongs_to :user
   has_many :marks, dependent: :delete_all
   has_many :toasts
   accepts_nested_attributes_for :marks, reject_if: :all_blank, allow_destroy: true

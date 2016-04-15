@@ -1,4 +1,5 @@
 class Toast < ActiveRecord::Base
+  belongs_to :owner, class_name: 'User'
   belongs_to :subject
   belongs_to :mark_system
   has_and_belongs_to_many :groups

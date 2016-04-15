@@ -4,14 +4,12 @@ class SubjectsController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @subjects = Subject.all
-    @subjects = @subjects.where("name LIKE '%#{params[:search_filter]}%'") if params[:search_filter].present?
-    @subjects = @subjects.page(params[:page]).per(10)
+    @groups = Subject.search(current_user, params[:search_filter]).page(params[:page]).per(10)
     @subject = Subject.new
   end
 
   def create
-    if Subject.create(subject_params)
+    if current_user.subjects.create(subject_params)
       flash[:notice] = 'Subject is successfully created'
     else
       flash[:error] = 'Something went wrong'
@@ -19,8 +17,7 @@ class SubjectsController < ApplicationController
     redirect_to subjects_path
   end
 
-  def edit
-  end
+  def edit; end
 
   def update
     if @subject.update(subject_params)
@@ -41,7 +38,7 @@ class SubjectsController < ApplicationController
   end
 
   def share_to_teacher
-    if @subject.teachers << User.find(params[:teacher][:id])
+    if @subject.teachers << User.find(params[:grant_id])
       flash[:notice] = 'Teachers subject access is granted'
     else
       flash[:error] = 'Something went wrong'
@@ -60,11 +57,11 @@ class SubjectsController < ApplicationController
 
   private
 
-    def set_subject
-      @subject = Subject.find(params[:id])
-    end
+  def set_subject
+    @subject = current_user.subjects.find(params[:id])
+  end
 
-    def subject_params
-      params.require(:subject).permit(:name)
-    end
+  def subject_params
+    params.require(:subject).permit(:name)
+  end
 end

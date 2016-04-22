@@ -38,11 +38,15 @@ gem 'kaminari', '0.16.3'
 gem 'rails-i18n', '~> 4.0.0'
 # Use unicorn as the app server
 gem 'unicorn', '4.8.3', group: :production
+# letters
+gem 'resque'
+gem 'resque_mailer'
 
 # Use Capistrano for deployment
 group :development do
   gem 'capistrano-rails', '1.1.2'
   gem 'capistrano-rvm', '0.1.2'
+  gem 'letter_opener'
 end
 
 group :test, :development do

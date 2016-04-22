@@ -253,6 +253,7 @@ uk:
     toast: тест
     welcome: Ласкаво просимо
     registration: Реєстрація
+    email: Email
     login: Логін
     last_name: Прізвище
     first_name: Ім'я
@@ -276,6 +277,10 @@ uk:
     check: Познач.
     date: Дата
     add: Додати
+    roles:
+      admin: Адміністратор
+      teacher: Викладач
+      student: Студент
     menu:
       manage_toasts: Тести
       list: Список

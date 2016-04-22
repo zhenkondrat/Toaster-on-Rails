@@ -207,6 +207,7 @@ en:
     toast: toast
     welcome: Wellcome
     registration: Registration
+    email: Email
     login: Login
     last_name: Last name
     first_name: First name
@@ -230,6 +231,10 @@ en:
     check: Check
     date: Date
     Add: Add
+    roles:
+      admin: Admin
+      teacher: Teacher
+      student: Student
     menu:
       manage_toasts: Toasts
       list: List

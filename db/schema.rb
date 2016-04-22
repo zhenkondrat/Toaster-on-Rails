@@ -73,7 +73,6 @@ ActiveRecord::Schema.define(version: 20160414221903) do
   end
 
   create_table "questions", force: :cascade do |t|
-    t.integer "toast_id"
     t.text    "text"
     t.string  "question_type"
     t.boolean "is_right"

@@ -4,52 +4,32 @@ class GroupsController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @groups = Group.search(current_user, params[:search_filter]).page(params[:page]).per(10)
+    @groups = Group.search(current_user, params[:search_filter])
+                   .page(params[:page])
+                   .per(10)
     @group = Group.new
   end
 
   def create
     @group = current_user.owned_groups.create(group_params)
-    if @group.persisted?
-      flash[:notice] = 'Group is successfully created'
-    else
-      flash[:error] = @group.errors.join(', ')
-    end
+    attach_message @group.persisted?, @group.errors
     redirect_to groups_path('#ModalAddGroup')
   end
 
   def edit; end
 
   def update
-    if @group.update(group_params)
-      flash[:notice] = 'Group is successfully updated'
-    else
-      flash[:error] = 'Something went wrong'
-    end
+    attach_message @group.update(group_params), @group.errors
     redirect_to edit_group_path(@group)
   end
 
-  def delete
-    if @group.destroy
-      flash[:notice] = 'Group is successfully deleted'
-    else
-      flash[:error] = 'Something went wrong'
-    end
+  def destroy
+    attach_message @group.destroy, @group.errors
     redirect_to groups_path
   end
 
-  def join_group
-    @group.change_students(student_ids)
-    flash[:notice] = 'Users are successfully joined to group'
-    redirect_to edit_group_path(@group)
-  end
-
-  def leave_group
-    if @group.users.delete(params[:user])
-      flash[:notice] = 'User is successfully expelled from group'
-    else
-      flash[:error] = 'Something went wrong'
-    end
+  def change_members
+    attach_message @group.change_students(student_ids), @group.errors
     redirect_to edit_group_path(@group)
   end
 

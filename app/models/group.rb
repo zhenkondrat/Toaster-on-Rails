@@ -10,7 +10,7 @@ class Group < ActiveRecord::Base
 
   def self.search(user, search_filter)
     return user.owned_groups if search_filter.blank?
-    user.owned_groups.where('name LIKE %?%', search_filter)
+    user.owned_groups.where('"name" LIKE ?', "%#{search_filter}%")
   end
 
   def foreign_users

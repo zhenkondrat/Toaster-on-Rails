@@ -16,4 +16,10 @@ class ApplicationController < ActionController::Base
   def set_locale
     I18n.locale = current_user.config[:locale] if user_signed_in?
   end
+
+  def attach_message(success_flag, entity_errors = nil)
+    flash_type = success_flag ? :success : :failed
+    flash[flash_type] = t "#{controller_name}.actions.#{action_name}.#{flash_type}"
+    flash[:errors] = entity_errors if entity_errors.present?
+  end
 end

@@ -205,7 +205,7 @@ en:
     pm: pm
   interface:
     toast: toast
-    welcome: Wellcome
+    welcome: Welcome
     registration: Registration
     email: Email
     login: Login

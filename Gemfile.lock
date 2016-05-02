@@ -94,6 +94,8 @@ GEM
       railties (>= 3.0.0)
     faker (1.6.1)
       i18n (~> 0.5)
+    flash_speaker (0.0.1.2)
+      rails-i18n (~> 4.0.0)
     font-awesome-rails (4.3.0.0)
       railties (>= 3.2, < 5.0)
     globalid (0.3.6)
@@ -275,6 +277,7 @@ DEPENDENCIES
   devise (= 3.4.1)
   factory_girl_rails (= 4.5.0)
   faker
+  flash_speaker (= 0.0.1.2)
   font-awesome-rails (= 4.3.0.0)
   haml (= 4.0.6)
   jbuilder (~> 2.0)

@@ -36,6 +36,7 @@ gem 'paperclip', '4.2.1'
 gem 'kaminari', '0.16.3'
 # Localization
 gem 'rails-i18n', '~> 4.0.0'
+gem 'flash_speaker', '0.0.1.2'
 # Use unicorn as the app server
 gem 'unicorn', '4.8.3', group: :production
 # letters

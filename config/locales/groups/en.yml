@@ -1,0 +1,7 @@
+en:
+  groups:
+    entity: Group
+    actions:
+      change_members:
+        success: Group memebrs are successfully changed!
+        failed: There are problems during changing members

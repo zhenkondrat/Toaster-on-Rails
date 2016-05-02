@@ -1,0 +1,12 @@
+en:
+  default:
+    actions:
+      create:
+        success: <entity> is successfully created!
+        failed: There are problems during <entity> creating
+      update:
+        success: <entity> is successfully updated!
+        failed: There are problems during <entity> updating
+      destroy:
+        success: <entity> is successfully deleted!
+        failed: There are problems during <entity> deleting

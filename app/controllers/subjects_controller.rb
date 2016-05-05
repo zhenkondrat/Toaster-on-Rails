@@ -1,43 +1,32 @@
 class SubjectsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_subject, except: [:create, :index]
-  load_and_authorize_resource
+  before_action :subject, only: :edit
 
   def index
-    @groups = Subject.search(current_user, params[:search_filter]).page(params[:page]).per(10)
+    @subjects = Subject.search(current_user, params[:search_filter])
+                       .page(params[:page])
     @subject = Subject.new
   end
 
   def create
-    if current_user.subjects.create(subject_params)
-      flash[:notice] = 'Subject is successfully created'
-    else
-      flash[:error] = 'Something went wrong'
-    end
+    subject = current_user.subjects.create(subject_params)
+    attach_message subject.persist? subject.errors
     redirect_to subjects_path
   end
 
   def edit; end
 
   def update
-    if @subject.update(subject_params)
-      flash[:notice] = 'Subject is successfully updated'
-    else
-      flash[:error] = 'Something went wrong'
-    end
+    attach_message subject.update(subject_params), subject.errors
     redirect_to subjects_path
   end
 
-  def delete
-    if @subject.destroy
-      flash[:notice] = 'Subject is successfully deleted'
-    else
-      flash[:error] = 'Something went wrong'
-    end
+  def destroy
+    attach_message subject.destroy, subject.errors
     redirect_to subjects_path
   end
 
-  def share_to_teacher
+  def change_teachers
     if @subject.teachers << User.find(params[:grant_id])
       flash[:notice] = 'Teachers subject access is granted'
     else
@@ -57,8 +46,8 @@ class SubjectsController < ApplicationController
 
   private
 
-  def set_subject
-    @subject = current_user.subjects.find(params[:id])
+  def subject
+    @subject ||= current_user.subjects.find(params[:id])
   end
 
   def subject_params

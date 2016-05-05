@@ -4,13 +4,6 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:edit, :update, :destroy]
   load_and_authorize_resource
 
-  def main
-    return redirect_to new_user_session_path unless user_signed_in?
-    save_result if session[:toast_started]
-    prepare_results if current_user.student?
-    render(current_user.student? ? 'users/user/home' : 'users/teacher/home')
-  end
-
   def index
     @users = User.search(params[:search_filter])
     @users = @users.where.not(role: [:teacher, :admin]) if current_user.teacher?
@@ -46,17 +39,6 @@ class UsersController < ApplicationController
   def results
     @results = current_user.results.order(created_at: :desc).page(params[:page]).per(5)
     render 'user/results'
-  end
-
-  def generate_invite_code
-    codes = InviteCode.generate!
-    render json: {status: 'ok'}.merge(codes)
-  end
-
-  def change_locale
-    I18n.locale = (I18n.locale == :en ? :uk : :en)
-    current_user.update(config: {locale: I18n.locale})
-    redirect_to :back, notice: 'Locale successfully changed'
   end
 
   private

@@ -1,7 +1,6 @@
 class QuestionsController < ApplicationController
-  before_action :set_question, except: [:new, :create]
   before_action :authenticate_user!
-  load_and_authorize_resource
+  before_action :question, only: :edit
 
   def new
     @question = Question.new(toast_id: params[:toast])
@@ -9,40 +8,29 @@ class QuestionsController < ApplicationController
 
   def create
     sanitize_params
-    if current_user.questions.create(question_params)
-      flash[:notice] = 'Question successfully created'
-    else
-      flash[:error] = %q|Question can't be created|
-    end
-    redirect_to edit_toast_path(@question.toast)
+    question = current_user.questions.create(question_params)
+    attach_message question.persist?, question.errors
+    redirect_to edit_toast_path(question.toast)
   end
 
   def edit; end
 
   def update
-    if @question.update(question_params)
-      flash[:notice] = 'Question successfully updated'
-    else
-      flash[:error] = %q|Question can't be updated|
-    end
-    redirect_to edit_toast_path(@question.toast)
+    attach_message question.update(question_params)
+    redirect_to edit_toast_path(question.toast)
   end
 
   def destroy
-    if @question.destroy
-      flash[:notice] = 'Question is successfully deleted'
-    else
-      flash[:error] = %q|Question can't be deleted|
-    end
-    redirect_to edit_toast_path(@question.toast)
+    attach_message question.destroy, question.errors
+    redirect_to edit_toast_path(question.toast)
   end
 
   private
 
-  def set_question
-    @question = Question.joins(:toasts)
-                        .where(toasts: {owner_id: current_user.id})
-                        .find(params[:id])
+  def question
+    @question ||= Question.joins(:toasts)
+                          .where(toasts: {owner_id: current_user.id})
+                          .find(params[:id])
   end
 
   def question_params

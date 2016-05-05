@@ -2,12 +2,17 @@
 %html
   %head
     %title Toaster
+    - provide(:title, 'Toaster')
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
     = yield :styles
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
   %body{ class: user_signed_in? ? (current_user.student? ? 'blue-bkg' : 'orange-bkg') : ''}
-    = render 'layouts/bar' if user_signed_in?
+    - if user_signed_in?
+      - if current_user.student?
+        = render 'layouts/student_bar'
+      - else
+        = render 'layouts/teacher_bar'
     .container
       = render 'layouts/flash'
       = yield

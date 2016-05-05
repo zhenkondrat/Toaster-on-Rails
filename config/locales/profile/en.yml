@@ -1,0 +1,9 @@
+en:
+  profile:
+    actions:
+      update:
+        success: Your profile info successfully updated!
+        failed: There are problems during profile updating
+      change_language:
+        success: Language successfully changed
+        failed: There are problems during profile updating

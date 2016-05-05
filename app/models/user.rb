@@ -1,9 +1,13 @@
 class User < ActiveRecord::Base
+  paginates_per 30
+
   include Roles
-  devise :database_authenticatable, :registerable, :rememberable, :validatable, :confirmable
+  devise :database_authenticatable, :registerable, :rememberable,
+         :validatable, :confirmable, :recoverable
   has_many :owned_toasts, class_name: 'Toast', foreign_key: :owner_id
   has_many :results, dependent: :delete_all
-  has_many :mark_systems, -> { merge(MarkSystem.where(user_id: nil)) }, dependent: :delete_all
+  has_many :mark_systems, -> { merge(MarkSystem.where(user_id: nil)) },
+           dependent: :delete_all
   has_many :memberships, foreign_key: :member_id
   has_many :owned_groups, -> { where(memberships: { member_type: 'owner' }) },
            source: :group, through: :memberships
@@ -22,21 +26,21 @@ class User < ActiveRecord::Base
   scope :students, ->{ where role: ROLE_STUDENT }
   scope :users, ->{ where role: [ROLE_STUDENT, ROLE_TEACHER] }
 
-  def self.search(search_filter)
-    return User.all if search_filter.blank?
-    search_filter = search_filter.gsub(/\s+/, ' ').strip.split
-    search_filter.map!{ |filter| User.sanitize(filter) }
+  def self.search(criteria)
+    return User.all if criteria.blank?
+    filters = criteria.gsub(/\s+/, ' ').strip.split
+                      .map{ |filter| User.sanitize(filter) }
     query =
-      case search_filter.size
+      case filters.size
       when 1
-        "last_name LIKE '%#{search_filter[0]}%' OR login LIKE '%#{search_filter[0]}%'"
+        "last_name LIKE '%#{filters[0]}%' OR login LIKE '%#{filters[0]}%'"
       when 2
-        "last_name LIKE '%#{search_filter[0]}%' AND first_name LIKE '%#{search_filter[1]}%'"
+        "last_name LIKE '%#{filters[0]}%' AND first_name LIKE '%#{filters[1]}%'"
       when 3
         <<-SQL
-          last_name LIKE '%#{search_filter[0]}%' AND
-          first_name LIKE '%#{search_filter[1]}%' AND
-          father_name LIKE '%#{search_filter[2]}%'
+          last_name LIKE '%#{filters[0]}%' AND
+          first_name LIKE '%#{filters[1]}%' AND
+          father_name LIKE '%#{filters[2]}%'
         SQL
       else
         'true'

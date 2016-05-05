@@ -1,4 +1,4 @@
 .panel.panel-warning.main
   .panel-heading
     %h3= t('interface.user.edit_user')
-  = render 'form', user: @user
+  = render 'users/form', user: current_user

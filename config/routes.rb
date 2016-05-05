@@ -7,6 +7,12 @@ Rails.application.routes.draw do
     end
   end
 
+  concern :recoverable do
+    member do
+      get :reset_password
+    end
+  end
+
   resources :mark_systems
 
   resources :toasts, concerns: :searchable do
@@ -31,7 +37,7 @@ Rails.application.routes.draw do
 
   devise_for :users, controllers: { registrations: 'devise_override/registrations' }
 
-  resources :users, concerns: :searchable do
+  resources :users, concerns: [:searchable, :recoverable] do
     member do
       get :results
     end
@@ -43,7 +49,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resource :profile, controller: :profile, except: :destroy do
+  resource :profile, controller: :profile, except: :destroy, concerns: :recoverable do
     post 'change_language/:name', action: 'change_language', as: :change_language
   end
 

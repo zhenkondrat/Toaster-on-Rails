@@ -1,0 +1,23 @@
+= form_for user do |f|
+  .panel-body
+    .form-group
+      = f.label :login, t('interface.login')
+      = f.text_field :login, class: 'form-control'
+    .form-group
+      = f.label :last_name, t('interface.last_name')
+      = f.text_field :last_name, class: 'form-control'
+    .form-group
+      = f.label :first_name, t('interface.first_name')
+      = f.text_field :first_name, class: 'form-control'
+    .form-group
+      = f.label :father_name, t('interface.father_name')
+      = f.text_field :father_name, class: 'form-control'
+    .form-group
+      = link_to t('.reset_password'),
+    .panel-footer
+      = f.submit t('interface.save'), class: 'btn btn-default'
+      - if current_user.admin? && user != current_user
+        .pull-right
+          = link_to user_path(user), method: :delete, data: {confirm: t('interface.del_attention')} do
+            .btn.btn-sm.btn-danger
+              %i.fa.fa-trash

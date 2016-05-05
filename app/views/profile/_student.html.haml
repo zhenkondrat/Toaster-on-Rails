@@ -1,27 +1,27 @@
-- provide(:title, 'Привіт студент')
 = content_for :styles do
   = stylesheet_link_tag 'student'
 .student_content.user-profile
-  %p.user_big_header #{I18n.t 'interface.welcome'}
+  %p.user_big_header #{t 'interface.welcome'}
   .user_info
     .col-lg-6.col-md-6.col-sm-12
       .left
         %p.user_small_header Особисті дані
         %p
-          #{I18n.t 'interface.last_name'}:
+          #{t 'interface.last_name'}:
           = current_user.last_name
         %p
-          #{I18n.t 'interface.first_name'}:
+          #{t 'interface.first_name'}:
           = current_user.first_name
         %p
-          #{I18n.t 'interface.father_name'}:
+          #{t 'interface.father_name'}:
           = current_user.father_name
         %p Групи до яких належить користувач:
-        %p= current_user.groups.map{ |group| group.name }.join(', ') unless current_user.groups.empty?
+        - unless current_user.joined_groups.exists?
+          %p= current_user.joined_groups.map{ |group| group.name }.join(', ')
         %p Наявні для проходження тести:
         %p
           - current_user.available_toasts.each do |toast|
-            = "#{link_to toast.name, toast_path(toast), data: {confirm: I18n.t('interface.del_attention')}}  ".html_safe
+            = "#{link_to toast.name, toast_path(toast), data: {confirm: t('interface.del_attention')}}  ".html_safe
     .col-lg-6.col-md-6.col-sm-12
       .right
         %p.user_small_header Останні результати
@@ -32,10 +32,10 @@
               %th Назва тесту
               %th Бал
               %th Дата
-            - @results.each do |result|
-              %tr
-                %td=result['subject_name']
-                %td=result['toast_name']
-                %td=result['mark']
-                %td= l Time.parse(result['created_at']), format: :short
+            -#- @results.each do |result|
+            -#  %tr
+            -#    %td=result['subject_name']
+            -#    %td=result['toast_name']
+            -#    %td=result['mark']
+            -#    %td= l Time.parse(result['created_at']), format: :short
 %p.user_footer#user_footer

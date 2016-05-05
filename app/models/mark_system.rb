@@ -1,4 +1,6 @@
 class MarkSystem < ActiveRecord::Base
+  paginates_per 10
+
   belongs_to :user
   has_many :marks, dependent: :delete_all
   has_many :toasts
